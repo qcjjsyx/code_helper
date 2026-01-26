@@ -97,6 +97,43 @@ def parse_ports(port_block: str) -> list[dict]:
     return ports
 
 
+def parse_port_declarations(text: str) -> dict[str, dict[str, str | None]]:
+    decls: dict[str, dict[str, str | None]] = {}
+    decl_block_re = re.compile(r"\b(input|output|inout)\b([^;]*);", re.DOTALL)
+    for match in decl_block_re.finditer(text):
+        direction = match.group(1)
+        block = match.group(2)
+        shared_width_match = WIDTH_RE.search(block)
+        shared_width = shared_width_match.group(1) if shared_width_match else None
+        parts: list[str] = []
+        current = ""
+        depth = 0
+        for char in block:
+            if char in "([{" :
+                depth += 1
+            elif char in ")]}":
+                depth = max(depth - 1, 0)
+            if char == "," and depth == 0:
+                parts.append(current)
+                current = ""
+            else:
+                current += char
+        if current.strip():
+            parts.append(current)
+        for part in parts:
+            segment = part.strip()
+            if not segment:
+                continue
+            width_match = WIDTH_RE.search(segment)
+            width = width_match.group(1) if width_match else shared_width
+            tokens = re.findall(r"[A-Za-z_][\w$]*", segment)
+            if not tokens:
+                continue
+            name = tokens[-1]
+            decls[name] = {"direction": direction, "width": width}
+    return decls
+
+
 def parse_params(text: str) -> list[dict]:
     params: list[dict] = []
     for match in PARAM_BLOCK_RE.finditer(text):
@@ -131,6 +168,19 @@ def parse_verilog(path: Path) -> ParsedModule:
     name, port_block, header_errors = extract_module_header(cleaned)
     errors.extend(header_errors)
     ports = parse_ports(port_block or "")
+    decls = parse_port_declarations(cleaned)
+    if ports:
+        for port in ports:
+            decl = decls.get(port["name"])
+            if not decl:
+                continue
+            if port["direction"] == "unknown":
+                port["direction"] = decl["direction"]
+            if port["width"] is None:
+                port["width"] = decl["width"]
+    else:
+        for name, decl in decls.items():
+            ports.append({"name": name, "direction": decl["direction"], "width": decl["width"]})
     params = parse_params(cleaned)
     instances = parse_instances(cleaned)
     if not name:
