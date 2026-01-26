@@ -1,46 +1,46 @@
 {
   "meta": {
-    "generated_at": "2026-01-26T08:37:29+00:00",
-    "repo_root": "/workspace/code_helper",
+    "generated_at": "2026-01-26T15:49:00+00:00",
+    "repo_root": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper",
     "entries_count": 11
   },
   "entries": [
     {
       "name": "cFifo1",
       "kind": "component",
-      "file": "cFifo1.v",
-      "sha256": "b92db272885ddfc1600b1fa744169091ebdbb8aa4e6113b313e216a3596dfa62",
+      "file": "base/cFifo1.v",
+      "sha256": "ef6459853badb89174c031dd3f8455ce472711c68bff507df156200add1b82db",
       "language": "verilog",
       "ports": [
         {
           "name": "i_drive",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "i_freeNext",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "o_free",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "o_driveNext",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "o_fire_1",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -61,50 +61,50 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "cPmtFifo1",
       "kind": "component",
-      "file": "cPmtFifo1.v",
-      "sha256": "c180614a81b8dbd3387e2ffcd24e19d3aae98d30d8aeb5a3ed4d02a71189f7c3",
+      "file": "base/cPmtFifo1.v",
+      "sha256": "592e366a298e44091652deb1f5ba3a6a9da051c9e8658aec5a4db20999177552",
       "language": "verilog",
       "ports": [
         {
           "name": "i_drive",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "i_freeNext",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "o_free",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "o_driveNext",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "o_fire_1",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "pmt",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -126,30 +126,30 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "contTap",
       "kind": "primitive",
-      "file": "contTap.v",
+      "file": "base/contTap.v",
       "sha256": "265013092b8c6e471b4420ac0a979c9152978d8cfabe30a835e562b5b9e249cb",
       "language": "verilog",
       "ports": [
         {
           "name": "trig",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "req",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -169,30 +169,30 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "delay1U",
       "kind": "primitive",
-      "file": "delay1U.v",
+      "file": "base/delay1U.v",
       "sha256": "56cacfd03d0e94c392adeaa76ecb398b687be36be284bd0a4a2971bdc862cfdc",
       "language": "verilog",
       "ports": [
         {
           "name": "inR",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "outR",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -212,30 +212,30 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "eventSink",
       "kind": "primitive",
-      "file": "eventSink.v",
-      "sha256": "c6e1dd4857d76a30f07504544cc9698347078422ec78bf49ade1099187e6395f",
+      "file": "base/eventSink.v",
+      "sha256": "beb25a10b8c257147386cfdcd827bc442a829c7290f7c5ccf168eaf5e029b04d",
       "language": "verilog",
       "ports": [
         {
           "name": "i_drive",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "o_free",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -254,30 +254,30 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "eventSource",
       "kind": "primitive",
-      "file": "eventSource.v",
+      "file": "base/eventSource.v",
       "sha256": "f9957d78f0ffc2719e9ac435da3fca904d5a7c052a97476bc6bed8fb16adf6b4",
       "language": "verilog",
       "ports": [
         {
           "name": "switch",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "fire",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -299,20 +299,20 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "freeSetDelay",
       "kind": "primitive",
-      "file": "freeSetDelay.v",
+      "file": "base/freeSetDelay.v",
       "sha256": "81c98e96aabfc5dbd1415dd23286137056fddd73e12a846405b2aa717571bd2e",
       "language": "verilog",
       "ports": [
         {
           "name": "DELAY_UNIT_NUM",
           "direction": "unknown",
-          "width": null
+          "width": "1"
         }
       ],
       "params": [
@@ -352,50 +352,50 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "pmtRelay",
       "kind": "primitive",
-      "file": "pmtRelay.v",
+      "file": "base/pmtRelay.v",
       "sha256": "ce9772bf99e9a1e7c23199592b2df6972dcf20ef521dcbffa25890301aa2965b",
       "language": "verilog",
       "ports": [
         {
           "name": "inR",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "inA",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "outR",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "outA",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "pmt",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "fire",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -420,35 +420,35 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "receiver",
       "kind": "primitive",
-      "file": "receiver.v",
+      "file": "base/receiver.v",
       "sha256": "1ffb4e2cd2758b38f559eb6eff46cabffa664dd44c15a63af4089285f1f56739",
       "language": "verilog",
       "ports": [
         {
           "name": "inR",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "inA",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "i_free",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -467,45 +467,45 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "relay",
       "kind": "primitive",
-      "file": "relay.v",
+      "file": "base/relay.v",
       "sha256": "b0143d767db67d5db6a1e67bee9ce5d8068b383fb8cc68557aaa0ef1e072f5eb",
       "language": "verilog",
       "ports": [
         {
           "name": "inR",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "inA",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "outR",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "outA",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "fire",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -530,40 +530,40 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     },
     {
       "name": "sender",
       "kind": "primitive",
-      "file": "sender.v",
+      "file": "base/sender.v",
       "sha256": "3eea9efdd4553609843604d7ef4c74b31fabf5dc40e9d6a75c6b755fa59227b5",
       "language": "verilog",
       "ports": [
         {
           "name": "i_drive",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "o_free",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "outR",
-          "direction": "unknown",
-          "width": null
+          "direction": "output",
+          "width": "1"
         },
         {
           "name": "i_free",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         },
         {
           "name": "rstn",
-          "direction": "unknown",
-          "width": null
+          "direction": "input",
+          "width": "1"
         }
       ],
       "params": [],
@@ -584,7 +584,7 @@
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T08:37:29+00:00",
+      "updated_at": "2026-01-26T15:49:00+00:00",
       "deleted": false
     }
   ]

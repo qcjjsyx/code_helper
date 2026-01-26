@@ -70,6 +70,7 @@ def build_entry(
         else:
             tech_cells.append(instance)
 
+    # print(module.ports)
     entry = {
         "name": module.name,
         "kind": kind,
@@ -127,7 +128,11 @@ def scan_modules(repo_root: Path, paths: list[Path]) -> dict[Path, ParsedModule]
     return modules
 
 
-def generate_registry(repo_root: Path, inputs: list[Path]) -> dict[str, Any]:
+def generate_registry(
+    repo_root: Path,
+    inputs: list[Path],
+    force: bool = False,
+) -> dict[str, Any]:
     config = load_config(repo_root)
     registry_path = repo_root / ".docgen" / "primitive_registry.json"
     registry = load_registry(registry_path)
@@ -143,7 +148,12 @@ def generate_registry(repo_root: Path, inputs: list[Path]) -> dict[str, Any]:
         raw_bytes = file_path.read_bytes()
         digest = sha256_bytes(raw_bytes)
         existing = entry_map.get(rel_path)
-        if existing and existing.get("sha256") == digest and not existing.get("deleted", False):
+        if (
+            existing
+            and existing.get("sha256") == digest
+            and not existing.get("deleted", False)
+            and not force
+        ):
             entries.append(existing)
             continue
         entries.append(
@@ -168,7 +178,11 @@ def generate_registry(repo_root: Path, inputs: list[Path]) -> dict[str, Any]:
     return registry
 
 
-def update_registry(repo_root: Path, changed_files: list[Path]) -> dict[str, Any]:
+def update_registry(
+    repo_root: Path,
+    changed_files: list[Path],
+    force: bool = False,
+) -> dict[str, Any]:
     config = load_config(repo_root)
     registry_path = repo_root / ".docgen" / "primitive_registry.json"
     registry = load_registry(registry_path)
@@ -191,7 +205,12 @@ def update_registry(repo_root: Path, changed_files: list[Path]) -> dict[str, Any
         raw_bytes = file_path.read_bytes()
         digest = sha256_bytes(raw_bytes)
         existing = entry_map.get(rel_path)
-        if existing and existing.get("sha256") == digest and not existing.get("deleted", False):
+        if (
+            existing
+            and existing.get("sha256") == digest
+            and not existing.get("deleted", False)
+            and not force
+        ):
             continue
         entry_map[rel_path] = build_entry(
             repo_root, file_path, parsed, known_modules, config, digest

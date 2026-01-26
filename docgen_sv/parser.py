@@ -104,7 +104,7 @@ def parse_port_declarations(text: str) -> dict[str, dict[str, str | None]]:
         direction = match.group(1)
         block = match.group(2)
         shared_width_match = WIDTH_RE.search(block)
-        shared_width = shared_width_match.group(1) if shared_width_match else None
+        shared_width = shared_width_match.group(1) if shared_width_match else "1"
         parts: list[str] = []
         current = ""
         depth = 0
@@ -126,11 +126,12 @@ def parse_port_declarations(text: str) -> dict[str, dict[str, str | None]]:
                 continue
             width_match = WIDTH_RE.search(segment)
             width = width_match.group(1) if width_match else shared_width
+            # print(width)
             tokens = re.findall(r"[A-Za-z_][\w$]*", segment)
             if not tokens:
                 continue
             name = tokens[-1]
-            decls[name] = {"direction": direction, "width": width}
+            decls[name] = {"direction": direction, "width": width if width else "1"}
     return decls
 
 
@@ -169,16 +170,21 @@ def parse_verilog(path: Path) -> ParsedModule:
     errors.extend(header_errors)
     ports = parse_ports(port_block or "")
     decls = parse_port_declarations(cleaned)
+    # print(decls)
     if ports:
+        # print("Using port list declarations")
         for port in ports:
             decl = decls.get(port["name"])
-            if not decl:
-                continue
-            if port["direction"] == "unknown":
+            if decl and port["direction"] == "unknown":
                 port["direction"] = decl["direction"]
             if port["width"] is None:
-                port["width"] = decl["width"]
+                if decl:
+                    # print(f"Using declared width for port {port['name']}")
+                    port["width"] = decl["width"]
+                else:
+                    port["width"] = "1"
     else:
+        # print("Using port declarations")
         for name, decl in decls.items():
             ports.append({"name": name, "direction": decl["direction"], "width": decl["width"]})
     params = parse_params(cleaned)
