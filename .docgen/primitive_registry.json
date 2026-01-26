@@ -1,0 +1,591 @@
+{
+  "meta": {
+    "generated_at": "2026-01-26T08:37:29+00:00",
+    "repo_root": "/workspace/code_helper",
+    "entries_count": 11
+  },
+  "entries": [
+    {
+      "name": "cFifo1",
+      "kind": "component",
+      "file": "cFifo1.v",
+      "sha256": "b92db272885ddfc1600b1fa744169091ebdbb8aa4e6113b313e216a3596dfa62",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "i_drive",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "i_freeNext",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "o_free",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "o_driveNext",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "o_fire_1",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [
+        "receiver",
+        "relay",
+        "sender"
+      ],
+      "tech_cells": [],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "base_pipeline",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "cPmtFifo1",
+      "kind": "component",
+      "file": "cPmtFifo1.v",
+      "sha256": "c180614a81b8dbd3387e2ffcd24e19d3aae98d30d8aeb5a3ed4d02a71189f7c3",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "i_drive",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "i_freeNext",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "o_free",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "o_driveNext",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "o_fire_1",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "pmt",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [
+        "pmtRelay",
+        "receiver",
+        "relay",
+        "sender"
+      ],
+      "tech_cells": [],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "base_pipeline",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "contTap",
+      "kind": "primitive",
+      "file": "contTap.v",
+      "sha256": "265013092b8c6e471b4420ac0a979c9152978d8cfabe30a835e562b5b9e249cb",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "trig",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "req",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [],
+      "tech_cells": [
+        "DRNQV2_140P9T35R",
+        "INV2_140P9T35R"
+      ],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "toggle",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "delay1U",
+      "kind": "primitive",
+      "file": "delay1U.v",
+      "sha256": "56cacfd03d0e94c392adeaa76ecb398b687be36be284bd0a4a2971bdc862cfdc",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "inR",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "outR",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [],
+      "tech_cells": [
+        "CLKAND2V3_140P9T35R",
+        "DEL1V4_140P9T35R"
+      ],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "delay",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "eventSink",
+      "kind": "primitive",
+      "file": "eventSink.v",
+      "sha256": "c6e1dd4857d76a30f07504544cc9698347078422ec78bf49ade1099187e6395f",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "i_drive",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "o_free",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [
+        "delay1U"
+      ],
+      "tech_cells": [],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "event",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "eventSource",
+      "kind": "primitive",
+      "file": "eventSource.v",
+      "sha256": "f9957d78f0ffc2719e9ac435da3fca904d5a7c052a97476bc6bed8fb16adf6b4",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "switch",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "fire",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [
+        "delay1U"
+      ],
+      "tech_cells": [
+        "CLKAND2V1_140P9T35R",
+        "INV2_140P9T35R"
+      ],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "event",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "freeSetDelay",
+      "kind": "primitive",
+      "file": "freeSetDelay.v",
+      "sha256": "81c98e96aabfc5dbd1415dd23286137056fddd73e12a846405b2aa717571bd2e",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "DELAY_UNIT_NUM",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [
+        {
+          "name": "DELAY_UNIT_NUM",
+          "default": "1 \n) (\n    input  wire i_pulse"
+        },
+        {
+          "name": "output",
+          "default": null
+        },
+        {
+          "name": "input",
+          "default": null
+        }
+      ],
+      "deps_primitives": [
+        "delay1U"
+      ],
+      "tech_cells": [
+        "BUFV2_140P9T35R",
+        "CLKAND2V3_140P9T35R",
+        "DEL1V4_140P9T35R",
+        "DRNQV2_140P9T35R",
+        "INV2_140P9T35R",
+        "XOR2V2_140P9T35R",
+        "generate"
+      ],
+      "reset": {
+        "present": false,
+        "signal": null,
+        "active_low": null
+      },
+      "category": "delay",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "pmtRelay",
+      "kind": "primitive",
+      "file": "pmtRelay.v",
+      "sha256": "ce9772bf99e9a1e7c23199592b2df6972dcf20ef521dcbffa25890301aa2965b",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "inR",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "inA",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "outR",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "outA",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "pmt",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "fire",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [],
+      "tech_cells": [
+        "BUFV2_140P9T35R",
+        "CLKAND2V3_140P9T35R",
+        "DEL1V4_140P9T35R",
+        "DRNQV2_140P9T35R",
+        "INV2_140P9T35R",
+        "XNOR2V2_140P9T35R",
+        "XOR2V2_140P9T35R"
+      ],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "handshake_relay",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "receiver",
+      "kind": "primitive",
+      "file": "receiver.v",
+      "sha256": "1ffb4e2cd2758b38f559eb6eff46cabffa664dd44c15a63af4089285f1f56739",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "inR",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "inA",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "i_free",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [],
+      "tech_cells": [
+        "DRNQV2_140P9T35R"
+      ],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "unknown",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "relay",
+      "kind": "primitive",
+      "file": "relay.v",
+      "sha256": "b0143d767db67d5db6a1e67bee9ce5d8068b383fb8cc68557aaa0ef1e072f5eb",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "inR",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "inA",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "outR",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "outA",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "fire",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [],
+      "tech_cells": [
+        "BUFV2_140P9T35R",
+        "CLKAND2V3_140P9T35R",
+        "DEL1V4_140P9T35R",
+        "DRNQV2_140P9T35R",
+        "INV2_140P9T35R",
+        "XNOR2V2_140P9T35R",
+        "XOR2V2_140P9T35R"
+      ],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "unknown",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    },
+    {
+      "name": "sender",
+      "kind": "primitive",
+      "file": "sender.v",
+      "sha256": "3eea9efdd4553609843604d7ef4c74b31fabf5dc40e9d6a75c6b755fa59227b5",
+      "language": "verilog",
+      "ports": [
+        {
+          "name": "i_drive",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "o_free",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "outR",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "i_free",
+          "direction": "unknown",
+          "width": null
+        },
+        {
+          "name": "rstn",
+          "direction": "unknown",
+          "width": null
+        }
+      ],
+      "params": [],
+      "deps_primitives": [],
+      "tech_cells": [
+        "DEL1V4_140P9T35R",
+        "DRNQV2_140P9T35R",
+        "INV2_140P9T35R"
+      ],
+      "reset": {
+        "present": true,
+        "signal": "rstn",
+        "active_low": true
+      },
+      "category": "unknown",
+      "protocol": "unknown",
+      "port_roles": {},
+      "semantics_1line": "",
+      "constraints": [],
+      "gotchas": [],
+      "updated_at": "2026-01-26T08:37:29+00:00",
+      "deleted": false
+    }
+  ]
+}
