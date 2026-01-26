@@ -7,12 +7,12 @@ from pathlib import Path
 from typing import Iterable
 
 
-PORT_DIR_RE = re.compile(r"\b(input|output|inout)\b")
-WIDTH_RE = re.compile(r"(\[[^\]]+\])")
-MODULE_RE = re.compile(r"\bmodule\s+([A-Za-z_][\w$]*)\b")
-PARAM_BLOCK_RE = re.compile(r"\b(parameter|localparam)\b([^;]*);", re.DOTALL)
-PARAM_ITEM_RE = re.compile(r"([A-Za-z_][\w$]*)\s*(?:=\s*([^,]+))?")
-INSTANCE_RE = re.compile(r"\b([A-Za-z_][\w$]*)\s+([A-Za-z_][\w$]*)\s*\(")
+PORT_DIR_RE = re.compile(r"\b(input|output|inout)\b") ## 匹配端口方向
+WIDTH_RE = re.compile(r"(\[[^\]]+\])") ## 匹配位宽
+MODULE_RE = re.compile(r"\bmodule\s+([A-Za-z_][\w$]*)\b") ## 匹配模块名
+PARAM_BLOCK_RE = re.compile(r"\b(parameter|localparam)\b([^;]*);", re.DOTALL) ## 匹配参数块
+PARAM_ITEM_RE = re.compile(r"([A-Za-z_][\w$]*)\s*(?:=\s*([^,]+))?") ## 匹配单个参数项
+INSTANCE_RE = re.compile(r"\b([A-Za-z_][\w$]*)\s+([A-Za-z_][\w$]*)\s*\(") ## 匹配模块实例化：模块类型名、实例名，以及左括号
 
 
 @dataclass
@@ -33,6 +33,7 @@ def read_file_text(path: Path) -> str:
     return data.decode("utf-8", errors="ignore")
 
 
+## Remove comments and string literals from the Verilog source code
 def strip_comments_and_strings(text: str) -> str:
     text = re.sub(r"//.*?$", "", text, flags=re.MULTILINE)
     text = re.sub(r"/\*.*?\*/", "", text, flags=re.DOTALL)

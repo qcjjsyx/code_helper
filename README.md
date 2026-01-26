@@ -5,8 +5,8 @@ This repository includes a lightweight Verilog primitive/component registry gene
 ## Usage
 
 ```bash
-python -m docgen_sv init --repo . --inputs .
-python -m docgen_sv update --repo . <changed_file.v>
+python -m docgen_sv init --repo . --inputs base
+python -m docgen_sv update --repo . base/<changed_file.v>
 python -m docgen_sv render --repo .
 ```
 
