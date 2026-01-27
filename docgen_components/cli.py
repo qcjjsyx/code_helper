@@ -18,6 +18,11 @@ def main(argv=None):
         required=True,
         help="Directories or files to scan for component sources.",
     )
+    init_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Rebuild entries even when file hashes are unchanged.",
+    )
 
     update_parser = subparsers.add_parser("update", help="Update component KB.")
     update_parser.add_argument("--repo", required=True, help="Repository root.")
@@ -25,6 +30,11 @@ def main(argv=None):
         "changed_files",
         nargs="+",
         help="Changed files or directories to update.",
+    )
+    update_parser.add_argument(
+        "--force",
+        action="store_true",
+        help="Rebuild entries even when file hashes are unchanged.",
     )
 
     render_parser = subparsers.add_parser("render", help="Render COMPONENTS.md.")
@@ -34,10 +44,10 @@ def main(argv=None):
     repo_root = Path(args.repo).resolve()
 
     if args.command == "init":
-        init_repo(repo_root, args.inputs)
+        init_repo(repo_root, args.inputs, force=args.force)
         return 0
     if args.command == "update":
-        update_repo(repo_root, args.changed_files)
+        update_repo(repo_root, args.changed_files, force=args.force)
         return 0
     if args.command == "render":
         render_repo(repo_root)

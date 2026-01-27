@@ -114,7 +114,7 @@ def render_repo(repo_root: Path):
     md_path.write_text(md_text, encoding="utf-8")
 
 
-def init_repo(repo_root: Path, inputs):
+def init_repo(repo_root: Path, inputs, force: bool = False):
     known_primitives = load_known_primitives(repo_root)
     known_components = build_known_components()
     files = discover_inputs(repo_root, inputs)
@@ -133,7 +133,7 @@ def init_repo(repo_root: Path, inputs):
     render_repo(repo_root)
 
 
-def update_repo(repo_root: Path, changed_files):
+def update_repo(repo_root: Path, changed_files, force: bool = False):
     known_primitives = load_known_primitives(repo_root)
     known_components = build_known_components()
     files = discover_inputs(repo_root, changed_files)
@@ -146,7 +146,7 @@ def update_repo(repo_root: Path, changed_files):
         entry = build_entry(path, repo_root, known_primitives, known_components)
         existing_idx = index_by_file.get(entry["file"])
         if existing_idx is not None:
-            if entries[existing_idx].get("sha256") == entry["sha256"]:
+            if entries[existing_idx].get("sha256") == entry["sha256"] and not force:
                 continue
             entries[existing_idx] = entry
         else:

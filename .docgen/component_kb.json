@@ -1,0 +1,859 @@
+{
+  "meta": {
+    "generated_at": "2026-01-27T14:40:36.606839+00:00",
+    "repo_root": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper",
+    "entries_count": 7
+  },
+  "entries": [
+    {
+      "name": "cArbMergeN_modName",
+      "file": "pipeline/cArbMergeN_modName.v",
+      "sha256": "f29e99fc7a16aa59d2c4230fb4989242c4d36bf3c0c0102a0692ab2b3ac96b43",
+      "params": [
+        {
+          "name": "NUM_PORTS",
+          "default_text": "3"
+        },
+        {
+          "name": "DATA_WIDTH",
+          "default_text": "32"
+        },
+        {
+          "name": "DELAY1",
+          "default_text": "1"
+        },
+        {
+          "name": "DELAY2",
+          "default_text": "1"
+        }
+      ],
+      "ports": [
+        {
+          "name": "rstn",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_drive0",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_data0",
+          "direction": "input",
+          "width_text_or_null": "DATA_WIDTH"
+        },
+        {
+          "name": "o_free0",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_drive1",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_data1",
+          "direction": "input",
+          "width_text_or_null": "DATA_WIDTH"
+        },
+        {
+          "name": "o_free1",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_drive2",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_data2",
+          "direction": "input",
+          "width_text_or_null": "DATA_WIDTH"
+        },
+        {
+          "name": "o_free2",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_driveNext",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_data",
+          "direction": "output",
+          "width_text_or_null": "DATA_WIDTH"
+        },
+        {
+          "name": "i_freeNext",
+          "direction": "input",
+          "width_text_or_null": "1"
+        }
+      ],
+      "deps": {
+        "components": [
+          "cPmtFifo1"
+        ],
+        "primitives": [
+          "contTap",
+          "freeSetDelay"
+        ],
+        "primitives_raw": [
+          "contTap",
+          "freeSetDelay"
+        ],
+        "tech_cells": [],
+        "unresolved": [
+          "i"
+        ],
+        "aliases": []
+      },
+      "component_type": "arb_merge",
+      "contract": {
+        "handshake_style": "unknown",
+        "inputs": [
+          {
+            "drive_port": "i_drive0",
+            "data_port": "i_data0",
+            "free_port": "o_free0",
+            "index": 0
+          },
+          {
+            "drive_port": "i_drive1",
+            "data_port": "i_data1",
+            "free_port": "o_free1",
+            "index": 1
+          },
+          {
+            "drive_port": "i_drive2",
+            "data_port": "i_data2",
+            "free_port": "o_free2",
+            "index": 2
+          }
+        ],
+        "outputs": {
+          "driveNext_port": "o_driveNext",
+          "data_port": "o_data",
+          "free_port": null,
+          "freeNext_port": "i_freeNext",
+          "extra_ports": [
+            "o_free0",
+            "o_free1",
+            "o_free2"
+          ]
+        },
+        "arbitration_policy": "lowest-index-first",
+        "selection_encoding": null,
+        "join_condition": null
+      },
+      "customization_guide": "1.Instantiation: cArbMerge8_exe #(88, 8) u_cArbMerge8_exe(...);\ncArbMerge8_exe #(.DATA_WIDTH(88),.NUM_PORTS(8)) u_cArbMerge8_exe(...);\n2.Modification: Modify the modelname (cArbMergeX_exe, DATA_WIDTH, NUM_PORTS)\nModify the interface (i_drive0, i_data0, o_free0)\nModify the signal (w_pf1id, w_pf1of, w_idata, o_data)",
+      "semantics_1line": "Arbitrates among inputs and merges data into a single output.",
+      "gotchas": [
+        "Arbitration is lowest-index-first unless modified.",
+        "DELAY parameters affect handshake timing and throughput."
+      ],
+      "updated_at": "2026-01-27T14:40:36.604029+00:00",
+      "parse_errors": []
+    },
+    {
+      "name": "cMutexMergeN_modName",
+      "file": "pipeline/cMutexMergeN_modName.v",
+      "sha256": "7b38504114de7ee8156caa4883cac5b0aaea6636b50b131491fdcd6598764181",
+      "params": [
+        {
+          "name": "DATA_WIDTH",
+          "default_text": "32"
+        }
+      ],
+      "ports": [
+        {
+          "name": "i_drive0",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_drive1",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_data0",
+          "direction": "input",
+          "width_text_or_null": "DATA_WIDTH"
+        },
+        {
+          "name": "i_data1",
+          "direction": "input",
+          "width_text_or_null": "DATA_WIDTH"
+        },
+        {
+          "name": "i_freeNext",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_free0",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_free1",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_driveNext",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_data",
+          "direction": "output",
+          "width_text_or_null": "DATA_WIDTH"
+        },
+        {
+          "name": "rstn",
+          "direction": "input",
+          "width_text_or_null": "1"
+        }
+      ],
+      "deps": {
+        "components": [],
+        "primitives": [
+          "freeSetDelay",
+          "contTap"
+        ],
+        "primitives_raw": [
+          "freeSetDelay",
+          "contTap"
+        ],
+        "tech_cells": [],
+        "unresolved": [],
+        "aliases": []
+      },
+      "component_type": "mutex_merge",
+      "contract": {
+        "handshake_style": "unknown",
+        "inputs": [
+          {
+            "drive_port": "i_drive0",
+            "data_port": "i_data0",
+            "free_port": "o_free0",
+            "index": 0
+          },
+          {
+            "drive_port": "i_drive1",
+            "data_port": "i_data1",
+            "free_port": "o_free1",
+            "index": 1
+          }
+        ],
+        "outputs": {
+          "driveNext_port": "o_driveNext",
+          "data_port": "o_data",
+          "free_port": null,
+          "freeNext_port": "i_freeNext",
+          "extra_ports": [
+            "o_free0",
+            "o_free1"
+          ]
+        },
+        "arbitration_policy": null,
+        "selection_encoding": null,
+        "join_condition": null
+      },
+      "customization_guide": "",
+      "semantics_1line": "Merges inputs with mutual exclusion behavior.",
+      "gotchas": [],
+      "updated_at": "2026-01-27T14:40:36.604752+00:00",
+      "parse_errors": []
+    },
+    {
+      "name": "cNatSplitN_modName",
+      "file": "pipeline/cNatSplitN_modName.v",
+      "sha256": "d9b826aebb939fa60884ef03314436b64fd7cbd1e98a0aad6c505dd309f25b36",
+      "params": [
+        {
+          "name": "NUM_PORTS",
+          "default_text": "3"
+        },
+        {
+          "name": "DATA_WIDTHI",
+          "default_text": "32"
+        },
+        {
+          "name": "DATA_WIDTHOUT0",
+          "default_text": "12"
+        },
+        {
+          "name": "DATA_WIDTHOUT1",
+          "default_text": "32"
+        },
+        {
+          "name": "DATA_WIDTHOUT2",
+          "default_text": "24"
+        }
+      ],
+      "ports": [
+        {
+          "name": "i_drive",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_freeNext_n",
+          "direction": "input",
+          "width_text_or_null": "NUM_PORTS"
+        },
+        {
+          "name": "i_data",
+          "direction": "input",
+          "width_text_or_null": "DATA_WIDTHI"
+        },
+        {
+          "name": "o_free",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_driveNext_n",
+          "direction": "output",
+          "width_text_or_null": "NUM_PORTS"
+        },
+        {
+          "name": "o_data0",
+          "direction": "output",
+          "width_text_or_null": "DATA_WIDTHOUT0"
+        },
+        {
+          "name": "o_data1",
+          "direction": "output",
+          "width_text_or_null": "DATA_WIDTHOUT1"
+        },
+        {
+          "name": "o_data2",
+          "direction": "output",
+          "width_text_or_null": "DATA_WIDTHOUT2"
+        },
+        {
+          "name": "rstn",
+          "direction": "input",
+          "width_text_or_null": "1"
+        }
+      ],
+      "deps": {
+        "components": [],
+        "primitives": [
+          "delay1U",
+          "freeSetDelay",
+          "contTap"
+        ],
+        "primitives_raw": [
+          "delay2U",
+          "freeSetDelay",
+          "contTap"
+        ],
+        "tech_cells": [],
+        "unresolved": [],
+        "aliases": [
+          {
+            "from": "delay2U",
+            "to": "delay1U"
+          }
+        ]
+      },
+      "component_type": "nat_split",
+      "contract": {
+        "handshake_style": "toggle_2phase",
+        "inputs": [
+          {
+            "drive_port": "i_drive",
+            "data_port": "i_data",
+            "free_port": "o_free",
+            "index": 0
+          }
+        ],
+        "outputs": {
+          "driveNext_port": "o_driveNext_n",
+          "data_port": null,
+          "free_port": "o_free",
+          "freeNext_port": "i_freeNext_n",
+          "extra_ports": [
+            "o_data0",
+            "o_data1",
+            "o_data2"
+          ]
+        },
+        "arbitration_policy": null,
+        "selection_encoding": null,
+        "join_condition": "all-ports-ready"
+      },
+      "customization_guide": "",
+      "semantics_1line": "Splits one input into multiple outputs with natural mapping.",
+      "gotchas": [
+        "Signals with _n suffix may be active-low; confirm polarity."
+      ],
+      "updated_at": "2026-01-27T14:40:36.605204+00:00",
+      "parse_errors": []
+    },
+    {
+      "name": "cSelSplitN_modName",
+      "file": "pipeline/cSelSplitN_modName.v",
+      "sha256": "1d0be8757b35ec3ab3a7354f460b7577ec4c3ccd01761154cc281864df266168",
+      "params": [
+        {
+          "name": "NUM_PORTS",
+          "default_text": "2"
+        },
+        {
+          "name": "DATA_WIDTH",
+          "default_text": "32"
+        },
+        {
+          "name": "DELAY_IDRIVE",
+          "default_text": "7"
+        },
+        {
+          "name": "DELAY_OFREE",
+          "default_text": "1"
+        }
+      ],
+      "ports": [
+        {
+          "name": "i_data",
+          "direction": "input",
+          "width_text_or_null": "[DATA_WIDTH + NUM_PORTS - 1:0]"
+        },
+        {
+          "name": "i_drive",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_free0",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_free1",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_free",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_drive0",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_drive1",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_data0",
+          "direction": "output",
+          "width_text_or_null": "DATA_WIDTH"
+        },
+        {
+          "name": "o_data1",
+          "direction": "output",
+          "width_text_or_null": "DATA_WIDTH"
+        },
+        {
+          "name": "rstn",
+          "direction": "input",
+          "width_text_or_null": "1"
+        }
+      ],
+      "deps": {
+        "components": [],
+        "primitives": [
+          "freeSetDelay"
+        ],
+        "primitives_raw": [
+          "freeSetDelay"
+        ],
+        "tech_cells": [],
+        "unresolved": [],
+        "aliases": []
+      },
+      "component_type": "sel_split",
+      "contract": {
+        "handshake_style": "pulse_drive_free",
+        "inputs": [
+          {
+            "drive_port": "i_drive",
+            "data_port": "i_data",
+            "free_port": "o_free",
+            "index": 0
+          }
+        ],
+        "outputs": {
+          "driveNext_port": null,
+          "data_port": null,
+          "free_port": "o_free",
+          "freeNext_port": null,
+          "extra_ports": [
+            "o_drive0",
+            "o_drive1",
+            "o_data0",
+            "o_data1"
+          ]
+        },
+        "arbitration_policy": null,
+        "selection_encoding": "one-hot in high bits",
+        "join_condition": null
+      },
+      "customization_guide": "",
+      "semantics_1line": "Splits one input into multiple outputs based on selection.",
+      "gotchas": [
+        "Selection uses one-hot encoding in the high bits of i_data.",
+        "DELAY parameters affect handshake timing and throughput."
+      ],
+      "updated_at": "2026-01-27T14:40:36.606041+00:00",
+      "parse_errors": []
+    },
+    {
+      "name": "cWaitMergeN_modName",
+      "file": "pipeline/cWaitMergeN_modName.v",
+      "sha256": "3ac5853bf2efa5dc8471d0b22665d77f7ba8f8d9ce982c7a8d4d2a0e99c95d12",
+      "params": [
+        {
+          "name": "NUM_PORTS",
+          "default_text": "3"
+        },
+        {
+          "name": "DATA_WIDTH_I0",
+          "default_text": "1"
+        },
+        {
+          "name": "DATA_WIDTH_I1",
+          "default_text": "3"
+        },
+        {
+          "name": "DATA_WIDTH_I2",
+          "default_text": "3"
+        },
+        {
+          "name": "DATA_WIDTH_O",
+          "default_text": "10"
+        }
+      ],
+      "ports": [
+        {
+          "name": "i_drive0",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_drive1",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_drive2",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_data0",
+          "direction": "input",
+          "width_text_or_null": "DATA_WIDTH_I0"
+        },
+        {
+          "name": "i_data1",
+          "direction": "input",
+          "width_text_or_null": "DATA_WIDTH_I1"
+        },
+        {
+          "name": "i_data2",
+          "direction": "input",
+          "width_text_or_null": "DATA_WIDTH_I2"
+        },
+        {
+          "name": "i_freeNext",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_free0",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_free1",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_free2",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_driveNext",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_data",
+          "direction": "output",
+          "width_text_or_null": "DATA_WIDTH_O"
+        },
+        {
+          "name": "rstn",
+          "direction": "input",
+          "width_text_or_null": "1"
+        }
+      ],
+      "deps": {
+        "components": [],
+        "primitives": [
+          "contTap",
+          "delay1U"
+        ],
+        "primitives_raw": [
+          "contTap",
+          "delay2U"
+        ],
+        "tech_cells": [],
+        "unresolved": [],
+        "aliases": [
+          {
+            "from": "delay2U",
+            "to": "delay1U"
+          }
+        ]
+      },
+      "component_type": "wait_merge",
+      "contract": {
+        "handshake_style": "unknown",
+        "inputs": [
+          {
+            "drive_port": "i_drive0",
+            "data_port": "i_data0",
+            "free_port": "o_free0",
+            "index": 0
+          },
+          {
+            "drive_port": "i_drive1",
+            "data_port": "i_data1",
+            "free_port": "o_free1",
+            "index": 1
+          },
+          {
+            "drive_port": "i_drive2",
+            "data_port": "i_data2",
+            "free_port": "o_free2",
+            "index": 2
+          }
+        ],
+        "outputs": {
+          "driveNext_port": "o_driveNext",
+          "data_port": "o_data",
+          "free_port": null,
+          "freeNext_port": "i_freeNext",
+          "extra_ports": [
+            "o_free0",
+            "o_free1",
+            "o_free2"
+          ]
+        },
+        "arbitration_policy": null,
+        "selection_encoding": null,
+        "join_condition": "all-ports-ready"
+      },
+      "customization_guide": "",
+      "semantics_1line": "Waits for all inputs ready before merging into one output.",
+      "gotchas": [],
+      "updated_at": "2026-01-27T14:40:36.606343+00:00",
+      "parse_errors": []
+    },
+    {
+      "name": "cFifo1_modName",
+      "file": "pipeline/cFifo1_modName.v",
+      "sha256": "fdfa1a23eb1eb884e9e2fdbfb579fa899aab795ee26d902c719bd94d6c6204cc",
+      "params": [],
+      "ports": [
+        {
+          "name": "i_drive",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_freeNext",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_free",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_driveNext",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_fire_1",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "rstn",
+          "direction": "input",
+          "width_text_or_null": "1"
+        }
+      ],
+      "deps": {
+        "components": [],
+        "primitives": [
+          "sender",
+          "relay",
+          "receiver",
+          "freeSetDelay"
+        ],
+        "primitives_raw": [
+          "sender",
+          "relay",
+          "receiver",
+          "freeSetDelay"
+        ],
+        "tech_cells": [],
+        "unresolved": [],
+        "aliases": []
+      },
+      "component_type": "fifo",
+      "contract": {
+        "handshake_style": "pulse_drive_free",
+        "inputs": [
+          {
+            "drive_port": "i_drive",
+            "data_port": null,
+            "free_port": "o_free",
+            "index": 0
+          }
+        ],
+        "outputs": {
+          "driveNext_port": "o_driveNext",
+          "data_port": null,
+          "free_port": "o_free",
+          "freeNext_port": "i_freeNext",
+          "extra_ports": [
+            "o_fire_1"
+          ]
+        },
+        "arbitration_policy": null,
+        "selection_encoding": null,
+        "join_condition": null
+      },
+      "customization_guide": "",
+      "semantics_1line": "Provides single-stage FIFO buffering for a channel.",
+      "gotchas": [],
+      "updated_at": "2026-01-27T14:40:36.606613+00:00",
+      "parse_errors": []
+    },
+    {
+      "name": "cPmtFifo1_modName",
+      "file": "pipeline/cPmtFifo1_modName.v",
+      "sha256": "756a358c51aaec22c3c3b3090920672d008c17b71556702ef8fea1db49576b79",
+      "params": [],
+      "ports": [
+        {
+          "name": "i_drive",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "i_freeNext",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_free",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_driveNext",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "o_fire_1",
+          "direction": "output",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "rstn",
+          "direction": "input",
+          "width_text_or_null": "1"
+        },
+        {
+          "name": "pmt",
+          "direction": "input",
+          "width_text_or_null": "1"
+        }
+      ],
+      "deps": {
+        "components": [],
+        "primitives": [
+          "sender",
+          "pmtRelay",
+          "relay",
+          "receiver",
+          "freeSetDelay"
+        ],
+        "primitives_raw": [
+          "sender",
+          "pmtRelay",
+          "relay",
+          "receiver",
+          "freeSetDelay"
+        ],
+        "tech_cells": [],
+        "unresolved": [],
+        "aliases": []
+      },
+      "component_type": "pmt_fifo",
+      "contract": {
+        "handshake_style": "pulse_drive_free",
+        "inputs": [
+          {
+            "drive_port": "i_drive",
+            "data_port": null,
+            "free_port": "o_free",
+            "index": 0
+          }
+        ],
+        "outputs": {
+          "driveNext_port": "o_driveNext",
+          "data_port": null,
+          "free_port": "o_free",
+          "freeNext_port": "i_freeNext",
+          "extra_ports": [
+            "o_fire_1"
+          ]
+        },
+        "arbitration_policy": null,
+        "selection_encoding": null,
+        "join_condition": null
+      },
+      "customization_guide": "",
+      "semantics_1line": "Provides single-stage FIFO buffering with permit control.",
+      "gotchas": [],
+      "updated_at": "2026-01-27T14:40:36.606837+00:00",
+      "parse_errors": []
+    }
+  ]
+}

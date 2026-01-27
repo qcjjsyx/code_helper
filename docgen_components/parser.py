@@ -38,7 +38,7 @@ def parse_params(text: str):
 
 def _parse_port_segment(direction: str, segment: str):
     width_match = re.search(r"\[[^\]]+\]", segment)
-    width = width_match.group(0).strip() if width_match else None
+    width = _normalize_width(width_match.group(0).strip() if width_match else None)
     cleaned = segment
     if width_match:
         cleaned = cleaned.replace(width_match.group(0), " ")
@@ -51,6 +51,16 @@ def _parse_port_segment(direction: str, segment: str):
         {"name": name, "direction": direction, "width_text_or_null": width}
         for name in names
     ]
+
+
+def _normalize_width(width_text):
+    if not width_text:
+        return "1"
+    inner = width_text[1:-1].strip()
+    match = re.match(r"^([A-Za-z_]\w*)\s*-\s*1\s*:\s*0$", inner)
+    if match:
+        return match.group(1)
+    return width_text
 
 
 def parse_ports_from_header(port_text: str):

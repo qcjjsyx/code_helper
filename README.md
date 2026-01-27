@@ -15,7 +15,9 @@ python -m docgen_sv_primitive render --repo .
 
 ```bash
 python -m docgen_components init --repo . --inputs pipeline
+python -m docgen_components init --repo . --inputs pipeline --force
 python -m docgen_components update --repo . pipeline/<changed_file.v>
+python -m docgen_components update --repo . pipeline/<changed_file.v> --force
 python -m docgen_components render --repo .
 ```
 
