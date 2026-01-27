@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from docgen_sv.parser import parse_verilog
+from docgen_sv_primitive.parser import parse_verilog
 
 
 class TestParser(unittest.TestCase):

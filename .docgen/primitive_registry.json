@@ -1,139 +1,15 @@
 {
   "meta": {
-    "generated_at": "2026-01-26T15:49:00+00:00",
-    "repo_root": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper",
-    "entries_count": 11
+    "generated_at": "2026-01-27T03:22:10+00:00",
+    "repo_root": "E:\\code_helper",
+    "entries_count": 9
   },
   "entries": [
     {
-      "name": "cFifo1",
-      "kind": "component",
-      "file": "base/cFifo1.v",
-      "sha256": "ef6459853badb89174c031dd3f8455ce472711c68bff507df156200add1b82db",
-      "language": "verilog",
-      "ports": [
-        {
-          "name": "i_drive",
-          "direction": "input",
-          "width": "1"
-        },
-        {
-          "name": "i_freeNext",
-          "direction": "input",
-          "width": "1"
-        },
-        {
-          "name": "o_free",
-          "direction": "output",
-          "width": "1"
-        },
-        {
-          "name": "o_driveNext",
-          "direction": "output",
-          "width": "1"
-        },
-        {
-          "name": "o_fire_1",
-          "direction": "output",
-          "width": "1"
-        },
-        {
-          "name": "rstn",
-          "direction": "input",
-          "width": "1"
-        }
-      ],
-      "params": [],
-      "deps_primitives": [
-        "receiver",
-        "relay",
-        "sender"
-      ],
-      "tech_cells": [],
-      "reset": {
-        "present": true,
-        "signal": "rstn",
-        "active_low": true
-      },
-      "category": "base_pipeline",
-      "protocol": "unknown",
-      "port_roles": {},
-      "semantics_1line": "",
-      "constraints": [],
-      "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
-      "deleted": false
-    },
-    {
-      "name": "cPmtFifo1",
-      "kind": "component",
-      "file": "base/cPmtFifo1.v",
-      "sha256": "592e366a298e44091652deb1f5ba3a6a9da051c9e8658aec5a4db20999177552",
-      "language": "verilog",
-      "ports": [
-        {
-          "name": "i_drive",
-          "direction": "input",
-          "width": "1"
-        },
-        {
-          "name": "i_freeNext",
-          "direction": "input",
-          "width": "1"
-        },
-        {
-          "name": "o_free",
-          "direction": "output",
-          "width": "1"
-        },
-        {
-          "name": "o_driveNext",
-          "direction": "output",
-          "width": "1"
-        },
-        {
-          "name": "o_fire_1",
-          "direction": "output",
-          "width": "1"
-        },
-        {
-          "name": "rstn",
-          "direction": "input",
-          "width": "1"
-        },
-        {
-          "name": "pmt",
-          "direction": "input",
-          "width": "1"
-        }
-      ],
-      "params": [],
-      "deps_primitives": [
-        "pmtRelay",
-        "receiver",
-        "relay",
-        "sender"
-      ],
-      "tech_cells": [],
-      "reset": {
-        "present": true,
-        "signal": "rstn",
-        "active_low": true
-      },
-      "category": "base_pipeline",
-      "protocol": "unknown",
-      "port_roles": {},
-      "semantics_1line": "",
-      "constraints": [],
-      "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
-      "deleted": false
-    },
-    {
       "name": "contTap",
       "kind": "primitive",
-      "file": "base/contTap.v",
-      "sha256": "265013092b8c6e471b4420ac0a979c9152978d8cfabe30a835e562b5b9e249cb",
+      "file": "base\\contTap.v",
+      "sha256": "3400d21a649f6c0022d6019327d2cce14e1d3340da8c92eec02aa5493f5bb36e",
       "language": "verilog",
       "ports": [
         {
@@ -163,20 +39,18 @@
         "signal": "rstn",
         "active_low": true
       },
-      "category": "toggle",
-      "protocol": "unknown",
       "port_roles": {},
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
+      "updated_at": "2026-01-27T03:22:10+00:00",
       "deleted": false
     },
     {
       "name": "delay1U",
       "kind": "primitive",
-      "file": "base/delay1U.v",
-      "sha256": "56cacfd03d0e94c392adeaa76ecb398b687be36be284bd0a4a2971bdc862cfdc",
+      "file": "base\\delay1U.v",
+      "sha256": "a5f8d7a79a41eafc14d905617e88f72ef4f321b1a75a1a4193a8c1ad481f7f21",
       "language": "verilog",
       "ports": [
         {
@@ -206,20 +80,18 @@
         "signal": "rstn",
         "active_low": true
       },
-      "category": "delay",
-      "protocol": "unknown",
       "port_roles": {},
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
+      "updated_at": "2026-01-27T03:22:10+00:00",
       "deleted": false
     },
     {
       "name": "eventSink",
       "kind": "primitive",
-      "file": "base/eventSink.v",
-      "sha256": "beb25a10b8c257147386cfdcd827bc442a829c7290f7c5ccf168eaf5e029b04d",
+      "file": "base\\eventSink.v",
+      "sha256": "c6e1dd4857d76a30f07504544cc9698347078422ec78bf49ade1099187e6395f",
       "language": "verilog",
       "ports": [
         {
@@ -248,20 +120,18 @@
         "signal": "rstn",
         "active_low": true
       },
-      "category": "event",
-      "protocol": "unknown",
       "port_roles": {},
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
+      "updated_at": "2026-01-27T03:22:10+00:00",
       "deleted": false
     },
     {
       "name": "eventSource",
       "kind": "primitive",
-      "file": "base/eventSource.v",
-      "sha256": "f9957d78f0ffc2719e9ac435da3fca904d5a7c052a97476bc6bed8fb16adf6b4",
+      "file": "base\\eventSource.v",
+      "sha256": "1cbcbb43c66cbd31814abf72c594019bfe4358b14870d05b49d961521739b588",
       "language": "verilog",
       "ports": [
         {
@@ -293,20 +163,18 @@
         "signal": "rstn",
         "active_low": true
       },
-      "category": "event",
-      "protocol": "unknown",
       "port_roles": {},
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
+      "updated_at": "2026-01-27T03:22:10+00:00",
       "deleted": false
     },
     {
       "name": "freeSetDelay",
       "kind": "primitive",
-      "file": "base/freeSetDelay.v",
-      "sha256": "81c98e96aabfc5dbd1415dd23286137056fddd73e12a846405b2aa717571bd2e",
+      "file": "base\\freeSetDelay.v",
+      "sha256": "7f865406f495c3a2c9c9d0c6e56810692e6cb84801be1e07c59d90c293508341",
       "language": "verilog",
       "ports": [
         {
@@ -318,7 +186,7 @@
       "params": [
         {
           "name": "DELAY_UNIT_NUM",
-          "default": "1 \n) (\n    input  wire i_pulse"
+          "default": "1 \r\n) (\r\n    input  wire i_pulse"
         },
         {
           "name": "output",
@@ -346,20 +214,18 @@
         "signal": null,
         "active_low": null
       },
-      "category": "delay",
-      "protocol": "unknown",
       "port_roles": {},
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
+      "updated_at": "2026-01-27T03:22:10+00:00",
       "deleted": false
     },
     {
       "name": "pmtRelay",
       "kind": "primitive",
-      "file": "base/pmtRelay.v",
-      "sha256": "ce9772bf99e9a1e7c23199592b2df6972dcf20ef521dcbffa25890301aa2965b",
+      "file": "base\\pmtRelay.v",
+      "sha256": "efbc4f83a91da96458cc942d54243579485161e006e10bb70ef7738a3eaf4c06",
       "language": "verilog",
       "ports": [
         {
@@ -414,20 +280,18 @@
         "signal": "rstn",
         "active_low": true
       },
-      "category": "handshake_relay",
-      "protocol": "unknown",
       "port_roles": {},
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
+      "updated_at": "2026-01-27T03:22:10+00:00",
       "deleted": false
     },
     {
       "name": "receiver",
       "kind": "primitive",
-      "file": "base/receiver.v",
-      "sha256": "1ffb4e2cd2758b38f559eb6eff46cabffa664dd44c15a63af4089285f1f56739",
+      "file": "base\\receiver.v",
+      "sha256": "80e5818555d9bb762aebc24eeabd701c012fabb8bfa2ab3975828fbd98a8ad42",
       "language": "verilog",
       "ports": [
         {
@@ -461,20 +325,18 @@
         "signal": "rstn",
         "active_low": true
       },
-      "category": "unknown",
-      "protocol": "unknown",
       "port_roles": {},
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
+      "updated_at": "2026-01-27T03:22:10+00:00",
       "deleted": false
     },
     {
       "name": "relay",
       "kind": "primitive",
-      "file": "base/relay.v",
-      "sha256": "b0143d767db67d5db6a1e67bee9ce5d8068b383fb8cc68557aaa0ef1e072f5eb",
+      "file": "base\\relay.v",
+      "sha256": "dee853d424f74ec2f8731d6106e365b14ed0980f57a78e295d6b440fd7947867",
       "language": "verilog",
       "ports": [
         {
@@ -524,20 +386,18 @@
         "signal": "rstn",
         "active_low": true
       },
-      "category": "unknown",
-      "protocol": "unknown",
       "port_roles": {},
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
+      "updated_at": "2026-01-27T03:22:10+00:00",
       "deleted": false
     },
     {
       "name": "sender",
       "kind": "primitive",
-      "file": "base/sender.v",
-      "sha256": "3eea9efdd4553609843604d7ef4c74b31fabf5dc40e9d6a75c6b755fa59227b5",
+      "file": "base\\sender.v",
+      "sha256": "73f849ea3e8b4decc90eb9285d49837ba15dc52d449f1d62c3b0960a27e14de0",
       "language": "verilog",
       "ports": [
         {
@@ -578,13 +438,11 @@
         "signal": "rstn",
         "active_low": true
       },
-      "category": "unknown",
-      "protocol": "unknown",
       "port_roles": {},
       "semantics_1line": "",
       "constraints": [],
       "gotchas": [],
-      "updated_at": "2026-01-26T15:49:00+00:00",
+      "updated_at": "2026-01-27T03:22:10+00:00",
       "deleted": false
     }
   ]

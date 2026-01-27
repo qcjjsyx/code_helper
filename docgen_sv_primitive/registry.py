@@ -5,8 +5,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from docgen_sv.config import load_config
-from docgen_sv.parser import ParsedModule, parse_verilog, scan_verilog_files, sha256_bytes
+from docgen_sv_primitive.config import load_config
+from docgen_sv_primitive.parser import ParsedModule, parse_verilog, scan_verilog_files, sha256_bytes
 
 
 def iso_timestamp() -> str:
@@ -82,8 +82,8 @@ def build_entry(
         "deps_primitives": sorted(set(deps)),
         "tech_cells": sorted(set(tech_cells)),
         "reset": infer_reset(module.ports),
-        "category": category,
-        "protocol": "unknown",
+        # "category": category,
+        # "protocol": "unknown",
         "port_roles": {},
         "semantics_1line": "",
         "constraints": [],

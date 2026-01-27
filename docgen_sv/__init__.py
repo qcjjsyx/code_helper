@@ -1,2 +1,0 @@
-"""docgen_sv package."""
-

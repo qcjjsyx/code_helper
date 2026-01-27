@@ -3,8 +3,8 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
-from docgen_sv.registry import generate_registry, load_registry, update_registry
-from docgen_sv.render import render_registry_markdown
+from docgen_sv_primitive.registry import generate_registry, load_registry, update_registry
+from docgen_sv_primitive.render import render_registry_markdown
 
 
 def parse_args() -> argparse.Namespace:

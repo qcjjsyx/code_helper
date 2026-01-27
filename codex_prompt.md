@@ -1,117 +1,97 @@
-你是一个资深 EDA/RTL 工程工具开发者。请在当前工程中实现一个“结构子注册表生成器（Primitive Registry Builder）”，用于扫描并解析我项目中上传的 11 个 Verilog 文件（基础结构子/基础组件），生成并维护一个结构化注册表文件。请严格按以下要求实现，不要写多余解释，直接输出可运行的代码文件与必要的 README。
 
-### 目标与产物
+你是一个资深 RTL/EDA 工具工程师。请在当前仓库中实现一个“组件知识库生成器（Component Knowledge Base Builder）”，它只负责解析我给定的 7 个 Verilog 组件文件，生成组件级的语义知识库。要求与我之前的“结构子 registry 生成器”完全分离：独立目录、独立包名、独立 CLI、独立输出文件；不得 import 之前的代码（可以选择性读取之前输出的 JSON 作为数据，但不要共享代码实现）。
 
-1. 生成 `.docgen/primitive_registry.json`（或 `.yaml`，优先 json），记录每个结构子/组件的条目。
-2. 支持增量更新：当文件内容未变化时跳过；变化时仅更新相关条目。
-3. 生成 `docs/PRIMITIVES.md`（Markdown）：按 `category` 分组输出每个条目的信息（v1 简版）。
-4. 提供命令行入口：
-   - `python -m docgen_sv init --repo <path> --inputs <file_or_dir...>`
-   - `python -m docgen_sv update --repo <path> <changed_file...>`
-   - `python -m docgen_sv render --repo <path>`（仅从 registry 渲染文档，不重新解析）
-5. 提供 `docs/REGISTRY_SCHEMA.md`：解释 registry 字段含义（简洁即可）。
+## 输入文件（仅这 7 个）
 
-### 输入范围（你必须覆盖）
+- cArbMergeN_modName.v
+- cMutexMergeN_modName.v
+- cNatSplitN_modName.v
+- cSelSplitN_modName.v
+- cWaitMergeN_modName.v
+- cFifo1_modName.v
+- cPmtFifo1_modName.v
 
-这些 Verilog 文件已存在于项目（路径以实际 repo 为准，你需要通过扫描发现；但它们的文件名如下）：
+这些文件位于仓库中（pipeline文件夹下），你需要通过扫描 inputs 找到它们。
 
-- sender.v
-- receiver.v
-- relay.v
-- contTap.v
-- delay1U.v
-- eventSource.v
-- cFifo1.v
-- pmtRelay.v
-- freeSetDelay.v
-- eventSink.v
-- cPmtFifo1.v
+## 目标产物
 
-说明：其中 `cFifo1` / `cPmtFifo1` 属于“基础组件（component）”，其余属于“结构子（primitive）”。但 registry 里统一用字段 `kind` 来区分：`primitive` 或 `component`。
+1) 生成 .docgen/component_kb.json
+2) 生成 docs/COMPONENTS.md（按 component_type 分组输出）
+3) 支持增量更新：文件 hash 未变则跳过；变更则仅更新该条目
+4) 提供 CLI：
+   - python -m docgen_components init --repo . --inputs <dir_or_files...>
+   - python -m docgen_components update --repo . <changed_files...>
+   - python -m docgen_components render --repo . （只渲染 md）
 
-### 注册表字段（必须实现）
+## component_kb.json 的 schema（必须包含）
 
-每个条目至少包含：
+顶层：
 
-- `name`: module 名（从 `module <name>` 解析）
-- `kind`: `"primitive"` 或 `"component"`（见后文分类规则）
-- `file`: 相对 repo 根目录的路径
-- `sha256`: 文件内容 hash
-- `language`: 固定 `"verilog"`
-- `ports`: 端口列表数组；每个端口包含 `{name, direction, width}`
-  - `direction` 解析 `input/output/inout`；若无明确方向就写 `"unknown"`
-  - `width` 若无法解析就写 `null`；能解析就写类似 `"[7:0]"` 或整数位宽
-- `params`: 参数列表数组（名称 + 默认值文本）；解析 `parameter` / `localparam`（能拿多少拿多少，解析失败可空）
-- `deps_primitives`: 该模块实例化了哪些“本项目结构子/组件”的模块名（不含工艺库单元）
-- `tech_cells`: 该模块实例化的“工艺库单元/标准单元”（例如 INV*/XOR*/DRNQV*/DEL* 等），以模块名列表形式记录
-- `reset`: `{present: bool, signal: string|null, active_low: bool|null}`
-  - 若端口存在 `rstn` 或 `resetn` 等低有效 reset 名称，设为 `present=true`；否则 false
-- `category`:（v1 可先按规则自动填默认；允许 `"unknown"`）
-- `protocol`:（v1 允许 `"unknown"`）
-- `port_roles`: dict，把端口名映射到角色（v1 可留空 `{}`）
-- `semantics_1line`:（v1 允许空字符串）
-- `constraints`: string array（v1 可空）
-- `gotchas`: string array（v1 可空）
-- `updated_at`: ISO 时间戳
+- meta: {generated_at, repo_root, entries_count}
 
-registry 顶层还需要 `meta`：
+每个条目（按 module name 作为 key 或 entries array 都可）至少包含：
 
-- `generated_at`
-- `repo_root`
-- `entries_count`
+- name: module 名（module xxx）
+- file: 相对 repo 路径
+- sha256: 文件 hash
+- params: 提取 parameter/localparam（name + default_text）
+- ports: 端口列表（name, direction, width_text_or_null）
+- deps: {components: [...], primitives: [...], tech_cells: [...], unresolved: [...]}
+  - components: 实例化到的组件名（如果在这 7 个里）
+  - primitives: 实例化到的基础结构子名（sender/relay/receiver/contTap/freeSetDelay/pmtRelay/delay1U/eventSource/eventSink 等；可用白名单/正则判断）
+  - tech_cells: INV/XOR/DRNQV/DEL 等工艺单元（按前缀规则归类）
+  - unresolved: 不在上述集合里的实例化模块名（如 delay2U 等）
+- component_type: 从 name 推断（枚举建议：arb_merge, wait_merge, mutex_merge, nat_split, sel_split, fifo, pmt_fifo）
+- contract: 组件行为契约（结构化字段，v1 允许部分字段为空，但 key 必须存在）
+  - handshake_style: "pulse_drive_free" 或 "toggle_2phase" 或 "unknown"
+  - inputs: [{drive_port, data_port, free_port, index}]
+  - outputs: {driveNext_port, data_port, free_port, freeNext_port, extra_ports: [...]}
+  - arbitration_policy: 对 cArbMergeN 推断 "lowest-index-first"；其他为 null
+  - selection_encoding: 对 cSelSplitN 推断 "one-hot in high bits"；其他为 null
+  - join_condition: 对 cWaitMergeN/cNatSplitN 推断 "all-ports-ready"；其他为 null
+- customization_guide: 从文件头注释中提取“Instantiation/Modification”段落（若不存在则空）
+- semantics_1line: 你根据 component_type 自动填一个一句话描述（可用模板）
+- gotchas: string array（用启发式填充：比如 one-hot 必须、*_n 命名歧义、delay 参数影响等；没有就空）
+- updated_at: 时间戳
+- parse_errors: 若解析失败，记录错误信息但不要崩溃
 
-### 分类规则（必须实现）
+## 解析要求（轻量但鲁棒）
 
-- 如果 `name` 以 `c` 开头且文件名包含 `Fifo`（如 cFifo1/cPmtFifo1），默认 `kind="component"`；否则 `kind="primitive"`。
-- 但允许用户在 `docgen_sv/config.json` 中覆盖分类（你需要实现 config 覆盖机制，默认配置可自动生成）。
-- `category` 自动填充的默认规则（v1 简单即可）：
-  - name 包含 `Relay` → `handshake_relay`
-  - name 包含 `Fifo` → `base_pipeline`
-  - name 包含 `delay` 或 `Delay` → `delay`
-  - name 包含 `event` 或 `Event` → `event`
-  - name 包含 `Tap` → `toggle`
-  - 否则 `"unknown"`
+- 先去掉 // 和 /* */ 注释再做正则解析
+- 解析 module header、端口、parameter
+- 解析实例化：`<mod>` `<inst>`(...); 并统计依赖
+- 对端口方向/位宽无法解析时填 unknown/null，不得崩溃
 
-### 解析要求（鲁棒性优先，v1 可轻量）
+## 文档输出（docs/COMPONENTS.md）
 
-不要引入重量级 SV parser。v1 使用“轻量解析”即可，但要满足：
+按 component_type 分组，每个组件输出：
 
-- 能正确识别 `module ... ( ... );` 的模块名
-- 能从 ANSI 风格端口声明中解析端口方向与位宽（常见写法）
-- 能识别实例化语句：`<mod> <inst>(...);` 或 `<mod> <inst> (...);`
-- 能忽略注释与字符串中的误命中（至少要先去掉 `//` 与 `/* */` 注释再做正则）
-- 对于解析失败的文件：不得崩溃；要记录 `parse_errors` 到条目里（新增字段允许），并继续处理其他文件
+- name / file / params
+- ports（简表）
+- deps（components/primitives/unresolved）
+- contract 的关键字段（inputs/outputs/仲裁或选择或 join）
+- customization_guide（若有）
 
-### 增量更新要求（必须实现）
+## 代码组织要求
 
-- registry 存储在 `.docgen/primitive_registry.json`
-- `init`：全量扫描 inputs（文件/目录），生成/更新全部条目
-- `update <changed_files...>`：仅对指定文件重新计算 hash 并重建该条目；然后重渲染 docs
-- 如果文件被删除：registry 标记 `deleted=true`（新增字段）并在文档中注明
+- Python 3.10+
+- 包目录：docgen_components/
+- __main__.py 支持 python -m docgen_components
+- 不依赖外部服务/LLM
+- 提供最小单元测试：至少对 2 个文件解析，断言 component_type 与 deps/primitives 不为空
 
-### 文档输出（必须实现）
+## 规则
 
-生成 `docs/PRIMITIVES.md`，按 category 分组，每个条目输出：
+1. **新增依赖归一化规则**
 
-- name、kind、file
-- ports（列表）
-- deps_primitives、tech_cells（列表）
-- reset 信息
-- semantics_1line（若为空就不输出）
+* 遇到实例化模块名匹配 `^delay\d+U$`，将其归一化为 `delay1U`，并记录 aliases。
 
-### 代码结构与质量要求
+2. **新增字段**
 
-- Python 实现（3.10+），不要依赖外部服务/LLM
-- 代码组织成包：`docgen_sv/`，包含 `__main__.py` 便于 `python -m docgen_sv ...`
-- 需要有单元测试：至少测试 2 个文件解析（可以用项目内真实文件路径）
-- 必须在 macOS/Linux 上可运行
-- 所有输出路径使用 repo_root 相对路径，并确保目录存在
+* `deps.primitives_raw` 与 `deps.aliases`
 
-### 验收标准
+3. **读取 primitive registry（只读 JSON）**
 
-运行：
+* 若 `.docgen/primitive_registry.json` 存在，则把其中 `name` 集合加载为 `known_primitives`，依赖分类时优先使用它。
 
-- `python -m docgen_sv init --repo . --inputs src test rtl .`（inputs 允许包含 repo 根目录）
-   应能在 `.docgen/` 和 `docs/` 下生成上述文件，且 registry 里至少包含 11 个条目（或更多，如果目录里有更多 `.v`）。
-
-请开始实现：输出所有新增/修改的文件内容（完整文件），并确保可直接运行。
+请直接输出所有新增文件的完整内容，并确保在 macOS/Linux 可运行。
