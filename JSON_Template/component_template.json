@@ -1,0 +1,103 @@
+{
+  "meta": {
+    "schema_version": "1.0",
+    "generated_at": "YYYY-MM-DDTHH:MM:SSZ",
+    "repo_root": ".",
+    "entries_count": 0,
+    "notes": [
+      "This is a template. Fill entries under `components`.",
+      "Keep raw+normalized dependency fields to avoid losing detail."
+    ]
+  },
+  "components": [
+    {
+      "name": "",
+      "kind": "component",
+      "component_type": "unknown",
+      "file": "",
+      "sha256": "",
+      "language": "verilog",
+      "updated_at": "YYYY-MM-DDTHH:MM:SSZ",
+
+      "params": [
+        {
+          "name": "",
+          "default_text": "",
+          "kind": "parameter"
+        }
+      ],
+
+      "ports": [
+        {
+          "name": "",
+          "direction": "input",
+          "width_text": null,
+          "type_text": null
+        }
+      ],
+
+      "deps": {
+        "components": [],
+        "primitives": [],
+        "tech_cells": [],
+        "unresolved": [],
+
+        "raw": { 
+          "all_instantiated_modules": [],
+          "components": [],
+          "primitives": [],
+          "tech_cells": [],
+          "unresolved": []
+        },
+
+        "aliases": {
+          "delay2U": "delay1U"
+        },
+
+        "sources": {
+          "instance_parse_method": "regex",
+          "comment_stripped": true
+        }
+      },
+
+      "reset": {
+        "present": false,
+        "signal": null,
+        "active_low": null
+      },
+
+     
+      "customization_guide": {
+        "extracted_from_comments": true,
+        "sections": [
+          {
+            "title": "Instantiation",
+            "text": ""
+          },
+          {
+            "title": "Modification",
+            "text": ""
+          }
+        ]
+      },
+
+      "semantics_1line": "",
+      "category": "unknown",
+      "protocol": "unknown",
+      "port_roles": {},
+
+      "constraints": [],
+      "gotchas": [],
+      "examples": {
+        "positive": [],
+        "negative": []
+      },
+
+      "quality": {
+        "parse_ok": true,
+        "parse_errors": [],
+        "warnings": []
+      }
+    }
+  ]
+}

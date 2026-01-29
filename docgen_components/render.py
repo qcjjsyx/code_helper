@@ -1,5 +1,5 @@
 def render_components_md(kb: dict) -> str:
-    entries = kb.get("entries", [])
+    entries = kb.get("components", [])
     groups = {}
     for entry in entries:
         group = entry.get("component_type") or "unknown"
@@ -25,33 +25,18 @@ def render_components_md(kb: dict) -> str:
                 )
             )
 
-            contract = entry.get("contract", {})
-            outputs = contract.get("outputs", {})
-            lines.append(
-                "- contract: inputs={inputs} outputs=driveNext:{drive_next}, data:{data}, free:{free}, freeNext:{free_next}".format(
-                    inputs=format_inputs(contract.get("inputs", [])),
-                    drive_next=outputs.get("driveNext_port"),
-                    data=outputs.get("data_port"),
-                    free=outputs.get("free_port"),
-                    free_next=outputs.get("freeNext_port"),
-                )
-            )
-
-            arbitration = contract.get("arbitration_policy")
-            selection = contract.get("selection_encoding")
-            join = contract.get("join_condition")
-            if arbitration or selection or join:
-                lines.append(
-                    "- policy: arbitration={arb} selection={sel} join={join}".format(
-                        arb=arbitration, sel=selection, join=join
-                    )
-                )
-
-            guide = entry.get("customization_guide") or ""
-            if guide:
+            guide = entry.get("customization_guide") or {}
+            sections = guide.get("sections", [])
+            if sections and any(section.get("text") for section in sections):
                 lines.append("- customization_guide:")
                 lines.append("```")
-                lines.append(guide)
+                for section in sections:
+                    title = section.get("title", "")
+                    text = section.get("text", "")
+                    if not text:
+                        continue
+                    lines.append(f"{title}:")
+                    lines.append(text)
                 lines.append("```")
 
     lines.append("")
@@ -76,11 +61,14 @@ def format_ports(ports):
     for port in ports:
         direction = port.get("direction", "unknown")
         name = port.get("name", "")
-        width = port.get("width_text_or_null")
+        width = port.get("width_text")
+        type_text = port.get("type_text")
+        segment = f"{direction} {name}"
         if width:
-            parts.append(f"{direction} {name} {width}")
-        else:
-            parts.append(f"{direction} {name}")
+            segment = f"{segment} {width}"
+        if type_text:
+            segment = f"{segment} {type_text}"
+        parts.append(segment)
     return ", ".join(parts)
 
 

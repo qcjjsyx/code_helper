@@ -27,18 +27,19 @@ def parse_params(text: str):
         r"\b(localparam|parameter)\b\s+([A-Za-z_]\w*)\s*=\s*([^,;\n\)]+)",
         text,
     ):
+        kind = match.group(1)
         name = match.group(2)
         if name in seen:
             continue
         seen.add(name)
         default_text = match.group(3).strip()
-        params.append({"name": name, "default_text": default_text})
+        params.append({"name": name, "default_text": default_text, "kind": kind})
     return params
 
 
 def _parse_port_segment(direction: str, segment: str):
     width_match = re.search(r"\[[^\]]+\]", segment)
-    width = _normalize_width(width_match.group(0).strip() if width_match else None)
+    width = width_match.group(0).strip() if width_match else None
     cleaned = segment
     if width_match:
         cleaned = cleaned.replace(width_match.group(0), " ")
@@ -48,19 +49,9 @@ def _parse_port_segment(direction: str, segment: str):
     cleaned = cleaned.replace(")", " ").replace(";", " ")
     names = [name.strip() for name in cleaned.split(",") if name.strip()]
     return [
-        {"name": name, "direction": direction, "width_text_or_null": width}
+        {"name": name, "direction": direction, "width_text": width, "type_text": None}
         for name in names
     ]
-
-
-def _normalize_width(width_text):
-    if not width_text:
-        return "1"
-    inner = width_text[1:-1].strip()
-    match = re.match(r"^([A-Za-z_]\w*)\s*-\s*1\s*:\s*0$", inner)
-    if match:
-        return match.group(1)
-    return width_text
 
 
 def parse_ports_from_header(port_text: str):
@@ -121,7 +112,7 @@ def parse_instantiations(text: str):
     return _dedupe_list(insts)
 
 
-def extract_customization_guide(raw_text: str) -> str:
+def extract_customization_guide(raw_text: str) -> dict:
     lines = raw_text.splitlines()
     header_lines = []
     for line in lines:
@@ -142,22 +133,34 @@ def extract_customization_guide(raw_text: str) -> str:
             stripped = stripped[1:].strip()
         cleaned.append(stripped)
 
-    start = None
-    for idx, line in enumerate(cleaned):
-        if re.search(r"Instantiation|Modification", line, re.I):
-            start = idx
-            break
-    if start is None:
-        return ""
+    sections = {"Instantiation": [], "Modification": []}
+    current = None
+    for line in cleaned:
+        if not line or "====" in line:
+            continue
+        if re.search(r"\bInstantiation\b", line, re.I):
+            current = "Instantiation"
+            continue
+        if re.search(r"\bModification\b", line, re.I):
+            current = "Modification"
+            continue
+        if current:
+            sections[current].append(line)
 
-    guide_lines = []
-    for line in cleaned[start:]:
-        if not line:
-            continue
-        if "====" in line:
-            continue
-        guide_lines.append(line)
-    return "\n".join(guide_lines).strip()
+    extracted = any(sections[title] for title in sections)
+    return {
+        "extracted_from_comments": extracted,
+        "sections": [
+            {
+                "title": "Instantiation",
+                "text": "\n".join(sections["Instantiation"]).strip(),
+            },
+            {
+                "title": "Modification",
+                "text": "\n".join(sections["Modification"]).strip(),
+            },
+        ],
+    }
 
 
 def parse_verilog_file(path: Path):
@@ -202,7 +205,7 @@ def _dedupe_ports(ports):
     seen = set()
     result = []
     for port in ports:
-        key = (port["name"], port["direction"], port["width_text_or_null"])
+        key = (port["name"], port["direction"], port["width_text"], port["type_text"])
         if key in seen:
             continue
         seen.add(key)

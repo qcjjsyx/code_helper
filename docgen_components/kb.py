@@ -49,7 +49,7 @@ TECH_CELL_PREFIXES = (
 
 
 def now_iso():
-    return datetime.now(timezone.utc).isoformat()
+    return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def build_known_components():
@@ -96,8 +96,11 @@ def discover_inputs(repo_root: Path, inputs):
 def load_kb(repo_root: Path):
     kb_path = repo_root / ".docgen" / "component_kb.json"
     if not kb_path.exists():
-        return {"meta": {}, "entries": []}
-    return json.loads(kb_path.read_text(encoding="utf-8"))
+        return {"meta": {}, "components": []}
+    data = json.loads(kb_path.read_text(encoding="utf-8"))
+    if "components" not in data and "entries" in data:
+        data["components"] = data.pop("entries")
+    return data
 
 
 def save_kb(repo_root: Path, kb: dict):
@@ -123,11 +126,16 @@ def init_repo(repo_root: Path, inputs, force: bool = False):
         entries.append(build_entry(path, repo_root, known_primitives, known_components))
     kb = {
         "meta": {
+            "schema_version": "1.0",
             "generated_at": now_iso(),
             "repo_root": str(repo_root),
             "entries_count": len(entries),
+            "notes": [
+                "This is a template. Fill entries under `components`.",
+                "Keep raw+normalized dependency fields to avoid losing detail.",
+            ],
         },
-        "entries": entries,
+        "components": entries,
     }
     save_kb(repo_root, kb)
     render_repo(repo_root)
@@ -139,7 +147,7 @@ def update_repo(repo_root: Path, changed_files, force: bool = False):
     files = discover_inputs(repo_root, changed_files)
 
     kb = load_kb(repo_root)
-    entries = kb.get("entries", [])
+    entries = kb.get("components", [])
     index_by_file = {entry.get("file"): idx for idx, entry in enumerate(entries)}
 
     for path in files:
@@ -153,11 +161,16 @@ def update_repo(repo_root: Path, changed_files, force: bool = False):
             entries.append(entry)
 
     kb["meta"] = {
+        "schema_version": "1.0",
         "generated_at": now_iso(),
         "repo_root": str(repo_root),
         "entries_count": len(entries),
+        "notes": [
+            "This is a template. Fill entries under `components`.",
+            "Keep raw+normalized dependency fields to avoid losing detail.",
+        ],
     }
-    kb["entries"] = entries
+    kb["components"] = entries
     save_kb(repo_root, kb)
     render_repo(repo_root)
 
@@ -171,22 +184,31 @@ def build_entry(
     name = parsed["name"] or path.stem
     component_type = infer_component_type(name)
     deps = classify_deps(parsed["instantiations"], known_components, known_primitives)
-    contract = build_contract(parsed["ports"], component_type)
-
     return {
         "name": name,
+        "kind": "component",
+        "component_type": component_type,
         "file": rel_path,
         "sha256": sha256,
+        "language": "verilog",
+        "updated_at": now_iso(),
         "params": parsed["params"],
         "ports": parsed["ports"],
         "deps": deps,
-        "component_type": component_type,
-        "contract": contract,
+        "reset": derive_reset(parsed["ports"]),
         "customization_guide": parsed["customization_guide"],
         "semantics_1line": semantics_for(component_type),
+        "category": "unknown",
+        "protocol": "unknown",
+        "port_roles": {},
+        "constraints": [],
         "gotchas": derive_gotchas(parsed["params"], parsed["ports"], component_type),
-        "updated_at": now_iso(),
-        "parse_errors": parsed["errors"],
+        "examples": {"positive": [], "negative": []},
+        "quality": {
+            "parse_ok": len(parsed["errors"]) == 0,
+            "parse_errors": parsed["errors"],
+            "warnings": [],
+        },
     }
 
 
@@ -225,36 +247,52 @@ def semantics_for(component_type: str) -> str:
 def classify_deps(instantiations, known_components, known_primitives):
     components = []
     primitives = []
-    primitives_raw = []
     tech_cells = []
     unresolved = []
-    aliases = []
+    raw_components = []
+    raw_primitives = []
+    raw_tech_cells = []
+    raw_unresolved = []
+    aliases = {}
 
     for raw in instantiations:
         normalized = raw
         if re.match(r"^delay\d+U$", raw):
             normalized = "delay1U"
             if raw != normalized:
-                aliases.append({"from": raw, "to": normalized})
+                aliases[raw] = normalized
 
         if raw in known_components or normalized in known_components:
             components.append(raw if raw in known_components else normalized)
+            raw_components.append(raw)
         elif normalized in known_primitives or raw in known_primitives:
             prim_name = normalized if normalized in known_primitives else raw
             primitives.append(prim_name)
-            primitives_raw.append(raw)
+            raw_primitives.append(raw)
         elif is_tech_cell(raw):
             tech_cells.append(raw)
+            raw_tech_cells.append(raw)
         else:
             unresolved.append(raw)
+            raw_unresolved.append(raw)
 
     return {
         "components": _unique(components),
         "primitives": _unique(primitives),
-        "primitives_raw": _unique(primitives_raw),
         "tech_cells": _unique(tech_cells),
         "unresolved": _unique(unresolved),
-        "aliases": _unique_aliases(aliases),
+        "raw": {
+            "all_instantiated_modules": _unique(instantiations),
+            "components": _unique(raw_components),
+            "primitives": _unique(raw_primitives),
+            "tech_cells": _unique(raw_tech_cells),
+            "unresolved": _unique(raw_unresolved),
+        },
+        "aliases": aliases,
+        "sources": {
+            "instance_parse_method": "regex",
+            "comment_stripped": True,
+        },
     }
 
 
@@ -336,6 +374,19 @@ def derive_gotchas(params, ports, component_type: str):
     return _unique(gotchas)
 
 
+def derive_reset(ports):
+    names = [port["name"] for port in ports]
+    reset_name = None
+    for candidate in ("rstn", "reset_n", "rst", "reset"):
+        if candidate in names:
+            reset_name = candidate
+            break
+    if not reset_name:
+        return {"present": False, "signal": None, "active_low": None}
+    active_low = reset_name.endswith("n") or reset_name.endswith("_n")
+    return {"present": True, "signal": reset_name, "active_low": active_low}
+
+
 def _file_sha256(path: Path):
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -380,13 +431,3 @@ def _unique(items):
     return result
 
 
-def _unique_aliases(aliases):
-    seen = set()
-    result = []
-    for alias in aliases:
-        key = (alias["from"], alias["to"])
-        if key in seen:
-            continue
-        seen.add(key)
-        result.append(alias)
-    return result

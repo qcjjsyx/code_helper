@@ -17,6 +17,7 @@ class TestComponents(unittest.TestCase):
         entry = build_entry(path, repo_root, known_primitives, known_components)
         self.assertEqual(entry["component_type"], "arb_merge")
         self.assertTrue(entry["deps"]["primitives"])
+        self.assertTrue(entry["quality"]["parse_ok"])
 
     def test_parse_nat_split(self):
         repo_root = Path(__file__).resolve().parents[1]
@@ -26,6 +27,7 @@ class TestComponents(unittest.TestCase):
         entry = build_entry(path, repo_root, known_primitives, known_components)
         self.assertEqual(entry["component_type"], "nat_split")
         self.assertTrue(entry["deps"]["primitives"])
+        self.assertTrue(entry["quality"]["parse_ok"])
 
 
 if __name__ == "__main__":
