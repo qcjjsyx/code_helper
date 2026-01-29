@@ -1,0 +1,10 @@
+//@cc: schema: cc_header_v1
+//@cc: name: TODO
+//@cc: family: NatSplitN
+//@cc: params:
+//@cc:   NUM_PORTS: TODO
+//@cc: roles:
+//@cc:   inputs: []
+//@cc:   outputs: []
+//@cc: contract:
+//@cc:   TODO: fill contract
