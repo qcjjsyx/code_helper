@@ -6,5 +6,7 @@
 //@cc: roles:
 //@cc:   inputs: []
 //@cc:   outputs: []
+//@cc:   upstream: []
+//@cc:   downstream: []
 //@cc: contract:
 //@cc:   TODO: fill contract

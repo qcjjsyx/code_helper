@@ -28,6 +28,8 @@ Example:
 - `name`: module name
 - `family`: one of `SelSplit`, `NatSplitN`, `WaitMergeN`, `ArbMergeN`, `MutexMergeN`, `Fifo1`, `PmtFifo1`
 - `params`, `roles`, `contract`: may be empty but must exist
+  - `roles.inputs`/`roles.outputs`: logical input/output port lists
+  - `roles.upstream`/`roles.downstream`: ports driven by upstream or driven to downstream
 
 ## Lint Rules (MVP)
 

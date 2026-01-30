@@ -23,6 +23,8 @@ def build_header(module_name: str, family: str, ports, add_family_note: bool):
     lines.append(f"  TODO: fill roles; ports: {port_list}")
     lines.append("  inputs: []")
     lines.append("  outputs: []")
+    lines.append("  upstream: []")
+    lines.append("  downstream: []")
     lines.append("contract:")
     if family == "ArbMergeN":
         lines.append("  arb_policy: TODO")
