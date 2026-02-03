@@ -16,7 +16,13 @@ FAMILIES = [
 def read_text(path: Path) -> str:
     return path.read_text(encoding="utf-8", errors="ignore")
 
+'''
+该函数的主要作用是 从文本中提取以 //@cc: 开头的连续注释块 。具体来说：
 
+- 识别并提取从第一个 //@cc: 标记开始的连续注释块
+- 当遇到非 //@cc: 开头的行时，停止提取
+- 返回提取的内容（两种格式：合并后的字符串和行列表）
+'''
 def extract_cc_block(text: str):
     lines = text.splitlines()
     block = []
@@ -33,7 +39,12 @@ def extract_cc_block(text: str):
         return None, []
     return "\n".join(block).strip(), block
 
+'''
+该函数的主要作用是 移除代码中的注释，但保留带有特定标记的注释 。具体来说：
 
+- 移除 所有标准注释（包括多行注释 /* */ 和普通单行注释 // ）
+- 保留 以 //@cc: 开头的特殊注释行
+'''
 def strip_comments_keep_cc(text: str) -> str:
     lines = []
     for line in text.splitlines():

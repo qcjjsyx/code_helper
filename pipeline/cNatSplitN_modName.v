@@ -9,6 +9,22 @@
 //======================================================
 
 
+
+
+//@cc: schema: cc_header_v1
+//@cc: name: cNatSplitN_modName
+//@cc: family: NatSplitN
+//@cc: params:
+//@cc:   NUM_PORTS: TODO
+//@cc: roles:
+//@cc:   TODO: fill roles; ports: i_data, i_drive, i_freeNext_n, o_data0, o_data1, o_data2, o_driveNext_n, o_free, rstn
+//@cc:   inputs: []
+//@cc:   outputs: []
+//@cc:   upstream: []
+//@cc:   downstream: []
+//@cc: contract:
+//@cc:   TODO: fill contract
+
  module cNatSplitN_modName#(
     parameter NUM_PORTS      = 3,
     parameter DATA_WIDTHI    = 32,

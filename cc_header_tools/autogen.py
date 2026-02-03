@@ -21,8 +21,8 @@ def build_header(module_name: str, family: str, ports, add_family_note: bool):
     lines.append("  NUM_PORTS: TODO")
     lines.append("roles:")
     lines.append(f"  TODO: fill roles; ports: {port_list}")
-    lines.append("  inputs: []")
-    lines.append("  outputs: []")
+    # lines.append("  inputs: []")
+    # lines.append("  outputs: []")
     lines.append("  upstream: []")
     lines.append("  downstream: []")
     lines.append("contract:")
@@ -46,6 +46,7 @@ def insert_header(text: str, header_block: str) -> str:
 def autogen_for_file(path: Path, inplace: bool, only_missing: bool):
     text = path.read_text(encoding="utf-8", errors="ignore")
     cc_text, _ = extract_cc_block(text)
+    ### 
     if cc_text:
         if only_missing:
             return False, "exists"
@@ -56,7 +57,7 @@ def autogen_for_file(path: Path, inplace: bool, only_missing: bool):
     ports = parse_ports(port_text)
     family = infer_family(module_name or "", path.name)
     add_family_note = family == "unknown"
-    header = build_header(module_name, family, ports, add_family_note)
+    header = build_header(module_name, family, ports, add_family_note) # type: ignore
     updated = insert_header(text, header)
     if inplace:
         path.write_text(updated, encoding="utf-8")

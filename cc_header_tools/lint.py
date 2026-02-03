@@ -21,11 +21,12 @@ def lint_text(text: str, strict: bool = False) -> LintResult:
         return result
 
     header = parse_yaml_min(cc_text)
-    schema = header.get("schema")
+    print(type(header))
+    schema = header.get("schema") # type: ignore
     if schema != "cc_header_v1":
         result.errors.append("schema must be cc_header_v1")
 
-    family = header.get("family")
+    family = header.get("family") # type: ignore
     if family not in FAMILIES:
         result.errors.append("family must be one of: " + ", ".join(FAMILIES))
 
@@ -34,14 +35,14 @@ def lint_text(text: str, strict: bool = False) -> LintResult:
     ports = parse_ports(port_text)
     port_names = {port["name"] for port in ports}
 
-    roles = header.get("roles", {})
+    roles = header.get("roles", {}) # type: ignore
     role_port_names = _collect_role_ports(roles)
     for role_port in role_port_names:
         base = normalize_port_ref(role_port)
         if base and base not in port_names:
             result.errors.append(f"role port '{role_port}' not found in module ports")
 
-    contract = header.get("contract", {})
+    contract = header.get("contract", {}) # type: ignore
     if family == "ArbMergeN":
         if not contract.get("arb_policy"):
             result.errors.append("ArbMergeN requires contract.arb_policy")
@@ -51,7 +52,7 @@ def lint_text(text: str, strict: bool = False) -> LintResult:
                 "MutexMergeN requires contract.mutex_model=environment_mutex_assumed"
             )
 
-    params = header.get("params", {})
+    params = header.get("params", {}) # type: ignore
     num_ports = params.get("NUM_PORTS")
     if isinstance(num_ports, int):
         channels = roles.get("inputs") or roles.get("channels")

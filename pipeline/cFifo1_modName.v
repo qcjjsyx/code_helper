@@ -10,6 +10,21 @@
 //======================================================
 
 
+
+//@cc: schema: cc_header_v1
+//@cc: name: cFifo1_modName
+//@cc: family: Fifo1
+//@cc: params:
+//@cc:   NUM_PORTS: TODO
+//@cc: roles:
+//@cc:   TODO: fill roles; ports: 
+//@cc:   inputs: []
+//@cc:   outputs: []
+//@cc:   upstream: []
+//@cc:   downstream: []
+//@cc: contract:
+//@cc:   TODO: fill contract
+
 module cFifo1_modName (
 	i_drive,
 	i_freeNext,

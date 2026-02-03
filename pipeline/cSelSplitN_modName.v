@@ -8,37 +8,23 @@
 // Description: 使用参数化定义的 SelSplit
 //======================================================
 
+
+
+
+
 //@cc: schema: cc_header_v1
 //@cc: name: cSelSplitN_modName
 //@cc: family: SelSplit
 //@cc: params:
-//@cc:   NUM_PORTS: <NUM_PORTS_PARAM_OR_LITERAL>
-//@cc:   DATA_WIDTH: <DATA_WIDTH_PARAM_OR_LITERAL>
+//@cc:   NUM_PORTS: TODO
 //@cc: roles:
-//@cc:   reset: {port: rstn, active_low: true}
-//@cc:   up:
-//@cc:     drive: <i_drive_port_or_expr>
-//@cc:     free:  <o_free_port_or_expr>
-//@cc:   sel:
-//@cc:     encoding: one_hot|binary|custom
-//@cc:     source: <sel_port_or_expr_or_slice>   # 可与 payload 融合或分离
-//@cc:   payload:
-//@cc:     source: <payload_port_or_expr_or_slice>|none
-//@cc:   channels:
-//@cc:     - k: 0
-//@cc:       drive: <o_drive0_port_or_expr>
-//@cc:       free:  <i_free0_port_or_expr>
-//@cc:       data:  <o_data0_port_or_expr>|none
-//@cc:     - k: 1
-//@cc:       drive: <o_drive1...>
-//@cc:       free:  <i_free1...>
-//@cc:       data:  <o_data1...>|none
+//@cc:   TODO: fill roles; ports: i_data, i_drive, i_free0, i_free1, o_data0, o_data1, o_drive0, o_drive1, o_free, rstn
+//@cc:   inputs: []
+//@cc:   outputs: []
+//@cc:   upstream: []
+//@cc:   downstream: []
 //@cc: contract:
-//@cc:   routing: select_one_channel_per_event
-//@cc:   release: selected_only            # o_free 由被选中通道的 free 导出（若不是必须写 custom）
-//@cc:   notes: ["Selection/payload may be fused or separated; only role mapping is invariant."]
-
-
+//@cc:   TODO: fill contract
 
 module cSelSplitN_modName #(
     parameter NUM_PORTS    = 2,
