@@ -21,8 +21,10 @@ def lint_text(text: str, strict: bool = False) -> LintResult:
         return result
 
     header = parse_yaml_min(cc_text)
-    print(type(header))
-    schema = header.get("schema") # type: ignore
+    if not isinstance(header, dict):
+        result.errors.append("header must be a mapping at top level")
+        return result
+    schema = header.get("schema")
     if schema != "cc_header_v1":
         result.errors.append("schema must be cc_header_v1")
 

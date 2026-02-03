@@ -1,0 +1,14 @@
+schema: cc_header_v1
+name: {module_name}
+family: {family}
+{family_note}params:
+  NUM_PORTS: TODO
+  DATA_WIDTH: {TODO}
+  DELAY: {TODO}
+roles:
+  TODO: fill roles; ports: {port_list}
+  upstream: []
+  downstream: []
+  fire:[]
+contract:
+{contract_block}

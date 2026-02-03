@@ -3,10 +3,10 @@
 //@cc: family: WaitMergeN
 //@cc: params:
 //@cc:   NUM_PORTS: TODO
+//@cc:   DATA_WIDTH: {TODO}
+//@cc:   DELAY: {TODO}
 //@cc: roles:
-//@cc:   inputs: []
-//@cc:   outputs: []
+//@cc:   TODO: fill roles; ports: TODO
 //@cc:   upstream: []
 //@cc:   downstream: []
-//@cc: contract:
-//@cc:   TODO: fill contract
+//@cc:   fire: []

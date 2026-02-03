@@ -2,7 +2,7 @@ import argparse
 import sys
 from pathlib import Path
 
-from .autogen import autogen_for_file
+from .autogen import autogen_for_file, remove_all_cc_blocks
 from .lint import lint_text
 from .parser import FAMILIES, read_text
 
@@ -27,11 +27,17 @@ def main(argv=None):
     skel_p.add_argument("--file", required=True)
     skel_p.add_argument("--inplace", action="store_true")
 
+    strip_p = sub.add_parser("strip", help="Remove //@cc: headers")
+    strip_p.add_argument("--repo", required=True)
+    strip_p.add_argument("--inputs", nargs="+", required=True)
+    strip_p.add_argument("--inplace", action="store_true")
+
     auto_p = sub.add_parser("autogen", help="Auto-generate headers for files")
     auto_p.add_argument("--repo", required=True)
     auto_p.add_argument("--inputs", nargs="+", required=True)
     auto_p.add_argument("--inplace", action="store_true")
     auto_p.add_argument("--only-missing", action="store_true")
+    auto_p.add_argument("--force", action="store_true")
     auto_p.add_argument("--strict", action="store_true")
 
     args = parser.parse_args(argv)
@@ -43,9 +49,16 @@ def main(argv=None):
         return run_scan(repo_root, args.inputs, args.strict)
     if args.command == "skeleton":
         return run_skeleton(repo_root, args.family, args.file, args.inplace)
+    if args.command == "strip":
+        return run_strip(repo_root, args.inputs, args.inplace)
     if args.command == "autogen":
         return run_autogen(
-            repo_root, args.inputs, args.inplace, args.only_missing, args.strict
+            repo_root,
+            args.inputs,
+            args.inplace,
+            args.only_missing,
+            args.force,
+            args.strict,
         )
     return 1
 
@@ -111,11 +124,29 @@ def run_skeleton(repo_root: Path, family: str, file_path: str, inplace: bool):
     return 0
 
 
-def run_autogen(repo_root: Path, inputs, inplace: bool, only_missing: bool, strict: bool):
+def run_strip(repo_root: Path, inputs, inplace: bool):
+    files = discover_files(repo_root, inputs)
+    changed = 0
+    for path in files:
+        text = read_text(path)
+        updated, removed_blocks = remove_all_cc_blocks(text)
+        if removed_blocks == 0:
+            continue
+        changed += 1
+        if inplace:
+            path.write_text(updated, encoding="utf-8")
+        else:
+            sys.stdout.write(updated)
+    return 0 if changed else 0
+
+
+def run_autogen(
+    repo_root: Path, inputs, inplace: bool, only_missing: bool, force: bool, strict: bool
+):
     files = discover_files(repo_root, inputs)
     failed = 0
     for path in files:
-        changed, output = autogen_for_file(path, inplace, only_missing)
+        changed, output = autogen_for_file(path, inplace, only_missing, force)
         if output is not None:
             sys.stdout.write(output)
         if not inplace and changed:

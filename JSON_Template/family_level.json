@@ -100,6 +100,9 @@
         "reset": {
           "reset_port": "rstn",
           "reset_active_low": true
+        },
+        "fire":{
+          "port": null
         }
       },
       "contract": {
