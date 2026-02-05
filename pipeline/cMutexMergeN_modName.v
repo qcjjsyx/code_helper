@@ -9,6 +9,25 @@
 //======================================================
 
 
+
+
+
+
+//@cc: schema: cc_header_v1
+//@cc: name: cMutexMergeN_modName
+//@cc: family: MutexMergeN
+//@cc: params:
+//@cc:   NUM_PORTS: TODO
+//@cc:   DATA_WIDTH: {TODO}
+//@cc:   DELAY: {TODO}
+//@cc: roles:
+//@cc:   TODO: fill roles; ports: i_data0, i_data1, i_drive0, i_drive1, i_freeNext, o_data, o_driveNext, o_free0, o_free1, rstn
+//@cc:   upstream: []
+//@cc:   downstream: []
+//@cc:   fire:[]
+//@cc: contract:
+//@cc:   mutex_model: TODO
+
 module cMutexMergeN_modName #(
     parameter DATA_WIDTH = 32
 )(

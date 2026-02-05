@@ -1,0 +1,12 @@
+//@cc: schema: cc_header_v1
+//@cc: name: TODO
+//@cc: family: WaitMergeN
+//@cc: params:
+//@cc:   NUM_PORTS: TODO
+//@cc:   DATA_WIDTH: {TODO}
+//@cc:   DELAY: {TODO}
+//@cc: roles:
+//@cc:   TODO: fill roles; ports: TODO
+//@cc:   upstream: []
+//@cc:   downstream: []
+//@cc:   fire: []

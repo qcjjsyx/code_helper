@@ -3,11 +3,28 @@
 // Project: SOLVA
 // Module:  cWaitMerge3
 // Author:  zhuangzhuang Liao
-// Mailï¼?   lzhuangzhuang2023@lzu.edu.cn
+// Mail?   lzhuangzhuang2023@lzu.edu.cn
 // Date:    2025-05-28
 // Description: parameterized 3-input cWaitMerge
 //======================================================
 
+
+
+
+//@cc: schema: cc_header_v1
+//@cc: name: cWaitMergeN_modName
+//@cc: family: WaitMergeN
+//@cc: params:
+//@cc:   NUM_PORTS: TODO
+//@cc:   DATA_WIDTH: {TODO}
+//@cc:   DELAY: {TODO}
+//@cc: roles:
+//@cc:   TODO: fill roles; ports: i_data0, i_data1, i_data2, i_drive0, i_drive1, i_drive2, i_freeNext, o_data, o_driveNext, o_free0, o_free1, o_free2, rstn
+//@cc:   upstream: []
+//@cc:   downstream: []
+//@cc:   fire:[]
+//@cc: contract:
+//@cc:   TODO: fill contract
 
 module cWaitMergeN_modName #(
     parameter NUM_PORTS     = 3,

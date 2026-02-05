@@ -10,6 +10,25 @@
 
 
 
+
+
+
+
+//@cc: schema: cc_header_v1
+//@cc: name: cSelSplitN_modName
+//@cc: family: SelSplit
+//@cc: params:
+//@cc:   NUM_PORTS: TODO
+//@cc:   DATA_WIDTH: {TODO}
+//@cc:   DELAY: {TODO}
+//@cc: roles:
+//@cc:   TODO: fill roles; ports: i_data, i_drive, i_free0, i_free1, o_data0, o_data1, o_drive0, o_drive1, o_free, rstn
+//@cc:   upstream: []
+//@cc:   downstream: []
+//@cc:   fire:[]
+//@cc: contract:
+//@cc:   TODO: fill contract
+
 module cSelSplitN_modName #(
     parameter NUM_PORTS    = 2,
     parameter DATA_WIDTH   = 32,
