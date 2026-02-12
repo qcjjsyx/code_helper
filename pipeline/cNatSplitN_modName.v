@@ -13,6 +13,7 @@
 
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cNatSplitN_modName
 //@cc: family: NatSplitN
@@ -21,10 +22,9 @@
 //@cc:   DATA_WIDTH: {TODO}
 //@cc:   DELAY: {TODO}
 //@cc: roles:
-//@cc:   TODO: fill roles; ports: i_data, i_drive, i_freeNext_n, o_data0, o_data1, o_data2, o_driveNext_n, o_free, rstn
 //@cc:   upstream: []
 //@cc:   downstream: []
-//@cc:   fire:[]
+//@cc:   fire: []
 //@cc: contract:
 //@cc:   TODO: fill contract
 

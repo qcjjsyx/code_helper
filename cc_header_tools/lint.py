@@ -79,7 +79,9 @@ def lint_text(text: str, strict: bool = False) -> LintResult:
 def _collect_role_ports(roles) -> List[str]:
     collected = []
     if isinstance(roles, dict):
-        for _, value in roles.items():
+        for key, value in roles.items():
+            if key == "num_ports_semantics":
+                continue
             collected.extend(_collect_role_ports(value))
     elif isinstance(roles, list):
         for item in roles:

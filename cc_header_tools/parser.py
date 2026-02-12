@@ -9,6 +9,7 @@ FAMILIES = [
     "ArbMergeN",
     "MutexMergeN",
     "Fifo1",
+    "PmtFifo",
     "PmtFifo1",
 ]
 
@@ -31,7 +32,9 @@ def extract_cc_block(text: str):
         if line.lstrip().startswith("//@cc:"):
             in_block = True
             content = line.split("//@cc:", 1)[1]
-            block.append(content.lstrip())
+            if content.startswith(" "):
+                content = content[1:]
+            block.append(content.rstrip("\n"))
         else:
             if in_block:
                 break
@@ -216,3 +219,32 @@ def infer_family(module_name: str, file_name: str) -> str:
         if "Fifo" in cand:
             return "Fifo1"
     return "unknown"
+
+
+def infer_cc_identity(file_name: str):
+    stem = Path(file_name).stem
+    rules = [
+        (r"^cSelSplit_(\d+)_", "SelSplit"),
+        (r"^cNatSplit_(\d+)_", "NatSplitN"),
+        (r"^cWaitMerge_(\d+)_", "WaitMergeN"),
+        (r"^cMutexMerge_(\d+)_", "MutexMergeN"),
+    ]
+    for pattern, family in rules:
+        match = re.match(pattern, stem)
+        if match:
+            return {
+                "family": family,
+                "num_ports": int(match.group(1)),
+            }
+
+    if re.match(r"^cFifo1_", stem):
+        return {"family": "Fifo1", "num_ports": None}
+    if re.match(r"^cPmtFifo_", stem):
+        return {"family": "PmtFifo", "num_ports": None}
+    if re.match(r"^cPmtFifo1_", stem):
+        return {"family": "PmtFifo1", "num_ports": None}
+
+    return {
+        "family": infer_family(stem, file_name),
+        "num_ports": None,
+    }

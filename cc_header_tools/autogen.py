@@ -2,34 +2,95 @@ from pathlib import Path
 
 from .parser import (
     extract_cc_block,
-    infer_family,
+    infer_cc_identity,
     parse_module_header,
     parse_ports,
     strip_comments_keep_cc,
 )
 
 
-def build_header(module_name: str, family: str, ports, add_family_note: bool):
-    port_list = ", ".join(sorted({p["name"] for p in ports}))
-    template_path = (
-        Path(__file__).resolve().parents[1] / "templates" / "cc_headers" / "autogen.txt"
-    )
-    template = template_path.read_text(encoding="utf-8")
-    family_note = "note: TODO set family\n" if add_family_note else ""
-    if family == "ArbMergeN":
-        contract_block = "  arb_policy: TODO"
-    elif family == "MutexMergeN":
-        contract_block = "  mutex_model: TODO"
+def _port_names(ports):
+    return {p["name"] for p in ports}
+
+
+def _first_existing(candidates, port_names):
+    for item in candidates:
+        if item in port_names:
+            return item
+    return candidates[0] if candidates else ""
+
+
+def _build_roles_and_params(identity, ports):
+    family = identity["family"]
+    num_ports = identity["num_ports"]
+    port_names = _port_names(ports)
+
+    params = {
+        "DATA_WIDTH": "{TODO}",
+        "DELAY": "{TODO}",
+    }
+    roles = {
+        "upstream": [],
+        "downstream": [],
+        "fire": [],
+    }
+    contract = {}
+
+    if family == "MutexMergeN":
+        contract["mutex_model"] = "environment_mutex_assumed"
+    elif family == "ArbMergeN":
+        contract["arb_policy"] = "TODO"
     else:
-        contract_block = "  TODO: fill contract"
-    filled = template.format(
-        module_name=module_name or "TODO: set module name",
-        family=family,
-        family_note=family_note,
-        port_list=port_list,
-        contract_block=contract_block,
+        contract["TODO"] = "fill contract"
+
+    if isinstance(num_ports, int):
+        params["NUM_PORTS"] = num_ports # type: ignore
+    elif family not in {"Fifo1", "PmtFifo", "PmtFifo1"}:
+        params["NUM_PORTS"] = "TODO"
+
+    if family in {"Fifo1", "PmtFifo", "PmtFifo1"}:
+        roles["upstream"] = [_first_existing(["i_drive"], port_names)]
+        roles["downstream"] = [_first_existing(["o_driveNext"], port_names)]
+        fire_port = _first_existing(["o_fire", "o_fire_1"], port_names)
+        if fire_port in port_names:
+            roles["fire"] = [fire_port]
+
+    return params, roles, contract
+
+
+def _yaml_inline_list(items):
+    return "[" + ", ".join(items) + "]"
+
+
+def build_header(module_name: str, identity, ports):
+    family = identity["family"]
+    params, roles, contract = _build_roles_and_params(identity, ports)
+
+    lines = [
+        "schema: cc_header_v1",
+        f"name: {module_name or 'TODO: set module name'}",
+        f"family: {family}",
+        "params:",
+    ]
+
+    if "NUM_PORTS" in params:
+        lines.append(f"  NUM_PORTS: {params['NUM_PORTS']}")
+    lines.append(f"  DATA_WIDTH: {params['DATA_WIDTH']}")
+    lines.append(f"  DELAY: {params['DELAY']}")
+
+    lines.extend(
+        [
+            "roles:",
+            f"  upstream: {_yaml_inline_list(roles['upstream'])}",
+            f"  downstream: {_yaml_inline_list(roles['downstream'])}",
+            f"  fire: {_yaml_inline_list(roles['fire'])}",
+        ]
     )
-    return "\n".join(f"//@cc: {line}" for line in filled.splitlines()) + "\n"
+    lines.append("contract:")
+    for key, value in contract.items():
+        lines.append(f"  {key}: {value}")
+
+    return "\n".join(f"//@cc: {line}" for line in lines) + "\n"
 
 
 def insert_header(text: str, header_block: str) -> str:
@@ -71,9 +132,8 @@ def autogen_for_file(path: Path, inplace: bool, only_missing: bool, force: bool 
     stripped = strip_comments_keep_cc(text)
     module_name, port_text = parse_module_header(stripped)
     ports = parse_ports(port_text)
-    family = infer_family(module_name or "", path.name)
-    add_family_note = family == "unknown"
-    header = build_header(module_name, family, ports, add_family_note) # type: ignore
+    identity = infer_cc_identity(path.name)
+    header = build_header(module_name, identity, ports) # type: ignore
     updated = insert_header(text, header)
     if inplace:
         path.write_text(updated, encoding="utf-8")
