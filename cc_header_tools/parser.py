@@ -72,6 +72,46 @@ def parse_module_header(text: str):
     return match.group(1), match.group("ports") or ""
 
 
+def parse_module_parameters(text: str):
+    match = re.search(
+        r"\bmodule\s+[A-Za-z_]\w*\s*(?:#\s*\((?P<params>.*?)\)\s*)?\(",
+        text,
+        re.S,
+    )
+    if not match:
+        return {}
+
+    params = {}
+    param_text = match.group("params") or ""
+    if not param_text:
+        return params
+
+    for raw_item in param_text.split(","):
+        item = raw_item.strip()
+        if not item or "=" not in item:
+            continue
+
+        left, right = item.split("=", 1)
+        right = right.strip()
+        left = re.sub(
+            r"\bparameter\b|\blocalparam\b|\binteger\b|\bint\b|\blongint\b|\bshortint\b|\blogic\b|\bbit\b|\breg\b|\bwire\b|\bsigned\b|\bunsigned\b",
+            " ",
+            left,
+        )
+        left = re.sub(r"\[[^\]]+\]", " ", left)
+        name_match = re.search(r"([A-Za-z_]\w*)\s*$", left.strip())
+        if not name_match:
+            continue
+
+        value = right.rstrip(",)").strip()
+        if re.fullmatch(r"\d+", value):
+            params[name_match.group(1)] = int(value)
+        else:
+            params[name_match.group(1)] = value
+
+    return params
+
+
 def parse_ports(port_text: str):
     ports = []
     if not port_text:

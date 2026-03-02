@@ -108,3 +108,44 @@ def test_autogen_infers_family_and_num_ports(tmp_path):
     # 4) PmtFifo: family=PmtFifo
     pmt_hdr = _header(work_dir / "cPmtFifo_cpu.v")
     assert pmt_hdr["family"] == "PmtFifo"
+
+
+def test_autogen_extracts_data_width_and_fallback_num_ports(tmp_path):
+    repo_root = REPO_ROOT
+    work_dir = tmp_path / "data_copy"
+    work_dir.mkdir(parents=True, exist_ok=True)
+
+    test_file = work_dir / "cArbMerge_custom.v"
+    test_file.write_text(
+        "\n".join(
+            [
+                "module cArbMerge_custom #(parameter DATA_WIDTH = 32, parameter NUM_PORTS = 4, parameter PIPE_STAGES = 2) (",
+                "    input i_drive0,",
+                "    input i_drive1,",
+                "    input i_drive2,",
+                "    input i_drive3,",
+                "    output o_driveNext",
+                ");",
+                "endmodule",
+                "",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    autogen = _run(
+        repo_root,
+        "autogen",
+        "--repo",
+        ".",
+        "--inputs",
+        str(work_dir),
+        "--inplace",
+        "--only-missing",
+    )
+    assert autogen.returncode == 0, autogen.stderr + autogen.stdout
+
+    hdr = _header(test_file)
+    assert hdr["params"]["DATA_WIDTH"] == 32
+    assert hdr["params"]["NUM_PORTS"] == 4
+    assert hdr["params"]["PIPE_STAGES"] == 2

@@ -3,6 +3,7 @@ from pathlib import Path
 from .parser import (
     extract_cc_block,
     infer_cc_identity,
+    parse_module_parameters,
     parse_module_header,
     parse_ports,
     strip_comments_keep_cc,
@@ -20,15 +21,14 @@ def _first_existing(candidates, port_names):
     return candidates[0] if candidates else ""
 
 
-def _build_roles_and_params(identity, ports):
+def _build_roles_and_params(identity, ports, module_params):
     family = identity["family"]
     num_ports = identity["num_ports"]
     port_names = _port_names(ports)
 
-    params = {
-        "DATA_WIDTH": "{TODO}",
-        "DELAY": "{TODO}",
-    }
+    params = dict(module_params)
+    params.setdefault("DATA_WIDTH", "{TODO}")
+    params.setdefault("DELAY", "{TODO}")
     roles = {
         "upstream": [],
         "downstream": [],
@@ -43,8 +43,13 @@ def _build_roles_and_params(identity, ports):
     else:
         contract["TODO"] = "fill contract"
 
+    parsed_num_ports = module_params.get("NUM_PORTS")
     if isinstance(num_ports, int):
         params["NUM_PORTS"] = num_ports # type: ignore
+    elif isinstance(parsed_num_ports, int):
+        params["NUM_PORTS"] = parsed_num_ports
+    elif isinstance(parsed_num_ports, str) and parsed_num_ports:
+        params["NUM_PORTS"] = parsed_num_ports
     elif family not in {"Fifo1", "PmtFifo", "PmtFifo1"}:
         params["NUM_PORTS"] = "TODO"
 
@@ -64,7 +69,8 @@ def _yaml_inline_list(items):
 
 def build_header(module_name: str, identity, ports):
     family = identity["family"]
-    params, roles, contract = _build_roles_and_params(identity, ports)
+    module_params = identity.get("module_params", {})
+    params, roles, contract = _build_roles_and_params(identity, ports, module_params)
 
     lines = [
         "schema: cc_header_v1",
@@ -73,10 +79,14 @@ def build_header(module_name: str, identity, ports):
         "params:",
     ]
 
-    if "NUM_PORTS" in params:
-        lines.append(f"  NUM_PORTS: {params['NUM_PORTS']}")
-    lines.append(f"  DATA_WIDTH: {params['DATA_WIDTH']}")
-    lines.append(f"  DELAY: {params['DELAY']}")
+    priority_keys = ["NUM_PORTS", "DATA_WIDTH", "DELAY"]
+    for key in priority_keys:
+        if key in params:
+            lines.append(f"  {key}: {params[key]}")
+    for key in sorted(params):
+        if key in priority_keys:
+            continue
+        lines.append(f"  {key}: {params[key]}")
 
     lines.extend(
         [
@@ -131,8 +141,10 @@ def autogen_for_file(path: Path, inplace: bool, only_missing: bool, force: bool 
 
     stripped = strip_comments_keep_cc(text)
     module_name, port_text = parse_module_header(stripped)
+    module_params = parse_module_parameters(stripped)
     ports = parse_ports(port_text)
     identity = infer_cc_identity(path.name)
+    identity["module_params"] = module_params
     header = build_header(module_name, identity, ports) # type: ignore
     updated = insert_header(text, header)
     if inplace:
