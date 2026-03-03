@@ -12,16 +12,17 @@
 `timescale 1ns / 1ps
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cMutexMerge_4_d_fetch
 //@cc: family: MutexMergeN
 //@cc: params:
 //@cc:   NUM_PORTS: 4
-//@cc:   DATA_WIDTH: {TODO}
+//@cc:   DATA_WIDTH: 81
 //@cc:   DELAY: {TODO}
 //@cc: roles:
-//@cc:   upstream: []
-//@cc:   downstream: []
+//@cc:   upstream: [i_drive0, i_drive1, i_drive2, i_drive3, o_free0, o_free1, o_free2, o_free3]
+//@cc:   downstream: [o_driveNext, i_freeNext]
 //@cc:   fire: []
 //@cc: contract:
 //@cc:   mutex_model: environment_mutex_assumed

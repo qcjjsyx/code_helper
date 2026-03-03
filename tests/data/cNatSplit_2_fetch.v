@@ -9,6 +9,7 @@
 `timescale 1ns / 1ps
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cNatSplit_2_fetch
 //@cc: family: NatSplitN
@@ -17,8 +18,8 @@
 //@cc:   DATA_WIDTH: {TODO}
 //@cc:   DELAY: {TODO}
 //@cc: roles:
-//@cc:   upstream: []
-//@cc:   downstream: []
+//@cc:   upstream: [i_drive, o_free]
+//@cc:   downstream: [o_driveNext0, o_driveNext1, i_freeNext0, i_freeNext1]
 //@cc:   fire: []
 //@cc: contract:
 //@cc:   TODO: fill contract

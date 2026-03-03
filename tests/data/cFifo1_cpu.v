@@ -10,6 +10,7 @@
 `timescale 1ns / 1ps
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cFifo1_cpu
 //@cc: family: Fifo1
@@ -17,8 +18,8 @@
 //@cc:   DATA_WIDTH: {TODO}
 //@cc:   DELAY: {TODO}
 //@cc: roles:
-//@cc:   upstream: [i_drive]
-//@cc:   downstream: [o_driveNext]
+//@cc:   upstream: [i_drive, o_free]
+//@cc:   downstream: [o_driveNext, i_freeNext]
 //@cc:   fire: [o_fire]
 //@cc: contract:
 //@cc:   TODO: fill contract
