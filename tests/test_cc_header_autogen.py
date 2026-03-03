@@ -85,6 +85,15 @@ def test_autogen_infers_family_and_num_ports(tmp_path):
         assert "num_ports_semantics" not in hdr["roles"]
         assert "channels" not in hdr["roles"]
 
+    selsplit_hdr = _header(work_dir / "cSelSplit_2_fetch.v")
+    assert selsplit_hdr["roles"]["upstream"] == ["i_drive", "o_free"]
+    assert selsplit_hdr["roles"]["downstream"] == [
+        "o_driveNext0",
+        "o_driveNext1",
+        "i_freeNext0",
+        "i_freeNext1",
+    ]
+
     # 2) MutexMerge/WaitMerge: NUM_PORTS=2/3/4/5/6, and no num_ports_semantics/inputs
     merge_files = [
         ("cWaitMerge_2_d_fetch.v", 2, "WaitMergeN"),
@@ -99,6 +108,19 @@ def test_autogen_infers_family_and_num_ports(tmp_path):
         assert hdr["params"]["NUM_PORTS"] == n
         assert "num_ports_semantics" not in hdr["roles"]
         assert "inputs" not in hdr["roles"]
+
+    merge_hdr = _header(work_dir / "cMutexMerge_4_d_fetch.v")
+    assert merge_hdr["roles"]["upstream"] == [
+        "i_drive0",
+        "i_drive1",
+        "i_drive2",
+        "i_drive3",
+        "o_free0",
+        "o_free1",
+        "o_free2",
+        "o_free3",
+    ]
+    assert merge_hdr["roles"]["downstream"] == ["o_driveNext", "i_freeNext"]
 
     # 3) Fifo1: family=Fifo1 and NUM_PORTS not auto-filled
     fifo_hdr = _header(work_dir / "cFifo1_cpu.v")

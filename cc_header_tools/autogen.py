@@ -26,6 +26,13 @@ def _build_roles_and_params(identity, ports, module_params):
     num_ports = identity["num_ports"]
     port_names = _port_names(ports)
 
+    def _match_ports(direction: str, prefix: str):
+        return [
+            p["name"]
+            for p in ports
+            if p.get("direction") == direction and p["name"].startswith(prefix)
+        ]
+
     params = dict(module_params)
     params.setdefault("DATA_WIDTH", "{TODO}")
     params.setdefault("DELAY", "{TODO}")
@@ -53,12 +60,15 @@ def _build_roles_and_params(identity, ports, module_params):
     elif family not in {"Fifo1", "PmtFifo", "PmtFifo1"}:
         params["NUM_PORTS"] = "TODO"
 
-    if family in {"Fifo1", "PmtFifo", "PmtFifo1"}:
-        roles["upstream"] = [_first_existing(["i_drive"], port_names)]
-        roles["downstream"] = [_first_existing(["o_driveNext"], port_names)]
-        fire_port = _first_existing(["o_fire", "o_fire_1"], port_names)
-        if fire_port in port_names:
-            roles["fire"] = [fire_port]
+    upstream_ports = _match_ports("input", "i_drive") + _match_ports("output", "o_free")
+    downstream_ports = _match_ports("output", "o_drive") + _match_ports("input", "i_free")
+
+    roles["upstream"] = upstream_ports
+    roles["downstream"] = downstream_ports
+
+    fire_port = _first_existing(["o_fire", "o_fire_1"], port_names)
+    if fire_port in port_names:
+        roles["fire"] = [fire_port]
 
     return params, roles, contract
 
