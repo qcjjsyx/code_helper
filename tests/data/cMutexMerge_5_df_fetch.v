@@ -10,13 +10,13 @@
 
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cMutexMerge_5_df_fetch
 //@cc: family: MutexMergeN
 //@cc: params:
 //@cc:   NUM_PORTS: 5
 //@cc:   DATA_WIDTH: 81
-//@cc:   DELAY: {TODO}
 //@cc: roles:
 //@cc:   upstream: [i_drive0, i_drive1, i_drive2, i_drive3, i_drive4, o_free0, o_free1, o_free2, o_free3, o_free4]
 //@cc:   downstream: [o_driveNext, i_freeNext]

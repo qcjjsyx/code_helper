@@ -10,13 +10,13 @@
 
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cNatSplit_3_fetch
 //@cc: family: NatSplitN
 //@cc: params:
 //@cc:   NUM_PORTS: 3
 //@cc:   DATA_WIDTH: {TODO}
-//@cc:   DELAY: {TODO}
 //@cc: roles:
 //@cc:   upstream: [i_drive, o_free]
 //@cc:   downstream: [o_driveNext0, o_driveNext1, o_driveNext2, i_freeNext0, i_freeNext1, i_freeNext2]

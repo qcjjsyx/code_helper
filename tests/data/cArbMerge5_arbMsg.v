@@ -14,6 +14,22 @@
 //======================================================
 
 
+
+
+
+//@cc: schema: cc_header_v1
+//@cc: name: cArbMerge5_arbMsg
+//@cc: family: ArbMergeN
+//@cc: params:
+//@cc:   NUM_PORTS: 5
+//@cc:   DATA_WIDTH: 51
+//@cc:   DELAY1: 1
+//@cc:   DELAY2: 1
+//@cc: roles:
+//@cc:   upstream: [i_drive0, i_drive1, i_drive2, i_drive3, i_drive4, o_free0, o_free1, o_free2, o_free3, o_free4]
+//@cc:   downstream: [o_driveNext, i_freeNext]
+//@cc:   fire: []
+
 module cArbMerge5_arbMsg #(
     parameter NUM_PORTS  = 5,
     parameter DATA_WIDTH = 51,

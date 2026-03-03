@@ -13,13 +13,13 @@
 
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cWaitMerge_2_d_fetch
 //@cc: family: WaitMergeN
 //@cc: params:
 //@cc:   NUM_PORTS: 2
 //@cc:   DATA_WIDTH: {TODO}
-//@cc:   DELAY: {TODO}
 //@cc: roles:
 //@cc:   upstream: [i_drive0, i_drive1, o_free0, o_free1]
 //@cc:   downstream: [o_driveNext, i_freeNext]

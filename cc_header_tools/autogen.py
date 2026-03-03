@@ -35,7 +35,7 @@ def _build_roles_and_params(identity, ports, module_params):
 
     params = dict(module_params)
     params.setdefault("DATA_WIDTH", "{TODO}")
-    params.setdefault("DELAY", "{TODO}")
+    # params.setdefault("DELAY", "{TODO}")
     roles = {
         "upstream": [],
         "downstream": [],
@@ -88,7 +88,7 @@ def build_header(module_name: str, identity, ports):
         "params:",
     ]
 
-    priority_keys = ["NUM_PORTS", "DATA_WIDTH", "DELAY"]
+    priority_keys = ["NUM_PORTS", "DATA_WIDTH"]
     for key in priority_keys:
         if key in params:
             lines.append(f"  {key}: {params[key]}")

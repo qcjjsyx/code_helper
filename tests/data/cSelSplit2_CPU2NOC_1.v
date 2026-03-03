@@ -10,6 +10,22 @@
 
 
 
+
+
+
+//@cc: schema: cc_header_v1
+//@cc: name: cSelSplit2_CPU2NOC_1
+//@cc: family: SelSplit
+//@cc: params:
+//@cc:   NUM_PORTS: 2
+//@cc:   DATA_WIDTH: 1
+//@cc:   DELAY_IDRIVE: 7
+//@cc:   DELAY_OFREE: 1
+//@cc: roles:
+//@cc:   upstream: [i_drive, o_free]
+//@cc:   downstream: [o_drive0, o_drive1, i_free0, i_free1]
+//@cc:   fire: []
+
 module cSelSplit2_CPU2NOC_1 #(
     parameter NUM_PORTS    = 2,
     parameter DATA_WIDTH   = 1,

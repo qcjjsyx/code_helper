@@ -9,6 +9,23 @@
 //======================================================
 
 
+
+
+
+//@cc: schema: cc_header_v1
+//@cc: name: cNatSplit2_CPU2NOC_51
+//@cc: family: NatSplitN
+//@cc: params:
+//@cc:   NUM_PORTS: 2
+//@cc:   DATA_WIDTH: {TODO}
+//@cc:   DATA_WIDTHI: 51
+//@cc:   DATA_WIDTHOUT0: 51
+//@cc:   DATA_WIDTHOUT1: 51
+//@cc: roles:
+//@cc:   upstream: [i_drive, o_free]
+//@cc:   downstream: [o_driveNext_n, i_freeNext_n]
+//@cc:   fire: []
+
  module cNatSplit2_CPU2NOC_51#(
     parameter NUM_PORTS      = 2,
     parameter DATA_WIDTHI    = 51,

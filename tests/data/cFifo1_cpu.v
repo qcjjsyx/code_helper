@@ -12,12 +12,12 @@
 
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cFifo1_cpu
 //@cc: family: Fifo1
 //@cc: params:
 //@cc:   DATA_WIDTH: {TODO}
-//@cc:   DELAY: {TODO}
 //@cc: roles:
 //@cc:   upstream: [i_drive, o_free]
 //@cc:   downstream: [o_driveNext, i_freeNext]
