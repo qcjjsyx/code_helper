@@ -13,6 +13,7 @@
 
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cMutexMerge_4_d_fetch
 //@cc: family: MutexMergeN
@@ -24,8 +25,6 @@
 //@cc:   upstream: [i_drive0, i_drive1, i_drive2, i_drive3, o_free0, o_free1, o_free2, o_free3]
 //@cc:   downstream: [o_driveNext, i_freeNext]
 //@cc:   fire: []
-//@cc: contract:
-//@cc:   mutex_model: environment_mutex_assumed
 
 module cMutexMerge_4_d_fetch#(
     parameter DATA_WIDTH = 81

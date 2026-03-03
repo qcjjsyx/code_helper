@@ -12,6 +12,7 @@
 
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cWaitMerge_2_d_fetch
 //@cc: family: WaitMergeN
@@ -23,8 +24,6 @@
 //@cc:   upstream: [i_drive0, i_drive1, o_free0, o_free1]
 //@cc:   downstream: [o_driveNext, i_freeNext]
 //@cc:   fire: []
-//@cc: contract:
-//@cc:   TODO: fill contract
 
 module cWaitMerge_2_d_fetch
 (    // in0 -->

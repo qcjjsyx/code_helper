@@ -41,14 +41,14 @@ def _build_roles_and_params(identity, ports, module_params):
         "downstream": [],
         "fire": [],
     }
-    contract = {}
+    # contract = {}
 
-    if family == "MutexMergeN":
-        contract["mutex_model"] = "environment_mutex_assumed"
-    elif family == "ArbMergeN":
-        contract["arb_policy"] = "TODO"
-    else:
-        contract["TODO"] = "fill contract"
+    # if family == "MutexMergeN":
+    #     contract["mutex_model"] = "environment_mutex_assumed"
+    # elif family == "ArbMergeN":
+    #     contract["arb_policy"] = "TODO"
+    # else:
+    #     contract["TODO"] = "fill contract"
 
     parsed_num_ports = module_params.get("NUM_PORTS")
     if isinstance(num_ports, int):
@@ -70,8 +70,7 @@ def _build_roles_and_params(identity, ports, module_params):
     if fire_port in port_names:
         roles["fire"] = [fire_port]
 
-    return params, roles, contract
-
+    return params, roles
 
 def _yaml_inline_list(items):
     return "[" + ", ".join(items) + "]"
@@ -80,7 +79,7 @@ def _yaml_inline_list(items):
 def build_header(module_name: str, identity, ports):
     family = identity["family"]
     module_params = identity.get("module_params", {})
-    params, roles, contract = _build_roles_and_params(identity, ports, module_params)
+    params, roles = _build_roles_and_params(identity, ports, module_params)
 
     lines = [
         "schema: cc_header_v1",
@@ -106,9 +105,9 @@ def build_header(module_name: str, identity, ports):
             f"  fire: {_yaml_inline_list(roles['fire'])}",
         ]
     )
-    lines.append("contract:")
-    for key, value in contract.items():
-        lines.append(f"  {key}: {value}")
+    # lines.append("contract:")
+    # for key, value in contract.items():
+    #     lines.append(f"  {key}: {value}")
 
     return "\n".join(f"//@cc: {line}" for line in lines) + "\n"
 

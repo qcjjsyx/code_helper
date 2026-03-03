@@ -10,6 +10,7 @@
 
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cSelSplit_6_exe
 //@cc: family: SelSplit
@@ -21,8 +22,6 @@
 //@cc:   upstream: [i_drive, o_free]
 //@cc:   downstream: [o_driveNext0, o_driveNext1, o_driveNext2, o_driveNext3, o_driveNext4, o_driveNext5, i_freeNext0, i_freeNext1, i_freeNext2, i_freeNext3, i_freeNext4, i_freeNext5]
 //@cc:   fire: []
-//@cc: contract:
-//@cc:   TODO: fill contract
 
 module cSelSplit_6_exe (
     input  wire i_drive,
