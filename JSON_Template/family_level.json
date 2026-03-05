@@ -5,8 +5,7 @@
     "notes": [
       "Contracts here are lab-level invariants. Implementation details (bit packing, exact expressions, port naming) are intentionally left flexible.",
       "Parsing should map arbitrary port names to these roles via either (1) component header annotation, or (2) evidence-based inference (AST/features), not by guessing.",
-      "All 'drive' signals and 'free' signals can be regarded as event handshakes and releases.",
-      "All components should ideally not carry a payload; it will only transmit events"
+      "All 'drive' signals and 'free' signals can be regarded as event handshakes and releases."
     ]
   },
 
@@ -20,34 +19,21 @@
         "EXTRA_PARAMS": {}
       },
       "interface": {
-        "upstream_event": {
+        "upstream": {
           "drive_port": null,
-          "free_port": null,
-          "reset_port": "rstn",
-          "reset_active_low": true
+          "free_port": null
         },
+        "downstream": {
+          "drive_ports": null,
+          "free_ports": null
+        },
+        "reset": { "reset_port": "rstn", "reset_active_low": true },
         "input_condition_and_payload": {
           "selection_mode": "unknown",
-          "payload_mode": "unknown",
-          "selection_port_or_slice": null,
-          "payload_port_or_slice": null,
-          "payload_width_param": "DATA_WIDTH",
-          "notes": [
-            "Selection condition and payload may be fused in one bus or separated into ports.",
-            "Do NOT assume selector bit placement (high bits/low bits) unless explicitly annotated or evidenced."
-          ]
-        },
-        "channels": {
-          "num_ports_param": "NUM_PORTS",
-          "downstream": [
-            {
-              "index": 0,
-              "drive_out": null,
-              "free_in": null,
-              "data_out": null
-            }
-          ]
+          "selection_port": null,
+          "payload_port": null
         }
+        
       },
       "contract": {
         "invariants": [
@@ -64,23 +50,15 @@
           "policy": "selected_only",
           "allowed_variants": ["selected_only", "custom_expr"],
           "details": "Selected channel's i_free[k] triggers upstream o_free"
-        },
-        "payload_rule": {
-          "presence": "optional",
-          "mapping": "payload follows selected channel; representation may be muxed/masked/duplicated depending on implementation"
         }
       },
-      "customization_points": [
-        "Port naming/packing is free-form; only roles matter.",
-        "NUM_PORTS and DATA_WIDTH can vary; selection/payload can be fused or separated."
-      ],
       "notes": [
         "Selection condition encoding (one-hot/binary/thermometer) is implementation-defined; do NOT assume unless annotated or evidenced.",
-        "This component should ideally not carry a payload but only handle event signals.",
         "The generation of `o_free` in the code appears to be triggered by `i_free` from any channel. However, the module's logic ensures that only one downstream module is driven, and only the driven downstream module sends the free signal. The code is written for convenience only."
         
       ]
     },
+
 
     {
       "family": "Fifo1",
@@ -109,7 +87,6 @@
         "invariants": [
           "Non-reentrant: the FIFO stage must not accept a new upstream drive until the previous transaction is freed.",
           "Upstream o_free is only generated after receiving the paired i_free (i_freeNext in staged designs), which indicates the transaction is complete."
-         
         ],
         "reentrancy": { "supported": false },
         "completion_propagation": {
@@ -119,15 +96,13 @@
           ]
         }
       },
-      "customization_points": [
-        "Port names can change; keep role mapping: upstream drive/free and downstream driveNext/freeNext."
-      ],
       "notes": [
         "This FIFO stage does not buffer multiple transactions; it holds only one transaction at a time.",
         "The FIFO stage enforces backpressure by not allowing new upstream drives until the current transaction is completed downstream.",
         "This component will not carry a payload; it will only transmit events."
       ]
     },
+
 
     {
       "family": "PmtFifo1",
@@ -142,7 +117,10 @@
           "pmt_port": null,
           "active_level": "positive"
         },
-        "reset": { "reset_port": "rstn", "reset_active_low": true }
+        "reset": { "reset_port": "rstn", "reset_active_low": true },
+        "fire":{
+          "port": null
+        }
       },
       "contract": {
         "invariants": [
@@ -156,9 +134,6 @@
           ]
         }
       },
-      "customization_points": [
-        "Permit polarity and naming may vary; must map to role 'permit'."
-      ],
       "notes": [
         "This FIFO stage incorporates a permit signal to control progression.",
         "When the permit signal is inactive, the FIFO stage halts forwarding events downstream.",
@@ -168,105 +143,43 @@
     },
 
     {
-      "family": "NatSplitN",
+      "family": "NatSplit",
       "kind": "base_component_template",
       "params": {
         "NUM_PORTS": null,
         "DATA_WIDTH": null,
-        "DATA_WIDTHOUT": null,
         "EXTRA_PARAMS": {}
       },
       "interface": {
-        "upstream_event": { "drive_port": null, "free_port": null },
+        "upstream": { "drive_port": null, "free_port": null },
+        "downstream": {
+          "drive_ports": null,
+          "free_ports": null
+        },
+        "reset": { "reset_port": "rstn", "reset_active_low": true },
         "payload": {
-          "mode": "unknown",
-          "width_param": "DATA_WIDTH",
-          "data_in_port": null
-        },
-        "channels": {
-          "num_ports_param": "NUM_PORTS",
-          "downstream": [
-            { "index": 0, "drive_out": null, "free_in": null, "data_out": null }
-          ]
-        },
-        "reset": { "reset_port": "rstn", "reset_active_low": true }
+          "payload_port": null
+        }
       },
       "contract": {
         "invariants": [
           "Broadcast semantics: an upstream event is broadcast to ALL downstream channels (not selection-based).",
           "Upstream o_free must wait for ALL downstream frees (all-acks completion)."
         ],
-        "distribution": { "mode": "broadcast_all" },
         "release_rule": {
           "policy": "all_ports",
           "details": "o_free is emitted only after every paired i_free[k] indicates completion"
-        },
-        "payload_rule": {
-          "presence": "optional",
-          "mapping": "payload may be replicated/sliced per channel; implementation-defined"
         }
       },
-      "customization_points": [
-        "Flatten or vectorize per-channel ports; role mapping is per channel.",
-        "Payload mapping is flexible; completion rule (all-acks) is NOT."
-      ],
       "notes": [
         "Payload width per output channel may differ from input payload width; DATA_WIDTHOUT param is provided for this purpose.",
         "Broadcast means all downstream channels receive the event drive simultaneously.",
-        "This component should ideally not carry a payload but only handle event signals.",
         "The number of output channels is determined by the NUM_PORTS parameter. The width of each output channel can be specified by a parameter or explicitly defined during initialization."
       ]
     },
 
     {
-      "family": "WaitMergeN",
-      "kind": "base_component_template",
-      "params": {
-        "NUM_PORTS": null,
-        "DATA_WIDTHI": null,
-        "DATA_WIDTHO": null,
-        "EXTRA_PARAMS": {}
-      },
-      "interface": {
-        "inputs": [
-          { "index": 0, "drive_in": null, "free_out": null, "data_in": null }
-        ],
-        "output": {
-          "drive_out": null,
-          "free_in": null,
-          "data_out": null
-        },
-        "reset": { "reset_port": "rstn", "reset_active_low": true }
-      },
-      "contract": {
-        "invariants": [
-          "All-inputs join: output event triggers only when ALL inputs have arrived (all inputs to be ready).",
-          "Input free_out[k] follow output free_in together (broadcast completion back to all inputs)."
-        ],
-        "join_condition": { "policy": "all_inputs" },
-        "release_rule": {
-          "policy": "broadcast_from_output_free",
-          "details": "When output free arrives, free_out[k] are issued together for all k"
-        },
-        "payload_rule": {
-          "presence": "optional",
-          "mapping": "data_out formation is implementation-defined (concat/mux/etc.); must be evidenced or annotated"
-        }
-      },
-      "customization_points": [
-        "Input port packing/flattening is flexible; join condition and broadcast-free rule are NOT.",
-        "Payload merge mapping must be stated if not trivially derivable."
-      ],
-      "notes": [
-        "Payload width per input channel may differ from output payload width; DATA_WIDTHI and DATA_WIDTHO params are provided for this purpose.",
-        "This component should ideally not carry a payload but only handle event signals.",
-        "All-inputs join means the output event drive occurs only when all input drives have arrived.",
-        "The number of input ports can be parameterized or hard-coded, and can be determined based on port resolution."
-      ]
-    },
-
-    {
-      "family": "ArbMergeN",
+      "family": "WaitMerge",
       "kind": "base_component_template",
       "params": {
         "NUM_PORTS": null,
@@ -274,13 +187,48 @@
         "EXTRA_PARAMS": {}
       },
       "interface": {
-        "inputs": [
-          { "index": 0, "drive_in": null, "free_out": null, "data_in": null }
+        "upstream": { "drive_port": null, "free_port": null },
+        "downstream": {
+          "drive_ports": null,
+          "free_ports": null
+        },
+        "payload": {
+          "payload_port": null
+        },
+        "reset": { "reset_port": "rstn", "reset_active_low": true }
+      },
+      "contract": {
+        "invariants": [
+          "All-inputs join: output event triggers only when ALL inputs have arrived (all inputs to be ready).",
+          "upstream free follow output free_in together (broadcast completion back to all inputs)."
         ],
-        "output": {
-          "drive_out": null,
-          "free_in": null,
-          "data_out": null
+        "release_rule": {
+          "policy": "broadcast_from_output_free",
+          "details": "When output free arrives, free_out[k] are issued together for all k"
+        }
+      },
+      "notes": [
+        "All-inputs join means the output event drive occurs only when all input drives have arrived.",
+        "The number of input ports can be parameterized or hard-coded, and can be determined based on port resolution."
+      ]
+    },
+
+    {
+      "family": "ArbMerge",
+      "kind": "base_component_template",
+      "params": {
+        "NUM_PORTS": null,
+        "DATA_WIDTH": null,
+        "EXTRA_PARAMS": {}
+      },
+      "interface": {
+        "upstream": { "drive_port": null, "free_port": null },
+        "downstream": {
+          "drive_ports": null,
+          "free_ports": null
+        },
+        "payload": {
+          "payload_port": null
         },
         "reset": { "reset_port": "rstn", "reset_active_low": true }
       },
@@ -297,24 +245,16 @@
         "release_rule": {
           "policy": "selected_only",
           "details": "Only the granted input receives completion back (free_out) per transaction"
-        },
-        "payload_rule": {
-          "presence": "optional",
-          "mapping": "output data corresponds to granted input; exact capture/mux strategy is implementation-defined"
         }
+       
       },
-      "customization_points": [
-        "Do not assume fairness/priority unless evidenced in code or annotated.",
-        "Port naming/packing is flexible; exclusivity is NOT."
-      ],
       "notes": [
-        "This component should ideally not carry a payload but only handle event signals.",
         "The number of input ports can be parameterized or hard-coded, and can be determined based on port resolution."
       ]
     },
 
     {
-      "family": "MutexMergeN",
+      "family": "MutexMerge",
       "kind": "base_component_template",
       "params": {
         "NUM_PORTS": null,
@@ -322,13 +262,13 @@
         "EXTRA_PARAMS": {}
       },
       "interface": {
-        "inputs": [
-          { "index": 0, "drive_in": null, "free_out": null, "data_in": null }
-        ],
-        "output": {
-          "drive_out": null,
-          "free_in": null,
-          "data_out": null
+        "upstream": { "drive_port": null, "free_port": null },
+        "downstream": {
+          "drive_ports": null,
+          "free_ports": null
+        },
+        "payload": {
+          "payload_port": null
         },
         "reset": { "reset_port": "rstn", "reset_active_low": true }
       },
@@ -347,12 +287,7 @@
           "details": "Completion corresponds to the active input; simultaneous case is out-of-contract"
         }
       },
-      "customization_points": [
-        "If a design requires internal arbitration, it is no longer this family (document as ArbMerge/other).",
-        "Port naming/packing is flexible; mutual-exclusion assumption is NOT."
-      ],
       "notes": [
-        "This component should ideally not carry a payload but only handle event signals.",
         "The number of input ports can be parameterized or hard-coded, and can be determined based on port resolution."
       ]
     }
