@@ -14,9 +14,11 @@
 
 
 
+
+
 //@cc: schema: cc_header_v1
 //@cc: name: cWaitMerge_2_d_fetch
-//@cc: family: WaitMergeN
+//@cc: family: WaitMerge
 //@cc: params:
 //@cc:   NUM_PORTS: 2
 //@cc:   DATA_WIDTH: {TODO}

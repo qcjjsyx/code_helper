@@ -11,9 +11,11 @@
 
 
 
+
+
 //@cc: schema: cc_header_v1
 //@cc: name: cNatSplit_3_fetch
-//@cc: family: NatSplitN
+//@cc: family: NatSplit
 //@cc: params:
 //@cc:   NUM_PORTS: 3
 //@cc:   DATA_WIDTH: {TODO}

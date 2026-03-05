@@ -11,9 +11,11 @@
 
 
 
+
+
 //@cc: schema: cc_header_v1
 //@cc: name: cMutexMerge_5_df_fetch
-//@cc: family: MutexMergeN
+//@cc: family: MutexMerge
 //@cc: params:
 //@cc:   NUM_PORTS: 5
 //@cc:   DATA_WIDTH: 81
