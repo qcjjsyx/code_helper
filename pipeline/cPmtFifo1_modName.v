@@ -14,18 +14,17 @@
 
 
 
+
 //@cc: schema: cc_header_v1
 //@cc: name: cPmtFifo1_modName
 //@cc: family: PmtFifo1
 //@cc: params:
-//@cc:   NUM_PORTS: TODO
 //@cc:   DATA_WIDTH: {TODO}
 //@cc:   DELAY: {TODO}
 //@cc: roles:
-//@cc:   TODO: fill roles; ports: i_drive, i_freeNext, o_driveNext, o_fire_1, o_free, pmt, rstn
-//@cc:   upstream: []
-//@cc:   downstream: []
-//@cc:   fire:[]
+//@cc:   upstream: [i_drive]
+//@cc:   downstream: [o_driveNext]
+//@cc:   fire: [o_fire_1]
 //@cc: contract:
 //@cc:   TODO: fill contract
 

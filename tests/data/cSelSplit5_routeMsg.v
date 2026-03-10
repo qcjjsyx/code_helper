@@ -16,32 +16,31 @@
 
 
 //@cc: schema: cc_header_v1
-//@cc: name: cSelSplitN_modName
+//@cc: name: cSelSplit5_routeMsg
 //@cc: family: SelSplit
 //@cc: params:
-//@cc:   NUM_PORTS: TODO
-//@cc:   DATA_WIDTH: {TODO}
-//@cc:   DELAY: {TODO}
+//@cc:   NUM_PORTS: 5
+//@cc:   DATA_WIDTH: 51
+//@cc:   DELAY_IDRIVE: 7
+//@cc:   DELAY_OFREE: 1
 //@cc: roles:
-//@cc:   upstream: []
-//@cc:   downstream: []
+//@cc:   upstream: [i_drive, o_free]
+//@cc:   downstream: [o_drive0, o_drive1, o_drive2, o_drive3, o_drive4, i_free0, i_free1, i_free2, i_free3, i_free4]
 //@cc:   fire: []
-//@cc: contract:
-//@cc:   TODO: fill contract
 
-module cSelSplitN_modName #(
-    parameter NUM_PORTS    = 2,
-    parameter DATA_WIDTH   = 32,
+module cSelSplit5_routeMsg #(
+    parameter NUM_PORTS    = 5,
+    parameter DATA_WIDTH   = 51, // 数据宽度
 	parameter DELAY_IDRIVE = 7,  // i_drive - o_drive 上加的延时
 	parameter DELAY_OFREE  = 1   // i_free - o_free 上加的延时
 ) (
     input [DATA_WIDTH + NUM_PORTS - 1:0] i_data,   // 高位为使用独热码编码的选择条件
     input                                i_drive,
-    input                                i_free0, i_free1,
+    input                                i_free0, i_free1,i_free2,i_free3,i_free4,
 
     output                  o_free,
-    output                  o_drive0, o_drive1,
-    output [DATA_WIDTH-1:0] o_data0, o_data1,
+    output                  o_drive0, o_drive1, o_drive2, o_drive3, o_drive4,
+    output [DATA_WIDTH-1:0] o_data0, o_data1, o_data2, o_data3, o_data4,
     input                   rstn
 );
 
@@ -56,14 +55,17 @@ module cSelSplitN_modName #(
 
 	// 截取高 NUM_PORTS 位选择数据、低 DATA_WIDTH 位数据
 	assign w_valid_n = i_data[DATA_WIDTH + NUM_PORTS - 1 : DATA_WIDTH];   
-	assign w_data_n  = i_data[DATA_WIDTH : 0];
+	assign w_data_n  = i_data[DATA_WIDTH - 1 : 0];  // Corrected data width assignment
 
 	// 选择输出数据端口
 	assign o_data0 = w_data_n & {DATA_WIDTH{w_valid_n[0]}};
 	assign o_data1 = w_data_n & {DATA_WIDTH{w_valid_n[1]}};
+	assign o_data2 = w_data_n & {DATA_WIDTH{w_valid_n[2]}};
+	assign o_data3 = w_data_n & {DATA_WIDTH{w_valid_n[3]}};
+	assign o_data4 = w_data_n & {DATA_WIDTH{w_valid_n[4]}};
 
 	// drive 与 free 事件延时
-	(* dont_touch="true" *)freeSetDelay #(
+	freeSetDelay #(
 		.DELAY_UNIT_NUM ( DELAY_OFREE )
 	) delay_ofree_donttouch (
 		.i_pulse ( w_freeNext ),
@@ -71,7 +73,7 @@ module cSelSplitN_modName #(
 		.rstn     ( rstn )
 	);
 
-	(* dont_touch="true" *)freeSetDelay #(
+	freeSetDelay #(
 		.DELAY_UNIT_NUM ( DELAY_IDRIVE )
 	) delay_odrive_donttouch (
 		.i_pulse ( i_drive ),
@@ -81,7 +83,9 @@ module cSelSplitN_modName #(
 
 	assign o_drive0 = w_driveNext & w_valid_n[0];
 	assign o_drive1 = w_driveNext & w_valid_n[1];
-
-	assign w_freeNext = i_free0 | i_free1;
+	assign o_drive2 = w_driveNext & w_valid_n[2];
+	assign o_drive3 = w_driveNext & w_valid_n[3];
+	assign o_drive4 = w_driveNext & w_valid_n[4];
+	assign w_freeNext = i_free0 | i_free1 | i_free2 | i_free3 | i_free4;
 endmodule
 

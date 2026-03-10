@@ -4,12 +4,12 @@ from pathlib import Path
 
 FAMILIES = [
     "SelSplit",
-    "NatSplitN",
-    "WaitMergeN",
-    "ArbMergeN",
-    "MutexMergeN",
+    "NatSplit",
+    "WaitMerge",
+    "ArbMerge",
+    "MutexMerge",
     "Fifo1",
-    "PmtFifo1",
+    "PmtFifo",
 ]
 
 
@@ -31,7 +31,9 @@ def extract_cc_block(text: str):
         if line.lstrip().startswith("//@cc:"):
             in_block = True
             content = line.split("//@cc:", 1)[1]
-            block.append(content.lstrip())
+            if content.startswith(" "):
+                content = content[1:]
+            block.append(content.rstrip("\n"))
         else:
             if in_block:
                 break
@@ -67,6 +69,46 @@ def parse_module_header(text: str):
     if not match:
         return None, ""
     return match.group(1), match.group("ports") or ""
+
+
+def parse_module_parameters(text: str):
+    match = re.search(
+        r"\bmodule\s+[A-Za-z_]\w*\s*(?:#\s*\((?P<params>.*?)\)\s*)?\(",
+        text,
+        re.S,
+    )
+    if not match:
+        return {}
+
+    params = {}
+    param_text = match.group("params") or ""
+    if not param_text:
+        return params
+
+    for raw_item in param_text.split(","):
+        item = raw_item.strip()
+        if not item or "=" not in item:
+            continue
+
+        left, right = item.split("=", 1)
+        right = right.strip()
+        left = re.sub(
+            r"\bparameter\b|\blocalparam\b|\binteger\b|\bint\b|\blongint\b|\bshortint\b|\blogic\b|\bbit\b|\breg\b|\bwire\b|\bsigned\b|\bunsigned\b",
+            " ",
+            left,
+        )
+        left = re.sub(r"\[[^\]]+\]", " ", left)
+        name_match = re.search(r"([A-Za-z_]\w*)\s*$", left.strip())
+        if not name_match:
+            continue
+
+        value = right.rstrip(",)").strip()
+        if re.fullmatch(r"\d+", value):
+            params[name_match.group(1)] = int(value)
+        else:
+            params[name_match.group(1)] = value
+
+    return params
 
 
 def parse_ports(port_text: str):
@@ -216,3 +258,32 @@ def infer_family(module_name: str, file_name: str) -> str:
         if "Fifo" in cand:
             return "Fifo1"
     return "unknown"
+
+
+def infer_cc_identity(file_name: str):
+    stem = Path(file_name).stem
+    rules = [
+        (r"^cSelSplit_(\d+)_", "SelSplit"),
+        (r"^cNatSplit_(\d+)_", "NatSplit"),
+        (r"^cWaitMerge_(\d+)_", "WaitMerge"),
+        (r"^cMutexMerge_(\d+)_", "MutexMerge"),
+    ]
+    for pattern, family in rules:
+        match = re.match(pattern, stem)
+        if match:
+            return {
+                "family": family,
+                "num_ports": int(match.group(1)),
+            }
+
+    if re.match(r"^cFifo1_", stem):
+        return {"family": "Fifo1", "num_ports": None}
+    if re.match(r"^cPmtFifo_", stem):
+        return {"family": "PmtFifo", "num_ports": None}
+    if re.match(r"^cPmtFifo1_", stem):
+        return {"family": "PmtFifo1", "num_ports": None}
+
+    return {
+        "family": infer_family(stem, file_name),
+        "num_ports": None,
+    }

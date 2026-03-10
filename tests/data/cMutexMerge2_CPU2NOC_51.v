@@ -15,21 +15,18 @@
 
 
 //@cc: schema: cc_header_v1
-//@cc: name: cMutexMergeN_modName
+//@cc: name: cMutexMerge2_CPU2NOC_51
 //@cc: family: MutexMergeN
 //@cc: params:
 //@cc:   NUM_PORTS: TODO
-//@cc:   DATA_WIDTH: {TODO}
-//@cc:   DELAY: {TODO}
+//@cc:   DATA_WIDTH: 51
 //@cc: roles:
-//@cc:   upstream: []
-//@cc:   downstream: []
+//@cc:   upstream: [i_drive0, i_drive1, o_free0, o_free1]
+//@cc:   downstream: [o_driveNext, i_freeNext]
 //@cc:   fire: []
-//@cc: contract:
-//@cc:   mutex_model: environment_mutex_assumed
 
-module cMutexMergeN_modName #(
-    parameter DATA_WIDTH = 32
+module cMutexMerge2_CPU2NOC_51 #(
+    parameter DATA_WIDTH = 51
 )(
     input                   i_drive0, i_drive1,
     input  [DATA_WIDTH-1:0] i_data0, i_data1,

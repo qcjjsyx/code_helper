@@ -16,22 +16,21 @@
 
 
 //@cc: schema: cc_header_v1
-//@cc: name: cSelSplitN_modName
+//@cc: name: cSelSplit2_CPU2NOC_1
 //@cc: family: SelSplit
 //@cc: params:
-//@cc:   NUM_PORTS: TODO
-//@cc:   DATA_WIDTH: {TODO}
-//@cc:   DELAY: {TODO}
+//@cc:   NUM_PORTS: 2
+//@cc:   DATA_WIDTH: 1
+//@cc:   DELAY_IDRIVE: 7
+//@cc:   DELAY_OFREE: 1
 //@cc: roles:
-//@cc:   upstream: []
-//@cc:   downstream: []
+//@cc:   upstream: [i_drive, o_free]
+//@cc:   downstream: [o_drive0, o_drive1, i_free0, i_free1]
 //@cc:   fire: []
-//@cc: contract:
-//@cc:   TODO: fill contract
 
-module cSelSplitN_modName #(
+module cSelSplit2_CPU2NOC_1 #(
     parameter NUM_PORTS    = 2,
-    parameter DATA_WIDTH   = 32,
+    parameter DATA_WIDTH   = 1,
 	parameter DELAY_IDRIVE = 7,  // i_drive - o_drive 上加的延时
 	parameter DELAY_OFREE  = 1   // i_free - o_free 上加的延时
 ) (
@@ -59,8 +58,8 @@ module cSelSplitN_modName #(
 	assign w_data_n  = i_data[DATA_WIDTH : 0];
 
 	// 选择输出数据端口
-	assign o_data0 = w_data_n & {DATA_WIDTH{w_valid_n[0]}};
-	assign o_data1 = w_data_n & {DATA_WIDTH{w_valid_n[1]}};
+	assign o_data0 = w_data_n & {DATA_WIDTH{w_valid_n[1]}};
+	assign o_data1 = w_data_n & {DATA_WIDTH{w_valid_n[0]}};
 
 	// drive 与 free 事件延时
 	(* dont_touch="true" *)freeSetDelay #(
@@ -79,8 +78,8 @@ module cSelSplitN_modName #(
 		.rstn     ( rstn )
 	);
 
-	assign o_drive0 = w_driveNext & w_valid_n[0];
-	assign o_drive1 = w_driveNext & w_valid_n[1];
+	assign o_drive0 = w_driveNext & w_valid_n[1];
+	assign o_drive1 = w_driveNext & w_valid_n[0];
 
 	assign w_freeNext = i_free0 | i_free1;
 endmodule

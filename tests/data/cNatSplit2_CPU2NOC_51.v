@@ -15,25 +15,25 @@
 
 
 //@cc: schema: cc_header_v1
-//@cc: name: cNatSplitN_modName
+//@cc: name: cNatSplit2_CPU2NOC_51
 //@cc: family: NatSplitN
 //@cc: params:
-//@cc:   NUM_PORTS: TODO
+//@cc:   NUM_PORTS: 2
 //@cc:   DATA_WIDTH: {TODO}
-//@cc:   DELAY: {TODO}
+//@cc:   DATA_WIDTHI: 51
+//@cc:   DATA_WIDTHOUT0: 51
+//@cc:   DATA_WIDTHOUT1: 51
 //@cc: roles:
-//@cc:   upstream: []
-//@cc:   downstream: []
+//@cc:   upstream: [i_drive, o_free]
+//@cc:   downstream: [o_driveNext_n, i_freeNext_n]
 //@cc:   fire: []
-//@cc: contract:
-//@cc:   TODO: fill contract
 
- module cNatSplitN_modName#(
-    parameter NUM_PORTS      = 3,
-    parameter DATA_WIDTHI    = 32,
-    parameter DATA_WIDTHOUT0 = 12,
-    parameter DATA_WIDTHOUT1 = 32,
-    parameter DATA_WIDTHOUT2 = 24
+ module cNatSplit2_CPU2NOC_51#(
+    parameter NUM_PORTS      = 2,
+    parameter DATA_WIDTHI    = 51,
+    parameter DATA_WIDTHOUT0 = 51,
+    parameter DATA_WIDTHOUT1 = 51
+   //  parameter DATA_WIDTHOUT2 = 24
 )(
     input  wire                   i_drive,
     input  wire [NUM_PORTS-1:0]   i_freeNext_n,
@@ -43,7 +43,7 @@
     output wire [NUM_PORTS-1:0]      o_driveNext_n,
     output wire [DATA_WIDTHOUT0-1:0] o_data0,
     output wire [DATA_WIDTHOUT1-1:0] o_data1,
-    output wire [DATA_WIDTHOUT2-1:0] o_data2,
+   //  output wire [DATA_WIDTHOUT2-1:0] o_data2,
 
     input wire rstn
 );
@@ -59,14 +59,20 @@
    /*******自定义输出数据*******/
    assign o_data0 = i_data[DATA_WIDTHOUT0-1:0];
    assign o_data1 = i_data[DATA_WIDTHOUT1-1:0];
-   assign o_data2 = i_data[DATA_WIDTHOUT2-1:0];
+   // assign o_data2 = i_data[DATA_WIDTHOUT2-1:0];
    /***************************/
 
    assign w_andReq   = & w_Req_n;
    assign w_sendFree = w_dirveReq & w_andReq;
    
-   delay2U delay_dandreq (.inR(w_andReq), .outR(w_d_andReq), .rstn(rstn));
-
+   // delay2U delay_dandreq (.inR(w_andReq), .outR(w_d_andReq), .rstn(rstn));
+   freeSetDelay #(
+      .DELAY_UNIT_NUM ( 2 )
+   ) delay_dandreq (
+      .i_pulse ( w_andReq ),
+      .o_pulse ( w_d_andReq ),
+      .rstn     ( rstn )
+   );
    (* dont_touch="true" *) freeSetDelay #(
       .DELAY_UNIT_NUM ( 4 )
    ) delay_ofree_donttouch (

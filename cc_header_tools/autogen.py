@@ -2,34 +2,114 @@ from pathlib import Path
 
 from .parser import (
     extract_cc_block,
-    infer_family,
+    infer_cc_identity,
+    parse_module_parameters,
     parse_module_header,
     parse_ports,
     strip_comments_keep_cc,
 )
 
 
-def build_header(module_name: str, family: str, ports, add_family_note: bool):
-    port_list = ", ".join(sorted({p["name"] for p in ports}))
-    template_path = (
-        Path(__file__).resolve().parents[1] / "templates" / "cc_headers" / "autogen.txt"
+def _port_names(ports):
+    return {p["name"] for p in ports}
+
+
+def _first_existing(candidates, port_names):
+    for item in candidates:
+        if item in port_names:
+            return item
+    return candidates[0] if candidates else ""
+
+
+def _build_roles_and_params(identity, ports, module_params):
+    family = identity["family"]
+    num_ports = identity["num_ports"]
+    port_names = _port_names(ports)
+
+    def _match_ports(direction: str, prefix: str):
+        return [
+            p["name"]
+            for p in ports
+            if p.get("direction") == direction and p["name"].startswith(prefix)
+        ]
+
+    params = dict(module_params)
+    params.setdefault("DATA_WIDTH", "{TODO}")
+    # params.setdefault("DELAY", "{TODO}")
+    roles = {
+        "upstream": [],
+        "downstream": [],
+        "fire": [],
+    }
+    # contract = {}
+
+    # if family == "MutexMergeN":
+    #     contract["mutex_model"] = "environment_mutex_assumed"
+    # elif family == "ArbMergeN":
+    #     contract["arb_policy"] = "TODO"
+    # else:
+    #     contract["TODO"] = "fill contract"
+
+    parsed_num_ports = module_params.get("NUM_PORTS")
+    if isinstance(num_ports, int):
+        params["NUM_PORTS"] = num_ports # type: ignore
+    elif isinstance(parsed_num_ports, int):
+        params["NUM_PORTS"] = parsed_num_ports
+    elif isinstance(parsed_num_ports, str) and parsed_num_ports:
+        params["NUM_PORTS"] = parsed_num_ports
+    elif family not in {"Fifo1", "PmtFifo", "PmtFifo1"}:
+        params["NUM_PORTS"] = "TODO"
+
+    upstream_ports = _match_ports("input", "i_drive") + _match_ports("output", "o_free")
+    downstream_ports = _match_ports("output", "o_drive") + _match_ports("input", "i_free")
+
+    roles["upstream"] = upstream_ports
+    roles["downstream"] = downstream_ports
+
+    fire_port = _first_existing(["o_fire", "o_fire_1"], port_names)
+    if fire_port in port_names:
+        roles["fire"] = [fire_port]
+
+    return params, roles
+
+def _yaml_inline_list(items):
+    return "[" + ", ".join(items) + "]"
+
+
+def build_header(module_name: str, identity, ports):
+    family = identity["family"]
+    module_params = identity.get("module_params", {})
+    params, roles = _build_roles_and_params(identity, ports, module_params)
+
+    lines = [
+        "schema: cc_header_v1",
+        f"name: {module_name or 'TODO: set module name'}",
+        f"family: {family}",
+        "params:",
+    ]
+
+    priority_keys = ["NUM_PORTS", "DATA_WIDTH"]
+    for key in priority_keys:
+        if key in params:
+            lines.append(f"  {key}: {params[key]}")
+    for key in sorted(params):
+        if key in priority_keys:
+            continue
+        lines.append(f"  {key}: {params[key]}")
+
+    lines.extend(
+        [
+            "roles:",
+            f"  upstream: {_yaml_inline_list(roles['upstream'])}",
+            f"  downstream: {_yaml_inline_list(roles['downstream'])}",
+            f"  fire: {_yaml_inline_list(roles['fire'])}",
+        ]
     )
-    template = template_path.read_text(encoding="utf-8")
-    family_note = "note: TODO set family\n" if add_family_note else ""
-    if family == "ArbMergeN":
-        contract_block = "  arb_policy: TODO"
-    elif family == "MutexMergeN":
-        contract_block = "  mutex_model: TODO"
-    else:
-        contract_block = "  TODO: fill contract"
-    filled = template.format(
-        module_name=module_name or "TODO: set module name",
-        family=family,
-        family_note=family_note,
-        port_list=port_list,
-        contract_block=contract_block,
-    )
-    return "\n".join(f"//@cc: {line}" for line in filled.splitlines()) + "\n"
+    # lines.append("contract:")
+    # for key, value in contract.items():
+    #     lines.append(f"  {key}: {value}")
+
+    return "\n".join(f"//@cc: {line}" for line in lines) + "\n"
 
 
 def insert_header(text: str, header_block: str) -> str:
@@ -70,10 +150,11 @@ def autogen_for_file(path: Path, inplace: bool, only_missing: bool, force: bool 
 
     stripped = strip_comments_keep_cc(text)
     module_name, port_text = parse_module_header(stripped)
+    module_params = parse_module_parameters(stripped)
     ports = parse_ports(port_text)
-    family = infer_family(module_name or "", path.name)
-    add_family_note = family == "unknown"
-    header = build_header(module_name, family, ports, add_family_note) # type: ignore
+    identity = infer_cc_identity(path.name)
+    identity["module_params"] = module_params
+    header = build_header(module_name, identity, ports) # type: ignore
     updated = insert_header(text, header)
     if inplace:
         path.write_text(updated, encoding="utf-8")

@@ -20,22 +20,21 @@
 
 
 //@cc: schema: cc_header_v1
-//@cc: name: cArbMergeN_modName
+//@cc: name: cArbMerge5_arbMsg
 //@cc: family: ArbMergeN
 //@cc: params:
-//@cc:   NUM_PORTS: TODO
-//@cc:   DATA_WIDTH: {TODO}
-//@cc:   DELAY: {TODO}
+//@cc:   NUM_PORTS: 5
+//@cc:   DATA_WIDTH: 51
+//@cc:   DELAY1: 1
+//@cc:   DELAY2: 1
 //@cc: roles:
-//@cc:   upstream: []
-//@cc:   downstream: []
+//@cc:   upstream: [i_drive0, i_drive1, i_drive2, i_drive3, i_drive4, o_free0, o_free1, o_free2, o_free3, o_free4]
+//@cc:   downstream: [o_driveNext, i_freeNext]
 //@cc:   fire: []
-//@cc: contract:
-//@cc:   arb_policy: TODO
 
-module cArbMergeN_modName #(
-    parameter NUM_PORTS  = 3,
-    parameter DATA_WIDTH = 32,
+module cArbMerge5_arbMsg #(
+    parameter NUM_PORTS  = 5,
+    parameter DATA_WIDTH = 51,
     parameter DELAY1     = 1,
     parameter DELAY2     = 1
 ) (
@@ -52,6 +51,14 @@ module cArbMergeN_modName #(
     input                   i_drive2,
     input  [DATA_WIDTH-1:0] i_data2,
     output                  o_free2,
+
+    input                  i_drive3,
+    input  [DATA_WIDTH-1:0] i_data3,
+    output                 o_free3,
+
+    input                   i_drive4,
+    input  [DATA_WIDTH-1:0] i_data4,
+    output                  o_free4,
 
     output                  o_driveNext,
     output [DATA_WIDTH-1:0] o_data,
@@ -79,14 +86,18 @@ module cArbMergeN_modName #(
     wire [ NUM_PORTS-1:0] w_grant;
     wire [ NUM_PORTS-1:0] w_reset;
 
-    assign w_pf1id = {i_drive2, i_drive1, i_drive0};
-    assign {o_free2, o_free1, o_free0} = w_pf1of;
+    assign w_pf1id = {i_drive4,i_drive3,i_drive2, i_drive1, i_drive0};
+    assign {o_free4,o_free3,o_free2, o_free1, o_free0} = w_pf1of;
+    assign w_idata[4] = i_data4;
+    assign w_idata[3] = i_data3;
     assign w_idata[2] = i_data2;
     assign w_idata[1] = i_data1;
     assign w_idata[0] = i_data0;
     assign o_data = ({DATA_WIDTH{w_grant[0]}} & r_data[0]) | 
     ({DATA_WIDTH{w_grant[1]}} & r_data[1]) | 
-    ({DATA_WIDTH{w_grant[2]}} & r_data[2]);
+    ({DATA_WIDTH{w_grant[2]}} & r_data[2])|
+    ({DATA_WIDTH{w_grant[3]}} & r_data[3]) | 
+    ({DATA_WIDTH{w_grant[4]}} & r_data[4]);
 
     assign o_driveNext = |w_pf2od;
     assign w_pf1pmt = {NUM_PORTS{~(|w_req)}};
