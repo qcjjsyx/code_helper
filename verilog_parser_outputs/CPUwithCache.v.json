@@ -1,0 +1,202 @@
+{
+  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\CPUwithCache.v",
+  "top_module_name": "CPUwithCache",
+  "internal_subnames": [
+    "cpu_top",
+    "cpuCache_top"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "rst",
+        "width": null
+      },
+      {
+        "index": 1,
+        "name": "switch",
+        "width": null
+      },
+      {
+        "index": 2,
+        "name": "i_driveFromTPUtoCPU",
+        "width": null
+      },
+      {
+        "index": 3,
+        "name": "i_dataTPUtoCPU_80",
+        "width": "[79:0]"
+      },
+      {
+        "index": 4,
+        "name": "i_freeFromTPUtoCPU",
+        "width": null
+      },
+      {
+        "index": 5,
+        "name": "i_freeFromTStoCPU",
+        "width": null
+      },
+      {
+        "index": 6,
+        "name": "i_driveFromTStoCPU",
+        "width": null
+      },
+      {
+        "index": 7,
+        "name": "i_icache_drvFTPUSlot",
+        "width": null
+      },
+      {
+        "index": 8,
+        "name": "i_icache_tpuSlotPA_56",
+        "width": "[55:0]"
+      },
+      {
+        "index": 9,
+        "name": "i_icache_instData_128",
+        "width": "[127:0]"
+      },
+      {
+        "index": 10,
+        "name": "i_icache_freeFTPUSlot",
+        "width": null
+      },
+      {
+        "index": 11,
+        "name": "i_dcache_drvFTMU",
+        "width": null
+      },
+      {
+        "index": 12,
+        "name": "i_dcache_tmuWen",
+        "width": null
+      },
+      {
+        "index": 13,
+        "name": "i_dcache_tmuPA_56",
+        "width": "[55:0]"
+      },
+      {
+        "index": 14,
+        "name": "i_dcache_tmuData_64",
+        "width": "[63:0]"
+      },
+      {
+        "index": 15,
+        "name": "i_dcache_freeFtmuR",
+        "width": null
+      },
+      {
+        "index": 16,
+        "name": "i_dcache_freeFtmuW",
+        "width": null
+      },
+      {
+        "index": 17,
+        "name": "i_drvFDDRRefill",
+        "width": null
+      },
+      {
+        "index": 18,
+        "name": "i_ddrRefillLine_256",
+        "width": "[255:0]"
+      },
+      {
+        "index": 19,
+        "name": "i_drvFDDRWriteOver",
+        "width": null
+      },
+      {
+        "index": 20,
+        "name": "i_freeFDDRRead",
+        "width": null
+      },
+      {
+        "index": 21,
+        "name": "i_freeFDDRWrite",
+        "width": null
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeFromCPUtoTPU",
+          "width": null
+        },
+        {
+          "name": "o_driveFromCPUtoTPU",
+          "width": null
+        },
+        {
+          "name": "o_driveFromCPUtoTS",
+          "width": null
+        },
+        {
+          "name": "o_dataCPUtoTS_128",
+          "width": "[127:0]"
+        },
+        {
+          "name": "o_freeFromCPUtoTS",
+          "width": null
+        },
+        {
+          "name": "o_icache_free2TPUSlot",
+          "width": null
+        },
+        {
+          "name": "o_icache_drv2TPUSlot",
+          "width": null
+        },
+        {
+          "name": "o_dcache_free2TMU",
+          "width": null
+        },
+        {
+          "name": "o_dcache_drv2tmuR",
+          "width": null
+        },
+        {
+          "name": "o_dcache_tmuRData_64",
+          "width": "[63:0]"
+        },
+        {
+          "name": "o_dcache_drv2tmuW",
+          "width": null
+        },
+        {
+          "name": "o_free2DDRRefill",
+          "width": null
+        },
+        {
+          "name": "o_free2DDRWriteOver",
+          "width": null
+        },
+        {
+          "name": "o_drv2DDRRead",
+          "width": null
+        },
+        {
+          "name": "o_readPA_56",
+          "width": "[55:0]"
+        },
+        {
+          "name": "o_drv2DDRWrite",
+          "width": null
+        },
+        {
+          "name": "o_writePA_56",
+          "width": "[55:0]"
+        },
+        {
+          "name": "o_writeLine_256",
+          "width": "[255:0]"
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}

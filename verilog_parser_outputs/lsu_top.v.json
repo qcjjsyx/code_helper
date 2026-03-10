@@ -1,0 +1,66 @@
+{
+  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\LSU\\lsu_top.v",
+  "top_module_name": "lsu_top",
+  "internal_subnames": [
+    "cFifo1_lsu",
+    "lsu_memReqFormat_comb",
+    "cSelSplit2_lsu",
+    "cNatSplit2_lsu",
+    "else",
+    "lsu_memAckFormat_comb",
+    "eventSink_lsu"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "i_driveFromExe",
+        "width": null
+      },
+      {
+        "index": 1,
+        "name": "i_freeFromMem",
+        "width": null
+      },
+      {
+        "index": 2,
+        "name": "i_driveFromMem",
+        "width": null
+      },
+      {
+        "index": 3,
+        "name": "i_freeFromRetire",
+        "width": null
+      },
+      {
+        "index": 4,
+        "name": "rst",
+        "width": null
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeToExe",
+          "width": null
+        },
+        {
+          "name": "o_driveToMem",
+          "width": null
+        },
+        {
+          "name": "o_freeToMem",
+          "width": null
+        },
+        {
+          "name": "o_driveToRetire",
+          "width": null
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}

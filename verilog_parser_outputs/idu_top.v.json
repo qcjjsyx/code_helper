@@ -1,0 +1,21 @@
+{
+  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\IDU\\idu_top.v",
+  "top_module_name": "idu_top",
+  "internal_subnames": [
+    "cFifo1_idu",
+    "decoder_c",
+    "decoder",
+    "csrf",
+    "grf"
+  ],
+  "interface": {
+    "inputs": [],
+    "output": {
+      "ports": []
+    },
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  }
+}

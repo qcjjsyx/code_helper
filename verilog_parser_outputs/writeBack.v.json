@@ -1,0 +1,82 @@
+{
+  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\WB\\writeBack.v",
+  "top_module_name": "writeBack",
+  "internal_subnames": [
+    "cFifo1_cpu",
+    "cNatSplit_2_fetch",
+    "delay8U",
+    "cSelSplit_2_fetch",
+    "cMutexMerge_2_WB",
+    "cWaitMerge_2_WB"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "i_dataLSUToWb_246",
+        "width": "[245:0]"
+      },
+      {
+        "index": 1,
+        "name": "i_driveLSUToWb",
+        "width": null
+      },
+      {
+        "index": 2,
+        "name": "i_freeGrfToWb",
+        "width": null
+      },
+      {
+        "index": 3,
+        "name": "i_freeCsrfToWb",
+        "width": null
+      },
+      {
+        "index": 4,
+        "name": "i_freeFetchToWb",
+        "width": null
+      },
+      {
+        "index": 5,
+        "name": "rst",
+        "width": null
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeWbToLSU",
+          "width": null
+        },
+        {
+          "name": "o_dataWbToGrf_69",
+          "width": "[68:0]"
+        },
+        {
+          "name": "o_driveWbToGrf",
+          "width": null
+        },
+        {
+          "name": "o_dataWbToCsrf_76",
+          "width": "[75:0]"
+        },
+        {
+          "name": "o_driveWbToCsrf",
+          "width": null
+        },
+        {
+          "name": "o_dataWbToFetch_64",
+          "width": "[63:0]"
+        },
+        {
+          "name": "o_driveWbToFetch",
+          "width": null
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}

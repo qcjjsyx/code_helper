@@ -1,0 +1,60 @@
+{
+  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\Exe\\exe_top.v",
+  "top_module_name": "exe_top",
+  "internal_subnames": [
+    "cFifo1_cpu",
+    "delay_free_cpu",
+    "cSelSplit_6_exe",
+    "alu_module",
+    "mul_module",
+    "div_module",
+    "agu_module",
+    "csr_module",
+    "bru_module",
+    "cMutexMerge_6_df_exe"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "rst",
+        "width": null
+      },
+      {
+        "index": 1,
+        "name": "i_driveToExe",
+        "width": null
+      },
+      {
+        "index": 2,
+        "name": "i_decoderExeBus_343",
+        "width": "[342:0]"
+      },
+      {
+        "index": 3,
+        "name": "i_freeNextFrmLsu",
+        "width": null
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeFrmExe",
+          "width": null
+        },
+        {
+          "name": "o_driveNextToLsu",
+          "width": null
+        },
+        {
+          "name": "o_exeLSUBus_246",
+          "width": "[245:0]"
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}

@@ -1,0 +1,136 @@
+{
+  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\mem_slot\\mem_slot.v",
+  "top_module_name": "mem_slot",
+  "internal_subnames": [
+    "cFifo1_cpu",
+    "delay_free_cpu",
+    "cSelSplit_2_fetch",
+    "cArbMerge_2_memslot",
+    "cMutexMerge_2_df_memslot"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "rst",
+        "width": null
+      },
+      {
+        "index": 1,
+        "name": "i_driveFromFetchtoMem",
+        "width": null
+      },
+      {
+        "index": 2,
+        "name": "i_dataFetchtoMem_136",
+        "width": "[135:0]"
+      },
+      {
+        "index": 3,
+        "name": "i_freeFromFetchtoMem",
+        "width": null
+      },
+      {
+        "index": 4,
+        "name": "i_driveFromLSUtoMem",
+        "width": null
+      },
+      {
+        "index": 5,
+        "name": "i_dataLSUtoMem_136",
+        "width": "[135:0]"
+      },
+      {
+        "index": 6,
+        "name": "i_freeFromLSUtoMem",
+        "width": null
+      },
+      {
+        "index": 7,
+        "name": "i_freeFromIcachetoMem",
+        "width": null
+      },
+      {
+        "index": 8,
+        "name": "i_driveFromIcachetoMem",
+        "width": null
+      },
+      {
+        "index": 9,
+        "name": "i_dataIcachetoMem_256",
+        "width": "[255:0]"
+      },
+      {
+        "index": 10,
+        "name": "i_freeFromDcachetoMem",
+        "width": null
+      },
+      {
+        "index": 11,
+        "name": "i_driveFromDcachetoMem",
+        "width": null
+      },
+      {
+        "index": 12,
+        "name": "i_dataDcachetoMem_256",
+        "width": "[255:0]"
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeFromMemtoFetch",
+          "width": null
+        },
+        {
+          "name": "o_driveFromMemtoFetch",
+          "width": null
+        },
+        {
+          "name": "o_dataMemtoFetch_256",
+          "width": "[255:0]"
+        },
+        {
+          "name": "o_freeFromMemtoLSU",
+          "width": null
+        },
+        {
+          "name": "o_driveFromMemtoLSU",
+          "width": null
+        },
+        {
+          "name": "o_dataMemtoLSU_256",
+          "width": "[255:0]"
+        },
+        {
+          "name": "o_driveFromMemtoIcache",
+          "width": null
+        },
+        {
+          "name": "o_dataMemtoIcache_136",
+          "width": "[135:0]"
+        },
+        {
+          "name": "o_freeFromMemtoIcache",
+          "width": null
+        },
+        {
+          "name": "o_driveFromMemtoDcache",
+          "width": null
+        },
+        {
+          "name": "o_dataMemtoDcache_136",
+          "width": "[135:0]"
+        },
+        {
+          "name": "o_freeFromMemtoDcache",
+          "width": null
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}

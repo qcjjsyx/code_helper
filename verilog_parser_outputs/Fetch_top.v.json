@@ -1,0 +1,148 @@
+{
+  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\Fetch\\Fetch_top.v",
+  "top_module_name": "Fetch_top",
+  "internal_subnames": [
+    "cMutexMerge_2_WB",
+    "cFifo1_cpu",
+    "cMutexMerge_4_d_fetch",
+    "Fetch_Logic",
+    "eventSink_cpu",
+    "delay_free_cpu",
+    "cSelSplit_2_fetch"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "rst",
+        "width": null
+      },
+      {
+        "index": 1,
+        "name": "switch",
+        "width": null
+      },
+      {
+        "index": 2,
+        "name": "i_driveFromTPUtoCPU",
+        "width": null
+      },
+      {
+        "index": 3,
+        "name": "i_dataTPUtoCPU_80",
+        "width": "[79:0]"
+      },
+      {
+        "index": 4,
+        "name": "i_freeFromTPUtoCPU",
+        "width": null
+      },
+      {
+        "index": 5,
+        "name": "i_driveFromEXCPtoCPU",
+        "width": null
+      },
+      {
+        "index": 6,
+        "name": "i_dataFromEXCPtoCPU_64",
+        "width": "[63:0]"
+      },
+      {
+        "index": 7,
+        "name": "i_driveFromWBtoCPU",
+        "width": null
+      },
+      {
+        "index": 8,
+        "name": "i_dataFromWBtoCPU_64",
+        "width": "[63:0]"
+      },
+      {
+        "index": 9,
+        "name": "i_freeFromIcachetoCPU",
+        "width": null
+      },
+      {
+        "index": 10,
+        "name": "i_driveFromIcachetoCPU",
+        "width": null
+      },
+      {
+        "index": 11,
+        "name": "i_dataIcachetoCPU_256",
+        "width": "[255:0]"
+      },
+      {
+        "index": 12,
+        "name": "i_freeFromTStoCPU",
+        "width": null
+      },
+      {
+        "index": 13,
+        "name": "i_driveFromTStoCPU",
+        "width": null
+      },
+      {
+        "index": 14,
+        "name": "i_freeFromDecodertoFetch",
+        "width": null
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeFromCPUtoTPU",
+          "width": null
+        },
+        {
+          "name": "o_driveFromCPUtoTPU",
+          "width": null
+        },
+        {
+          "name": "o_freeFromCPUtoEXCP",
+          "width": null
+        },
+        {
+          "name": "o_freeFromCPUtoWB",
+          "width": null
+        },
+        {
+          "name": "o_driveFromCPUtoIcache",
+          "width": null
+        },
+        {
+          "name": "o_dataCPUtoIcache_136",
+          "width": "[135:0]"
+        },
+        {
+          "name": "o_freeFromCPUtoIcache",
+          "width": null
+        },
+        {
+          "name": "o_driveFromCPUtoTS",
+          "width": null
+        },
+        {
+          "name": "o_dataCPUtoTS_128",
+          "width": "[127:0]"
+        },
+        {
+          "name": "o_freeFromCPUtoTS",
+          "width": null
+        },
+        {
+          "name": "o_driveFromFetchtoDecoder",
+          "width": null
+        },
+        {
+          "name": "o_dataFetchtoDecoder_97",
+          "width": "[96:0]"
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}

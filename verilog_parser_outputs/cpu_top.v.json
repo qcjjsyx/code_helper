@@ -1,0 +1,133 @@
+{
+  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\CPU\\cpu_top.v",
+  "top_module_name": "cpu_top",
+  "internal_subnames": [
+    "Fetch_top",
+    "idu_top",
+    "exe_top",
+    "lsu_top",
+    "mem_slot",
+    "writeBack"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "rst",
+        "width": null
+      },
+      {
+        "index": 1,
+        "name": "switch",
+        "width": null
+      },
+      {
+        "index": 2,
+        "name": "i_driveFromTPUtoCPU",
+        "width": null
+      },
+      {
+        "index": 3,
+        "name": "i_dataTPUtoCPU_80",
+        "width": "[79:0]"
+      },
+      {
+        "index": 4,
+        "name": "i_freeFromTPUtoCPU",
+        "width": null
+      },
+      {
+        "index": 5,
+        "name": "i_freeFromTStoCPU",
+        "width": null
+      },
+      {
+        "index": 6,
+        "name": "i_driveFromTStoCPU",
+        "width": null
+      },
+      {
+        "index": 7,
+        "name": "i_freeFromIcachetoMem",
+        "width": null
+      },
+      {
+        "index": 8,
+        "name": "i_driveFromIcachetoMem",
+        "width": null
+      },
+      {
+        "index": 9,
+        "name": "i_dataIcachetoMem_256",
+        "width": "[255:0]"
+      },
+      {
+        "index": 10,
+        "name": "i_freeFromDcachetoMem",
+        "width": null
+      },
+      {
+        "index": 11,
+        "name": "i_driveFromDcachetoMem",
+        "width": null
+      },
+      {
+        "index": 12,
+        "name": "i_dataDcachetoMem_256",
+        "width": "[255:0]"
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeFromCPUtoTPU",
+          "width": null
+        },
+        {
+          "name": "o_driveFromCPUtoTPU",
+          "width": null
+        },
+        {
+          "name": "o_driveFromCPUtoTS",
+          "width": null
+        },
+        {
+          "name": "o_dataCPUtoTS_128",
+          "width": "[127:0]"
+        },
+        {
+          "name": "o_freeFromCPUtoTS",
+          "width": null
+        },
+        {
+          "name": "o_driveFromMemtoIcache",
+          "width": null
+        },
+        {
+          "name": "o_dataMemtoIcache_136",
+          "width": "[135:0]"
+        },
+        {
+          "name": "o_freeFromMemtoIcache",
+          "width": null
+        },
+        {
+          "name": "o_driveFromMemtoDcache",
+          "width": null
+        },
+        {
+          "name": "o_dataMemtoDcache_136",
+          "width": "[135:0]"
+        },
+        {
+          "name": "o_freeFromMemtoDcache",
+          "width": null
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}
