@@ -72,7 +72,7 @@ def _parse_port_list(port_list_str: str) -> Dict[str, Any]:
             break
         direction = m.group(1).lower()
         msb, lsb = m.group(2), m.group(3)
-        width = f"[{msb}:{lsb}]" if (msb is not None and lsb is not None) else None
+        width = int(msb) - int(lsb) + 1 if (msb is not None and lsb is not None) else 1
         name = m.group(4).strip()
         pos = m.end()
 
