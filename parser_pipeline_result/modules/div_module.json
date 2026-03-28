@@ -1,0 +1,541 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "div_module",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "CPU/Exe/div_module.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "i_divdata_235",
+        "direction": "input",
+        "width_text": "[234:0]"
+      },
+      {
+        "name": "o_divResult_246",
+        "direction": "output",
+        "width_text": "[245:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_Compress_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_inst_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_rd_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_rs1Value_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_rs2Value_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_PC_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_div_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_remainder_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_mulDivSign_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_rv64_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_divResult_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_op1NeedToBeTrans_64",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_op2NeedToBeTrans_64",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_quotientSign_64",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_remainderSign_64",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_quoNeedToBeTrans_64",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_remNeedToBeTrans_64",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "rs1_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "rs2_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_op1NeedToBeTrans_32",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_op2NeedToBeTrans_32",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_quotientSign_32",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_remainderSign_32",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_quoNeedToBeTrans_32",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_remNeedToBeTrans_32",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_unsignedOperand1_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_unsignedOperand2_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_unsignedOperand1_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_unsignedOperand2_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_tempQuotient_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_tempRemainder_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_tempQuotient_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_tempRemainder_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_signedQuotient_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_signedRemainder_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_signedQuotient_32_sext",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_signedQuotient_32_final",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_signedRemainder_32_sext",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_signedRemainder_32_final",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_quotient_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_remainder_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_quotient_32",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_remainder_32",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_divResult_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    }
+  ],
+  "instances": [],
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_divdata_235",
+        "kind": "port_input",
+        "width_text": "[234:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_divResult_246",
+        "kind": "port_output",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rs1_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rs2_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_Compress_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_PC_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_divResult_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_divResult_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_div_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mulDivSign_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_op1NeedToBeTrans_32",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_op1NeedToBeTrans_64",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_op2NeedToBeTrans_32",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_op2NeedToBeTrans_64",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_quoNeedToBeTrans_32",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_quoNeedToBeTrans_64",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_quotientSign_32",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_quotientSign_64",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_quotient_32",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_quotient_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rd_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_remNeedToBeTrans_32",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_remNeedToBeTrans_64",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_remainderSign_32",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_remainderSign_64",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_remainder_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_remainder_32",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_remainder_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs1Value_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs2Value_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rv64_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_signedQuotient_32_final",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_signedQuotient_32_sext",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_signedQuotient_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_signedRemainder_32_final",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_signedRemainder_32_sext",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_signedRemainder_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_tempQuotient_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_tempQuotient_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_tempRemainder_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_tempRemainder_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_unsignedOperand1_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_unsignedOperand1_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_unsignedOperand2_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_unsignedOperand2_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

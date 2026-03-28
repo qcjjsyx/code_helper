@@ -127,9 +127,9 @@ def test_autogen_infers_family_and_num_ports(tmp_path):
     assert fifo_hdr["family"] == "Fifo1"
     assert "NUM_PORTS" not in fifo_hdr["params"]
 
-    # 4) PmtFifo: family=PmtFifo
+    # 4) PmtFifo: family=PmtFifo1
     pmt_hdr = _header(work_dir / "cPmtFifo_cpu.v")
-    assert pmt_hdr["family"] == "PmtFifo"
+    assert pmt_hdr["family"] == "PmtFifo1"
 
 
 def test_autogen_extracts_data_width_and_fallback_num_ports(tmp_path):

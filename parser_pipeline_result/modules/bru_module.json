@@ -1,0 +1,365 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "bru_module",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "CPU/Exe/bru_module.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "i_brudata_303",
+        "direction": "input",
+        "width_text": "[302:0]"
+      },
+      {
+        "name": "o_bruResult_246",
+        "direction": "output",
+        "width_text": "[245:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_Compress_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_inst_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_rd_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_rs1Value_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_rs2Value_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_PC_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_imm_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_rv64_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_Jal_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_Jalr_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_BType_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_BTypeCon_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_branchSign_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_Jalresult_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_Jalpc_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_Jalrresult_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_Jalrpc_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_beq",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_bne",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_bl",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_bge",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_bJump",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_pcresult_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_resultvalue_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_JalrRight_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_jalResult_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_jalrResult_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_bResult_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    }
+  ],
+  "instances": [],
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_brudata_303",
+        "kind": "port_input",
+        "width_text": "[302:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_bruResult_246",
+        "kind": "port_output",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_BTypeCon_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_BType_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Compress_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Jal_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Jalpc_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_JalrRight_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Jalr_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Jalresult_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_Jalrpc_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_Jalrresult_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_PC_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bJump",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_bResult_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_beq",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_bge",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_bl",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_bne",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_branchSign_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_jalResult_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_jalrResult_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_pcresult_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rd_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_resultvalue_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs1Value_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs2Value_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rv64_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

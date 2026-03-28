@@ -4,12 +4,12 @@ from pathlib import Path
 
 FAMILIES = [
     "SelSplit",
-    "NatSplit",
-    "WaitMerge",
-    "ArbMerge",
-    "MutexMerge",
+    "NatSplitN",
+    "WaitMergeN",
+    "ArbMergeN",
+    "MutexMergeN",
     "Fifo1",
-    "PmtFifo",
+    "PmtFifo1",
 ]
 
 
@@ -264,9 +264,9 @@ def infer_cc_identity(file_name: str):
     stem = Path(file_name).stem
     rules = [
         (r"^cSelSplit_(\d+)_", "SelSplit"),
-        (r"^cNatSplit_(\d+)_", "NatSplit"),
-        (r"^cWaitMerge_(\d+)_", "WaitMerge"),
-        (r"^cMutexMerge_(\d+)_", "MutexMerge"),
+        (r"^cNatSplit_(\d+)_", "NatSplitN"),
+        (r"^cWaitMerge_(\d+)_", "WaitMergeN"),
+        (r"^cMutexMerge_(\d+)_", "MutexMergeN"),
     ]
     for pattern, family in rules:
         match = re.match(pattern, stem)
@@ -278,9 +278,9 @@ def infer_cc_identity(file_name: str):
 
     if re.match(r"^cFifo1_", stem):
         return {"family": "Fifo1", "num_ports": None}
-    if re.match(r"^cPmtFifo_", stem):
-        return {"family": "PmtFifo", "num_ports": None}
     if re.match(r"^cPmtFifo1_", stem):
+        return {"family": "PmtFifo1", "num_ports": None}
+    if re.match(r"^cPmtFifo_", stem):
         return {"family": "PmtFifo1", "num_ports": None}
 
     return {

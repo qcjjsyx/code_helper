@@ -1,0 +1,1752 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "CPUwithCache",
+  "artifact_kind": "module",
+  "module_role": "top",
+  "file": "CPU/CPUwithCache.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "switch",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromTPUtoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dataTPUtoCPU_80",
+        "direction": "input",
+        "width_text": "[79:0]"
+      },
+      {
+        "name": "o_freeFromCPUtoTPU",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromCPUtoTPU",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_freeFromTPUtoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromCPUtoTS",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_dataCPUtoTS_128",
+        "direction": "output",
+        "width_text": "[127:0]"
+      },
+      {
+        "name": "i_freeFromTStoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromTStoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_freeFromCPUtoTS",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_icache_drvFTPUSlot",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_icache_free2TPUSlot",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_icache_tpuSlotPA_56",
+        "direction": "input",
+        "width_text": "[55 :0]"
+      },
+      {
+        "name": "i_icache_instData_128",
+        "direction": "input",
+        "width_text": "[127:0]"
+      },
+      {
+        "name": "o_icache_drv2TPUSlot",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_icache_freeFTPUSlot",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dcache_drvFTMU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_dcache_free2TMU",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_dcache_tmuWen",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dcache_tmuPA_56",
+        "direction": "input",
+        "width_text": "[55 :0]"
+      },
+      {
+        "name": "i_dcache_tmuData_64",
+        "direction": "input",
+        "width_text": "[63 :0]"
+      },
+      {
+        "name": "o_dcache_drv2tmuR",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_dcache_freeFtmuR",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_dcache_tmuRData_64",
+        "direction": "output",
+        "width_text": "[63 :0]"
+      },
+      {
+        "name": "o_dcache_drv2tmuW",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_dcache_freeFtmuW",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_drvFDDRRefill",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_free2DDRRefill",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_ddrRefillLine_256",
+        "direction": "input",
+        "width_text": "[255:0]"
+      },
+      {
+        "name": "i_drvFDDRWriteOver",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_free2DDRWriteOver",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_drv2DDRRead",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_freeFDDRRead",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_readPA_56",
+        "direction": "output",
+        "width_text": "[55 :0]"
+      },
+      {
+        "name": "o_drv2DDRWrite",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_freeFDDRWrite",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_writePA_56",
+        "direction": "output",
+        "width_text": "[55 :0]"
+      },
+      {
+        "name": "o_writeLine_256",
+        "direction": "output",
+        "width_text": "[255:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_driveFromMemtoIcache",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataMemtoIcache_136",
+      "kind": "wire",
+      "width_text": "[135:0]"
+    },
+    {
+      "name": "w_freeFromIcachetoMem",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFromIcachetoMem",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataIcachetoMem_256",
+      "kind": "wire",
+      "width_text": "[255:0]"
+    },
+    {
+      "name": "w_freeFromMemtoIcache",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFromMemtoDcache",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataMemtoDcache_136",
+      "kind": "wire",
+      "width_text": "[135:0]"
+    },
+    {
+      "name": "w_freeFromDcachetoMem",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFromDcachetoMem",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataDcachetoMem_256",
+      "kind": "wire",
+      "width_text": "[255:0]"
+    },
+    {
+      "name": "w_freeFromMemtoDcache",
+      "kind": "wire",
+      "width_text": null
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "cpu_top",
+      "module_type": "cpu_top",
+      "artifact_kind": "module",
+      "target_ref": "../modules/cpu_top.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "switch",
+          "signal": "switch",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "i_driveFromTPUtoCPU",
+          "signal": "i_driveFromTPUtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataTPUtoCPU_80",
+          "signal": "i_dataTPUtoCPU_80",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromCPUtoTPU",
+          "signal": "o_freeFromCPUtoTPU",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromCPUtoTPU",
+          "signal": "o_driveFromCPUtoTPU",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeFromTPUtoCPU",
+          "signal": "i_freeFromTPUtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromCPUtoTS",
+          "signal": "o_driveFromCPUtoTS",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataCPUtoTS_128",
+          "signal": "o_dataCPUtoTS_128",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromTStoCPU",
+          "signal": "i_freeFromTStoCPU",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromTStoCPU",
+          "signal": "i_driveFromTStoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeFromCPUtoTS",
+          "signal": "o_freeFromCPUtoTS",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromMemtoIcache",
+          "signal": "w_driveFromMemtoIcache",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataMemtoIcache_136",
+          "signal": "w_dataMemtoIcache_136",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromIcachetoMem",
+          "signal": "w_freeFromIcachetoMem",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromIcachetoMem",
+          "signal": "w_driveFromIcachetoMem",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataIcachetoMem_256",
+          "signal": "w_dataIcachetoMem_256",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromMemtoIcache",
+          "signal": "w_freeFromMemtoIcache",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromMemtoDcache",
+          "signal": "w_driveFromMemtoDcache",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataMemtoDcache_136",
+          "signal": "w_dataMemtoDcache_136",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromDcachetoMem",
+          "signal": "w_freeFromDcachetoMem",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromDcachetoMem",
+          "signal": "w_driveFromDcachetoMem",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataDcachetoMem_256",
+          "signal": "w_dataDcachetoMem_256",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromMemtoDcache",
+          "signal": "w_freeFromMemtoDcache",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        }
+      ]
+    },
+    {
+      "instance_name": "cpuCache_top",
+      "module_type": "cpuCache_top",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        },
+        {
+          "port": "i_icache_drvFLdSt",
+          "signal": "w_driveFromMemtoIcache",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_icache_free2LdSt",
+          "signal": "w_freeFromIcachetoMem",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_icache_stWen_8",
+          "signal": "w_dataMemtoIcache_136[135:128]",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_icache_cpuPA_56",
+          "signal": "w_dataMemtoIcache_136[119:64]",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_icache_stData_64",
+          "signal": "w_dataMemtoIcache_136[63:0]",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_icache_drv2LdSt",
+          "signal": "w_driveFromIcachetoMem",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_icache_freeFLdSt",
+          "signal": "w_freeFromMemtoIcache",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_icache_loadData_256",
+          "signal": "w_dataIcachetoMem_256",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_icache_drvFTPUSlot",
+          "signal": "i_icache_drvFTPUSlot",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_icache_free2TPUSlot",
+          "signal": "o_icache_free2TPUSlot",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_icache_tpuSlotPA_56",
+          "signal": "i_icache_tpuSlotPA_56",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_icache_instData_128",
+          "signal": "i_icache_instData_128",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_icache_drv2TPUSlot",
+          "signal": "o_icache_drv2TPUSlot",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_icache_freeFTPUSlot",
+          "signal": "i_icache_freeFTPUSlot",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_dcache_drvFLdSt",
+          "signal": "w_driveFromMemtoDcache",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dcache_free2LdSt",
+          "signal": "w_freeFromDcachetoMem",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_dcache_stWen_8",
+          "signal": "w_dataMemtoDcache_136[135:128]",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_dcache_cpuPA_56",
+          "signal": "w_dataMemtoDcache_136[119:64]",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_dcache_stData_64",
+          "signal": "w_dataMemtoDcache_136[63:0]",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_dcache_drv2LdSt",
+          "signal": "w_driveFromDcachetoMem",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dcache_freeFLdSt",
+          "signal": "w_freeFromMemtoDcache",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_dcache_loadData_256",
+          "signal": "w_dataDcachetoMem_256",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_dcache_drvFTMU",
+          "signal": "i_dcache_drvFTMU",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_dcache_free2TMU",
+          "signal": "o_dcache_free2TMU",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_dcache_tmuWen",
+          "signal": "i_dcache_tmuWen",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_dcache_tmuPA_56",
+          "signal": "i_dcache_tmuPA_56",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_dcache_tmuData_64",
+          "signal": "i_dcache_tmuData_64",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_dcache_drv2tmuR",
+          "signal": "o_dcache_drv2tmuR",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_dcache_freeFtmuR",
+          "signal": "i_dcache_freeFtmuR",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_dcache_tmuRData_64",
+          "signal": "o_dcache_tmuRData_64",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_dcache_drv2tmuW",
+          "signal": "o_dcache_drv2tmuW",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_dcache_freeFtmuW",
+          "signal": "i_dcache_freeFtmuW",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_drvFDDRRefill",
+          "signal": "i_drvFDDRRefill",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free2DDRRefill",
+          "signal": "o_free2DDRRefill",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_ddrRefillLine_256",
+          "signal": "i_ddrRefillLine_256",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drvFDDRWriteOver",
+          "signal": "i_drvFDDRWriteOver",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free2DDRWriteOver",
+          "signal": "o_free2DDRWriteOver",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_drv2DDRRead",
+          "signal": "o_drv2DDRRead",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeFDDRRead",
+          "signal": "i_freeFDDRRead",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_readPA_56",
+          "signal": "o_readPA_56",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_drv2DDRWrite",
+          "signal": "o_drv2DDRWrite",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeFDDRWrite",
+          "signal": "i_freeFDDRWrite",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_writePA_56",
+          "signal": "o_writePA_56",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_writeLine_256",
+          "signal": "o_writeLine_256",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ]
+    }
+  ],
+  "direct_children": {
+    "modules": [
+      "cpu_top"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_dataTPUtoCPU_80",
+        "kind": "port_input",
+        "width_text": "[79:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_dcache_drvFTMU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "i_dcache_freeFtmuR",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_dcache_freeFtmuW",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_dcache_tmuData_64",
+        "kind": "port_input",
+        "width_text": "[63 :0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_dcache_tmuPA_56",
+        "kind": "port_input",
+        "width_text": "[55 :0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_dcache_tmuWen",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "i_ddrRefillLine_256",
+        "kind": "port_input",
+        "width_text": "[255:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_driveFromTPUtoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFromTStoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_drvFDDRRefill",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "i_drvFDDRWriteOver",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "i_freeFDDRRead",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFDDRWrite",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromTPUtoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromTStoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_icache_drvFTPUSlot",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "i_icache_freeFTPUSlot",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_icache_instData_128",
+        "kind": "port_input",
+        "width_text": "[127:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_icache_tpuSlotPA_56",
+        "kind": "port_input",
+        "width_text": "[55 :0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_dataCPUtoTS_128",
+        "kind": "port_output",
+        "width_text": "[127:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_dcache_drv2tmuR",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "o_dcache_drv2tmuW",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "o_dcache_free2TMU",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_dcache_tmuRData_64",
+        "kind": "port_output",
+        "width_text": "[63 :0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_driveFromCPUtoTPU",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveFromCPUtoTS",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_drv2DDRRead",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "o_drv2DDRWrite",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "o_free2DDRRefill",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_free2DDRWriteOver",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFromCPUtoTPU",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFromCPUtoTS",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_icache_drv2TPUSlot",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "o_icache_free2TPUSlot",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_readPA_56",
+        "kind": "port_output",
+        "width_text": "[55 :0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_writeLine_256",
+        "kind": "port_output",
+        "width_text": "[255:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_writePA_56",
+        "kind": "port_output",
+        "width_text": "[55 :0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "reset"
+      },
+      {
+        "name": "switch",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "condition"
+      },
+      {
+        "name": "w_dataDcachetoMem_256",
+        "kind": "local_signal",
+        "width_text": "[255:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataIcachetoMem_256",
+        "kind": "local_signal",
+        "width_text": "[255:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataMemtoDcache_136",
+        "kind": "local_signal",
+        "width_text": "[135:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataMemtoDcache_136[119:64]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataMemtoDcache_136[135:128]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataMemtoDcache_136[63:0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataMemtoIcache_136",
+        "kind": "local_signal",
+        "width_text": "[135:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataMemtoIcache_136[119:64]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataMemtoIcache_136[135:128]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataMemtoIcache_136[63:0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "w_driveFromDcachetoMem",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromIcachetoMem",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromMemtoDcache",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromMemtoIcache",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_freeFromDcachetoMem",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromIcachetoMem",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromMemtoDcache",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromMemtoIcache",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "rst",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "switch",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "switch",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromTPUtoCPU",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_driveFromTPUtoCPU",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_dataTPUtoCPU_80",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_dataTPUtoCPU_80",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromCPUtoTPU",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_freeFromCPUtoTPU",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveFromCPUtoTPU",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_driveFromCPUtoTPU",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromTPUtoCPU",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_freeFromTPUtoCPU",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveFromCPUtoTS",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_driveFromCPUtoTS",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_dataCPUtoTS_128",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_dataCPUtoTS_128",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromTStoCPU",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_freeFromTStoCPU",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromTStoCPU",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_driveFromTStoCPU",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromCPUtoTS",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_freeFromCPUtoTS",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromMemtoIcache",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_driveFromMemtoIcache",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataMemtoIcache_136",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_dataMemtoIcache_136",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromIcachetoMem",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_freeFromIcachetoMem",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFromIcachetoMem",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_driveFromIcachetoMem",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataIcachetoMem_256",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_dataIcachetoMem_256",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromMemtoIcache",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_freeFromMemtoIcache",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromMemtoDcache",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_driveFromMemtoDcache",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataMemtoDcache_136",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_dataMemtoDcache_136",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromDcachetoMem",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_freeFromDcachetoMem",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFromDcachetoMem",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_driveFromDcachetoMem",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataDcachetoMem_256",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "i_dataDcachetoMem_256",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromMemtoDcache",
+        "instance_name": "cpu_top",
+        "module_type": "cpu_top",
+        "port": "o_freeFromMemtoDcache",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveFromMemtoIcache",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_icache_drvFLdSt",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_freeFromIcachetoMem",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_icache_free2LdSt",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataMemtoIcache_136[135:128]",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_icache_stWen_8",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataMemtoIcache_136[119:64]",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_icache_cpuPA_56",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataMemtoIcache_136[63:0]",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_icache_stData_64",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveFromIcachetoMem",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_icache_drv2LdSt",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_freeFromMemtoIcache",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_icache_freeFLdSt",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataIcachetoMem_256",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_icache_loadData_256",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_icache_drvFTPUSlot",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_icache_drvFTPUSlot",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_icache_free2TPUSlot",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_icache_free2TPUSlot",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_icache_tpuSlotPA_56",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_icache_tpuSlotPA_56",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_icache_instData_128",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_icache_instData_128",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_icache_drv2TPUSlot",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_icache_drv2TPUSlot",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_icache_freeFTPUSlot",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_icache_freeFTPUSlot",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveFromMemtoDcache",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_drvFLdSt",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_freeFromDcachetoMem",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_dcache_free2LdSt",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataMemtoDcache_136[135:128]",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_stWen_8",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataMemtoDcache_136[119:64]",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_cpuPA_56",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataMemtoDcache_136[63:0]",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_stData_64",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveFromDcachetoMem",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_dcache_drv2LdSt",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_freeFromMemtoDcache",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_freeFLdSt",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataDcachetoMem_256",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_dcache_loadData_256",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_dcache_drvFTMU",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_drvFTMU",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_dcache_free2TMU",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_dcache_free2TMU",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_dcache_tmuWen",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_tmuWen",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_dcache_tmuPA_56",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_tmuPA_56",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_dcache_tmuData_64",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_tmuData_64",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_dcache_drv2tmuR",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_dcache_drv2tmuR",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_dcache_freeFtmuR",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_freeFtmuR",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_dcache_tmuRData_64",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_dcache_tmuRData_64",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_dcache_drv2tmuW",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_dcache_drv2tmuW",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_dcache_freeFtmuW",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_dcache_freeFtmuW",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_drvFDDRRefill",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_drvFDDRRefill",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_free2DDRRefill",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_free2DDRRefill",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_ddrRefillLine_256",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_ddrRefillLine_256",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_drvFDDRWriteOver",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_drvFDDRWriteOver",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_free2DDRWriteOver",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_free2DDRWriteOver",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_drv2DDRRead",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_drv2DDRRead",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_freeFDDRRead",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_freeFDDRRead",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_readPA_56",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_readPA_56",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_drv2DDRWrite",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_drv2DDRWrite",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "i_freeFDDRWrite",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "i_freeFDDRWrite",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_writePA_56",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_writePA_56",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_writeLine_256",
+        "instance_name": "cpuCache_top",
+        "module_type": "cpuCache_top",
+        "port": "o_writeLine_256",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "Fetch_Logic",
+      "Fetch_top",
+      "agu_module",
+      "alu_module",
+      "bru_module",
+      "cpu_top",
+      "csr_module",
+      "csrf",
+      "decoder",
+      "decoder_c",
+      "delay_free_cpu",
+      "div_module",
+      "eventSink_cpu",
+      "eventSink_lsu",
+      "exe_top",
+      "freeSetDelay_lsu",
+      "grf",
+      "idu_top",
+      "lsu_memAckFormat_comb",
+      "lsu_memReqFormat_comb",
+      "lsu_top",
+      "mem_slot",
+      "mul_module",
+      "writeBack"
+    ],
+    "reachable_components": [
+      "cArbMerge2_lsu",
+      "cArbMerge_2_memslot",
+      "cFifo1_cpu",
+      "cFifo1_idu",
+      "cFifo1_lsu",
+      "cMutexMerge2_d_lsu",
+      "cMutexMerge_2_WB",
+      "cMutexMerge_2_df_memslot",
+      "cMutexMerge_3_df_fetch",
+      "cMutexMerge_4_d_fetch",
+      "cMutexMerge_6_df_exe",
+      "cNatSplit2_lsu",
+      "cNatSplit_2_fetch",
+      "cSelSplit2_lsu",
+      "cSelSplit_2_fetch",
+      "cSelSplit_3_fetch",
+      "cSelSplit_6_exe",
+      "cWaitMerge_2_WB",
+      "cWaitMerge_2_d_fetch"
+    ],
+    "families_used": [
+      "ArbMerge",
+      "Fifo1",
+      "MutexMerge",
+      "NatSplit",
+      "SelSplit",
+      "WaitMerge"
+    ]
+  },
+  "warnings": []
+}

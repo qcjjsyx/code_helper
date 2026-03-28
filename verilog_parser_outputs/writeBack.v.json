@@ -1,5 +1,5 @@
 {
-  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\WB\\writeBack.v",
+  "parsed_file": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/CPU/WB/writeBack.v",
   "top_module_name": "writeBack",
   "internal_subnames": [
     "cFifo1_cpu",
@@ -14,63 +14,63 @@
       {
         "index": 0,
         "name": "i_dataLSUToWb_246",
-        "width": "[245:0]"
+        "width": 246
       },
       {
         "index": 1,
         "name": "i_driveLSUToWb",
-        "width": null
+        "width": 1
       },
       {
         "index": 2,
         "name": "i_freeGrfToWb",
-        "width": null
+        "width": 1
       },
       {
         "index": 3,
         "name": "i_freeCsrfToWb",
-        "width": null
+        "width": 1
       },
       {
         "index": 4,
         "name": "i_freeFetchToWb",
-        "width": null
+        "width": 1
       },
       {
         "index": 5,
         "name": "rst",
-        "width": null
+        "width": 1
       }
     ],
     "output": {
       "ports": [
         {
           "name": "o_freeWbToLSU",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dataWbToGrf_69",
-          "width": "[68:0]"
+          "width": 69
         },
         {
           "name": "o_driveWbToGrf",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dataWbToCsrf_76",
-          "width": "[75:0]"
+          "width": 76
         },
         {
           "name": "o_driveWbToCsrf",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dataWbToFetch_64",
-          "width": "[63:0]"
+          "width": 64
         },
         {
           "name": "o_driveWbToFetch",
-          "width": null
+          "width": 1
         }
       ]
     },

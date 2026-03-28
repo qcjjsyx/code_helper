@@ -1,0 +1,222 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "csr_module",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "CPU/Exe/csr_module.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "i_csrdata_247",
+        "direction": "input",
+        "width_text": "[246:0]"
+      },
+      {
+        "name": "o_csrResult_246",
+        "direction": "output",
+        "width_text": "[245:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_Compress_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_inst_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_rd_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_rs1Value_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_rs2Value_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_PC_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_rv64_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_CsrType_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_CsrCsw_3",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "w_rs2Csr_12",
+      "kind": "wire",
+      "width_text": "[11:0]"
+    },
+    {
+      "name": "w_Clear",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_Set",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_Write",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_resultRd_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_resultCsr_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    }
+  ],
+  "instances": [],
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_csrdata_247",
+        "kind": "port_input",
+        "width_text": "[246:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_csrResult_246",
+        "kind": "port_output",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_Clear",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Compress_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_CsrCsw_3",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_CsrType_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_PC_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_Set",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Write",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rd_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_resultCsr_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_resultRd_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs1Value_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs2Csr_12",
+        "kind": "local_signal",
+        "width_text": "[11:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs2Value_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rv64_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

@@ -1,5 +1,5 @@
 {
-  "parsed_file": "E:\\code_helper\\CPU\\CPU\\cpu_top.v",
+  "parsed_file": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/CPU/CPU/cpu_top.v",
   "top_module_name": "cpu_top",
   "internal_subnames": [
     "Fetch_top",

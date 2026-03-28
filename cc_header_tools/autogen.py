@@ -41,14 +41,12 @@ def _build_roles_and_params(identity, ports, module_params):
         "downstream": [],
         "fire": [],
     }
-    # contract = {}
+    contract = {}
 
-    # if family == "MutexMergeN":
-    #     contract["mutex_model"] = "environment_mutex_assumed"
-    # elif family == "ArbMergeN":
-    #     contract["arb_policy"] = "TODO"
-    # else:
-    #     contract["TODO"] = "fill contract"
+    if family == "MutexMergeN":
+        contract["mutex_model"] = "environment_mutex_assumed"
+    elif family == "ArbMergeN":
+        contract["arb_policy"] = "implementation_defined"
 
     parsed_num_ports = module_params.get("NUM_PORTS")
     if isinstance(num_ports, int):
@@ -70,7 +68,7 @@ def _build_roles_and_params(identity, ports, module_params):
     if fire_port in port_names:
         roles["fire"] = [fire_port]
 
-    return params, roles
+    return params, roles, contract
 
 def _yaml_inline_list(items):
     return "[" + ", ".join(items) + "]"
@@ -79,7 +77,7 @@ def _yaml_inline_list(items):
 def build_header(module_name: str, identity, ports):
     family = identity["family"]
     module_params = identity.get("module_params", {})
-    params, roles = _build_roles_and_params(identity, ports, module_params)
+    params, roles, contract = _build_roles_and_params(identity, ports, module_params)
 
     lines = [
         "schema: cc_header_v1",
@@ -105,9 +103,10 @@ def build_header(module_name: str, identity, ports):
             f"  fire: {_yaml_inline_list(roles['fire'])}",
         ]
     )
-    # lines.append("contract:")
-    # for key, value in contract.items():
-    #     lines.append(f"  {key}: {value}")
+    if contract:
+        lines.append("contract:")
+        for key, value in contract.items():
+            lines.append(f"  {key}: {value}")
 
     return "\n".join(f"//@cc: {line}" for line in lines) + "\n"
 
@@ -153,6 +152,8 @@ def autogen_for_file(path: Path, inplace: bool, only_missing: bool, force: bool 
     module_params = parse_module_parameters(stripped)
     ports = parse_ports(port_text)
     identity = infer_cc_identity(path.name)
+    if identity["family"] == "unknown":
+        return False, None
     identity["module_params"] = module_params
     header = build_header(module_name, identity, ports) # type: ignore
     updated = insert_header(text, header)

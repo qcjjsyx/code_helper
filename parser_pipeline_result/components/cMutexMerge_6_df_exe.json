@@ -1,0 +1,203 @@
+{
+  "schema": "parser_pipeline_component",
+  "schema_version": "1.0",
+  "name": "cMutexMerge_6_df_exe",
+  "artifact_kind": "derived_component",
+  "family": "MutexMerge",
+  "file": "CPU/Exe/cMutexMerge_6_df_exe.v",
+  "template_source": "JSON_Template/family_level.json",
+  "interface": {
+    "params": {
+      "DATA_WIDTH": "246"
+    },
+    "ports": [
+      {
+        "name": "i_drive0",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_drive1",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_drive2",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_drive3",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_drive4",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_drive5",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_data0",
+        "direction": "input",
+        "width_text": "[DATA_WIDTH-1:0]"
+      },
+      {
+        "name": "i_data1",
+        "direction": "input",
+        "width_text": "[DATA_WIDTH-1:0]"
+      },
+      {
+        "name": "i_data2",
+        "direction": "input",
+        "width_text": "[DATA_WIDTH-1:0]"
+      },
+      {
+        "name": "i_data3",
+        "direction": "input",
+        "width_text": "[DATA_WIDTH-1:0]"
+      },
+      {
+        "name": "i_data4",
+        "direction": "input",
+        "width_text": "[DATA_WIDTH-1:0]"
+      },
+      {
+        "name": "i_data5",
+        "direction": "input",
+        "width_text": "[DATA_WIDTH-1:0]"
+      },
+      {
+        "name": "i_freeNext",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_free0",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_free1",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_free2",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_free3",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_free4",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_free5",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_driveNext",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_data",
+        "direction": "output",
+        "width_text": "[DATA_WIDTH-1:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "role_mapping": {
+    "upstream": {
+      "ports": [
+        "i_drive0",
+        "i_drive1",
+        "i_drive2",
+        "i_drive3",
+        "i_drive4",
+        "i_drive5",
+        "o_free0",
+        "o_free1",
+        "o_free2",
+        "o_free3",
+        "o_free4",
+        "o_free5"
+      ]
+    },
+    "downstream": {
+      "ports": [
+        "i_freeNext",
+        "o_driveNext"
+      ]
+    },
+    "payload": {
+      "ports": [
+        "i_data0",
+        "i_data1",
+        "i_data2",
+        "i_data3",
+        "i_data4",
+        "i_data5",
+        "o_data"
+      ]
+    },
+    "fire": {
+      "ports": []
+    }
+  },
+  "contract": {
+    "invariants": [
+      "Environment provides mutual exclusion: upstream inputs are assumed mutually exclusive.",
+      "Conflicts are assumed NOT to arrive simultaneously; the component does not need to resolve simultaneous contention."
+    ],
+    "exclusion_model": {
+      "policy": "environment_mutex_assumed"
+    },
+    "conflict_handling": {
+      "simultaneous_requests_expected": false,
+      "if_happens": "undefined_or_out_of_contract"
+    },
+    "release_rule": {
+      "policy": "selected_only",
+      "details": "Completion corresponds to the active input; simultaneous case is out-of-contract"
+    }
+  },
+  "flow_semantics": {
+    "event_behavior": "Environment provides mutual exclusion: upstream inputs are assumed mutually exclusive.",
+    "data_behavior": "Payload-related ports: i_data0, i_data1, i_data2, i_data3, i_data4, i_data5, o_data.",
+    "completion_behavior": "Completion corresponds to the active input; simultaneous case is out-of-contract"
+  },
+  "implementation_summary": {
+    "internal_dependencies": [
+      "contTap",
+      "delay16U",
+      "delay3U",
+      "delay4U",
+      "receiver",
+      "relay",
+      "sender"
+    ],
+    "stops_at_family_level": true
+  },
+  "warnings": []
+}

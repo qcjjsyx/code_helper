@@ -1,5 +1,5 @@
 {
-  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\CPUwithCache.v",
+  "parsed_file": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/CPU/CPUwithCache.v",
   "top_module_name": "CPUwithCache",
   "internal_subnames": [
     "cpu_top",
@@ -10,187 +10,187 @@
       {
         "index": 0,
         "name": "rst",
-        "width": null
+        "width": 1
       },
       {
         "index": 1,
         "name": "switch",
-        "width": null
+        "width": 1
       },
       {
         "index": 2,
         "name": "i_driveFromTPUtoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 3,
         "name": "i_dataTPUtoCPU_80",
-        "width": "[79:0]"
+        "width": 80
       },
       {
         "index": 4,
         "name": "i_freeFromTPUtoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 5,
         "name": "i_freeFromTStoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 6,
         "name": "i_driveFromTStoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 7,
         "name": "i_icache_drvFTPUSlot",
-        "width": null
+        "width": 1
       },
       {
         "index": 8,
         "name": "i_icache_tpuSlotPA_56",
-        "width": "[55:0]"
+        "width": 56
       },
       {
         "index": 9,
         "name": "i_icache_instData_128",
-        "width": "[127:0]"
+        "width": 128
       },
       {
         "index": 10,
         "name": "i_icache_freeFTPUSlot",
-        "width": null
+        "width": 1
       },
       {
         "index": 11,
         "name": "i_dcache_drvFTMU",
-        "width": null
+        "width": 1
       },
       {
         "index": 12,
         "name": "i_dcache_tmuWen",
-        "width": null
+        "width": 1
       },
       {
         "index": 13,
         "name": "i_dcache_tmuPA_56",
-        "width": "[55:0]"
+        "width": 56
       },
       {
         "index": 14,
         "name": "i_dcache_tmuData_64",
-        "width": "[63:0]"
+        "width": 64
       },
       {
         "index": 15,
         "name": "i_dcache_freeFtmuR",
-        "width": null
+        "width": 1
       },
       {
         "index": 16,
         "name": "i_dcache_freeFtmuW",
-        "width": null
+        "width": 1
       },
       {
         "index": 17,
         "name": "i_drvFDDRRefill",
-        "width": null
+        "width": 1
       },
       {
         "index": 18,
         "name": "i_ddrRefillLine_256",
-        "width": "[255:0]"
+        "width": 256
       },
       {
         "index": 19,
         "name": "i_drvFDDRWriteOver",
-        "width": null
+        "width": 1
       },
       {
         "index": 20,
         "name": "i_freeFDDRRead",
-        "width": null
+        "width": 1
       },
       {
         "index": 21,
         "name": "i_freeFDDRWrite",
-        "width": null
+        "width": 1
       }
     ],
     "output": {
       "ports": [
         {
           "name": "o_freeFromCPUtoTPU",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_driveFromCPUtoTPU",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_driveFromCPUtoTS",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dataCPUtoTS_128",
-          "width": "[127:0]"
+          "width": 128
         },
         {
           "name": "o_freeFromCPUtoTS",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_icache_free2TPUSlot",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_icache_drv2TPUSlot",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dcache_free2TMU",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dcache_drv2tmuR",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dcache_tmuRData_64",
-          "width": "[63:0]"
+          "width": 64
         },
         {
           "name": "o_dcache_drv2tmuW",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_free2DDRRefill",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_free2DDRWriteOver",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_drv2DDRRead",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_readPA_56",
-          "width": "[55:0]"
+          "width": 56
         },
         {
           "name": "o_drv2DDRWrite",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_writePA_56",
-          "width": "[55:0]"
+          "width": 56
         },
         {
           "name": "o_writeLine_256",
-          "width": "[255:0]"
+          "width": 256
         }
       ]
     },

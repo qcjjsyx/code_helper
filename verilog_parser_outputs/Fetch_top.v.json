@@ -1,5 +1,5 @@
 {
-  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\Fetch\\Fetch_top.v",
+  "parsed_file": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/CPU/Fetch/Fetch_top.v",
   "top_module_name": "Fetch_top",
   "internal_subnames": [
     "cMutexMerge_2_WB",
@@ -15,128 +15,128 @@
       {
         "index": 0,
         "name": "rst",
-        "width": null
+        "width": 1
       },
       {
         "index": 1,
         "name": "switch",
-        "width": null
+        "width": 1
       },
       {
         "index": 2,
         "name": "i_driveFromTPUtoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 3,
         "name": "i_dataTPUtoCPU_80",
-        "width": "[79:0]"
+        "width": 80
       },
       {
         "index": 4,
         "name": "i_freeFromTPUtoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 5,
         "name": "i_driveFromEXCPtoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 6,
         "name": "i_dataFromEXCPtoCPU_64",
-        "width": "[63:0]"
+        "width": 64
       },
       {
         "index": 7,
         "name": "i_driveFromWBtoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 8,
         "name": "i_dataFromWBtoCPU_64",
-        "width": "[63:0]"
+        "width": 64
       },
       {
         "index": 9,
         "name": "i_freeFromIcachetoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 10,
         "name": "i_driveFromIcachetoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 11,
         "name": "i_dataIcachetoCPU_256",
-        "width": "[255:0]"
+        "width": 256
       },
       {
         "index": 12,
         "name": "i_freeFromTStoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 13,
         "name": "i_driveFromTStoCPU",
-        "width": null
+        "width": 1
       },
       {
         "index": 14,
         "name": "i_freeFromDecodertoFetch",
-        "width": null
+        "width": 1
       }
     ],
     "output": {
       "ports": [
         {
           "name": "o_freeFromCPUtoTPU",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_driveFromCPUtoTPU",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_freeFromCPUtoEXCP",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_freeFromCPUtoWB",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_driveFromCPUtoIcache",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dataCPUtoIcache_136",
-          "width": "[135:0]"
+          "width": 136
         },
         {
           "name": "o_freeFromCPUtoIcache",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_driveFromCPUtoTS",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dataCPUtoTS_128",
-          "width": "[127:0]"
+          "width": 128
         },
         {
           "name": "o_freeFromCPUtoTS",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_driveFromFetchtoDecoder",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_dataFetchtoDecoder_97",
-          "width": "[96:0]"
+          "width": 97
         }
       ]
     },

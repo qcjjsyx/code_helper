@@ -1,0 +1,1979 @@
+{
+  "schema": "parser_pipeline_project_index",
+  "schema_version": "1.0",
+  "repo_root": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper",
+  "generated_at": "2026-03-14T07:36:03Z",
+  "input_roots": [
+    "CPU"
+  ],
+  "top_modules": [
+    {
+      "name": "cpu_top",
+      "file": "CPU/CPU/cpu_top.v",
+      "json_ref": "modules/cpu_top.json"
+    },
+    {
+      "name": "CPUwithCache",
+      "file": "CPU/CPUwithCache.v",
+      "json_ref": "modules/CPUwithCache.json"
+    }
+  ],
+  "artifacts": {
+    "modules": [
+      {
+        "name": "CPUwithCache",
+        "file": "CPU/CPUwithCache.v",
+        "json_ref": "modules/CPUwithCache.json"
+      },
+      {
+        "name": "Fetch_Logic",
+        "file": "CPU/Fetch/Fetch_Logic.v",
+        "json_ref": "modules/Fetch_Logic.json"
+      },
+      {
+        "name": "Fetch_top",
+        "file": "CPU/Fetch/Fetch_top.v",
+        "json_ref": "modules/Fetch_top.json"
+      },
+      {
+        "name": "agu_module",
+        "file": "CPU/Exe/agu_module.v",
+        "json_ref": "modules/agu_module.json"
+      },
+      {
+        "name": "alu_module",
+        "file": "CPU/Exe/alu_module.v",
+        "json_ref": "modules/alu_module.json"
+      },
+      {
+        "name": "bru_module",
+        "file": "CPU/Exe/bru_module.v",
+        "json_ref": "modules/bru_module.json"
+      },
+      {
+        "name": "cpu_top",
+        "file": "CPU/CPU/cpu_top.v",
+        "json_ref": "modules/cpu_top.json"
+      },
+      {
+        "name": "csr_module",
+        "file": "CPU/Exe/csr_module.v",
+        "json_ref": "modules/csr_module.json"
+      },
+      {
+        "name": "csrf",
+        "file": "CPU/IDU/csrf.v",
+        "json_ref": "modules/csrf.json"
+      },
+      {
+        "name": "decoder",
+        "file": "CPU/IDU/decoder.v",
+        "json_ref": "modules/decoder.json"
+      },
+      {
+        "name": "decoder_c",
+        "file": "CPU/IDU/decoder_c.v",
+        "json_ref": "modules/decoder_c.json"
+      },
+      {
+        "name": "delay_free_cpu",
+        "file": "CPU/delay_free_cpu.v",
+        "json_ref": "modules/delay_free_cpu.json"
+      },
+      {
+        "name": "div_module",
+        "file": "CPU/Exe/div_module.v",
+        "json_ref": "modules/div_module.json"
+      },
+      {
+        "name": "eventSink_cpu",
+        "file": "CPU/eventSink_cpu.v",
+        "json_ref": "modules/eventSink_cpu.json"
+      },
+      {
+        "name": "eventSink_lsu",
+        "file": "CPU/LSU/eventSink_lsu.v",
+        "json_ref": "modules/eventSink_lsu.json"
+      },
+      {
+        "name": "exe_top",
+        "file": "CPU/Exe/exe_top.v",
+        "json_ref": "modules/exe_top.json"
+      },
+      {
+        "name": "freeSetDelay_lsu",
+        "file": "CPU/LSU/freeSetDelay_lsu.v",
+        "json_ref": "modules/freeSetDelay_lsu.json"
+      },
+      {
+        "name": "grf",
+        "file": "CPU/IDU/grf.v",
+        "json_ref": "modules/grf.json"
+      },
+      {
+        "name": "idu_top",
+        "file": "CPU/IDU/idu_top.v",
+        "json_ref": "modules/idu_top.json"
+      },
+      {
+        "name": "lsu_memAckFormat_comb",
+        "file": "CPU/LSU/lsu_memAckFormat_comb.v",
+        "json_ref": "modules/lsu_memAckFormat_comb.json"
+      },
+      {
+        "name": "lsu_memReqFormat_comb",
+        "file": "CPU/LSU/lsu_memReqFormat_comb.v",
+        "json_ref": "modules/lsu_memReqFormat_comb.json"
+      },
+      {
+        "name": "lsu_top",
+        "file": "CPU/LSU/lsu_top.v",
+        "json_ref": "modules/lsu_top.json"
+      },
+      {
+        "name": "mem_slot",
+        "file": "CPU/mem_slot/mem_slot.v",
+        "json_ref": "modules/mem_slot.json"
+      },
+      {
+        "name": "mul_module",
+        "file": "CPU/Exe/mul_module.v",
+        "json_ref": "modules/mul_module.json"
+      },
+      {
+        "name": "writeBack",
+        "file": "CPU/WB/writeBack.v",
+        "json_ref": "modules/writeBack.json"
+      }
+    ],
+    "components": [
+      {
+        "name": "cArbMerge2_lsu",
+        "family": "ArbMerge",
+        "file": "CPU/LSU/cArbMerge2_lsu.v",
+        "json_ref": "components/cArbMerge2_lsu.json"
+      },
+      {
+        "name": "cArbMerge_2_memslot",
+        "family": "ArbMerge",
+        "file": "CPU/mem_slot/cArbMerge_2_memslot.v",
+        "json_ref": "components/cArbMerge_2_memslot.json"
+      },
+      {
+        "name": "cFifo1_cpu",
+        "family": "Fifo1",
+        "file": "CPU/cFifo1_cpu.v",
+        "json_ref": "components/cFifo1_cpu.json"
+      },
+      {
+        "name": "cFifo1_idu",
+        "family": "Fifo1",
+        "file": "CPU/IDU/cFifo1_idu.v",
+        "json_ref": "components/cFifo1_idu.json"
+      },
+      {
+        "name": "cFifo1_lsu",
+        "family": "Fifo1",
+        "file": "CPU/LSU/cFifo1_lsu.v",
+        "json_ref": "components/cFifo1_lsu.json"
+      },
+      {
+        "name": "cMutexMerge2_d_lsu",
+        "family": "MutexMerge",
+        "file": "CPU/LSU/cMutexMerge2_d_lsu.v",
+        "json_ref": "components/cMutexMerge2_d_lsu.json"
+      },
+      {
+        "name": "cMutexMerge_2_WB",
+        "family": "MutexMerge",
+        "file": "CPU/WB/cMutexMerge_2_WB.v",
+        "json_ref": "components/cMutexMerge_2_WB.json"
+      },
+      {
+        "name": "cMutexMerge_2_df_memslot",
+        "family": "MutexMerge",
+        "file": "CPU/mem_slot/cMutexMerge_2_df_memslot.v",
+        "json_ref": "components/cMutexMerge_2_df_memslot.json"
+      },
+      {
+        "name": "cMutexMerge_3_df_fetch",
+        "family": "MutexMerge",
+        "file": "CPU/Fetch/cMutexMerge_3_df_fetch.v",
+        "json_ref": "components/cMutexMerge_3_df_fetch.json"
+      },
+      {
+        "name": "cMutexMerge_4_d_fetch",
+        "family": "MutexMerge",
+        "file": "CPU/Fetch/cMutexMerge_4_d_fetch.v",
+        "json_ref": "components/cMutexMerge_4_d_fetch.json"
+      },
+      {
+        "name": "cMutexMerge_6_df_exe",
+        "family": "MutexMerge",
+        "file": "CPU/Exe/cMutexMerge_6_df_exe.v",
+        "json_ref": "components/cMutexMerge_6_df_exe.json"
+      },
+      {
+        "name": "cNatSplit2_lsu",
+        "family": "NatSplit",
+        "file": "CPU/LSU/cNatSplit2_lsu.v",
+        "json_ref": "components/cNatSplit2_lsu.json"
+      },
+      {
+        "name": "cNatSplit_2_fetch",
+        "family": "NatSplit",
+        "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+        "json_ref": "components/cNatSplit_2_fetch.json"
+      },
+      {
+        "name": "cSelSplit2_lsu",
+        "family": "SelSplit",
+        "file": "CPU/LSU/cSelSplit2_lsu.v",
+        "json_ref": "components/cSelSplit2_lsu.json"
+      },
+      {
+        "name": "cSelSplit_2_fetch",
+        "family": "SelSplit",
+        "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+        "json_ref": "components/cSelSplit_2_fetch.json"
+      },
+      {
+        "name": "cSelSplit_3_fetch",
+        "family": "SelSplit",
+        "file": "CPU/Fetch/cSelSplit_3_fetch.v",
+        "json_ref": "components/cSelSplit_3_fetch.json"
+      },
+      {
+        "name": "cSelSplit_6_exe",
+        "family": "SelSplit",
+        "file": "CPU/Exe/cSelSplit_6_exe.v",
+        "json_ref": "components/cSelSplit_6_exe.json"
+      },
+      {
+        "name": "cWaitMerge_2_WB",
+        "family": "WaitMerge",
+        "file": "CPU/WB/cWaitMerge_2_WB.v",
+        "json_ref": "components/cWaitMerge_2_WB.json"
+      },
+      {
+        "name": "cWaitMerge_2_d_fetch",
+        "family": "WaitMerge",
+        "file": "CPU/Fetch/cWaitMerge_2_d_fetch.v",
+        "json_ref": "components/cWaitMerge_2_d_fetch.json"
+      }
+    ]
+  },
+  "hierarchies": {
+    "cpu_top": {
+      "module": "cpu_top",
+      "file": "CPU/CPU/cpu_top.v",
+      "children": [
+        {
+          "instance_name": "Fetch_top",
+          "target": "Fetch_top",
+          "artifact_kind": "module",
+          "file": "CPU/Fetch/Fetch_top.v",
+          "children": [
+            {
+              "instance_name": "cMutexMerge_2_WB",
+              "target": "cMutexMerge_2_WB",
+              "artifact_kind": "derived_component",
+              "file": "CPU/WB/cMutexMerge_2_WB.v",
+              "family": "MutexMerge"
+            },
+            {
+              "instance_name": "cFifo1_cpu_1",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "cMutexMerge_4_d_fetch",
+              "target": "cMutexMerge_4_d_fetch",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Fetch/cMutexMerge_4_d_fetch.v",
+              "family": "MutexMerge"
+            },
+            {
+              "instance_name": "Fetch_Logic",
+              "target": "Fetch_Logic",
+              "artifact_kind": "module",
+              "file": "CPU/Fetch/Fetch_Logic.v",
+              "children": [
+                {
+                  "instance_name": "cFifo1_cpu",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "delay_free_cpu_sel1",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "cSelSplit_2_fetch_1",
+                  "target": "cSelSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+                  "family": "SelSplit"
+                },
+                {
+                  "instance_name": "cNatSplit_2_fetch",
+                  "target": "cNatSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+                  "family": "NatSplit"
+                },
+                {
+                  "instance_name": "cWaitMerge_2_d_fetch",
+                  "target": "cWaitMerge_2_d_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cWaitMerge_2_d_fetch.v",
+                  "family": "WaitMerge"
+                },
+                {
+                  "instance_name": "delay_free_cpu_sel2",
+                  "target": "delay6U",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "cSelSplit_3_fetch",
+                  "target": "cSelSplit_3_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cSelSplit_3_fetch.v",
+                  "family": "SelSplit"
+                },
+                {
+                  "instance_name": "cMutexMerge_3_df_fetch",
+                  "target": "cMutexMerge_3_df_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cMutexMerge_3_df_fetch.v",
+                  "family": "MutexMerge"
+                },
+                {
+                  "instance_name": "cNatSplit_2_fetch_2",
+                  "target": "cNatSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+                  "family": "NatSplit"
+                }
+              ]
+            },
+            {
+              "instance_name": "cFifo1_cpu_2",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "eventSink_cpu_1",
+              "target": "eventSink_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/eventSink_cpu.v",
+              "children": [
+                {
+                  "instance_name": "dealy",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "cFifo1_cpu_3",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "delay_free_cpu_sel",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "cSelSplit_2_fetch",
+              "target": "cSelSplit_2_fetch",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+              "family": "SelSplit"
+            }
+          ]
+        },
+        {
+          "instance_name": "idu_top",
+          "target": "idu_top",
+          "artifact_kind": "module",
+          "file": "CPU/IDU/idu_top.v",
+          "children": [
+            {
+              "instance_name": "u_fifo_saveInputDataFromIfu",
+              "target": "cFifo1_idu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/IDU/cFifo1_idu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "u_decoder_c",
+              "target": "decoder_c",
+              "artifact_kind": "module",
+              "file": "CPU/IDU/decoder_c.v",
+              "children": []
+            },
+            {
+              "instance_name": "u_decoder",
+              "target": "decoder",
+              "artifact_kind": "module",
+              "file": "CPU/IDU/decoder.v",
+              "children": []
+            },
+            {
+              "instance_name": "u_csrf",
+              "target": "csrf",
+              "artifact_kind": "module",
+              "file": "CPU/IDU/csrf.v",
+              "children": [
+                {
+                  "instance_name": "u_fifo_write",
+                  "target": "cFifo1_idu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/IDU/cFifo1_idu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "u_freeSetDelay",
+                  "target": "freeSetDelay",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "u_fifo_read",
+                  "target": "cFifo1_idu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/IDU/cFifo1_idu.v",
+                  "family": "Fifo1"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_grf",
+              "target": "grf",
+              "artifact_kind": "module",
+              "file": "CPU/IDU/grf.v",
+              "children": [
+                {
+                  "instance_name": "u_fifo_write",
+                  "target": "cFifo1_idu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/IDU/cFifo1_idu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "u_freeSetDelay",
+                  "target": "freeSetDelay",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "u_fifo_read",
+                  "target": "cFifo1_idu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/IDU/cFifo1_idu.v",
+                  "family": "Fifo1"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "instance_name": "exe_top",
+          "target": "exe_top",
+          "artifact_kind": "module",
+          "file": "CPU/Exe/exe_top.v",
+          "children": [
+            {
+              "instance_name": "cFifo1_cpu_1",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "delay_free_cpu_sel",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "cSelSplit_6_exe",
+              "target": "cSelSplit_6_exe",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Exe/cSelSplit_6_exe.v",
+              "family": "SelSplit"
+            },
+            {
+              "instance_name": "u_delayALU0_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delayMUL0_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delayDIV0_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delayAGU0_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delayCSR0_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delayBRU0_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "alu_module",
+              "target": "alu_module",
+              "artifact_kind": "module",
+              "file": "CPU/Exe/alu_module.v",
+              "children": []
+            },
+            {
+              "instance_name": "mul_module",
+              "target": "mul_module",
+              "artifact_kind": "module",
+              "file": "CPU/Exe/mul_module.v",
+              "children": []
+            },
+            {
+              "instance_name": "div_module",
+              "target": "div_module",
+              "artifact_kind": "module",
+              "file": "CPU/Exe/div_module.v",
+              "children": []
+            },
+            {
+              "instance_name": "agu_module",
+              "target": "agu_module",
+              "artifact_kind": "module",
+              "file": "CPU/Exe/agu_module.v",
+              "children": []
+            },
+            {
+              "instance_name": "csr_module",
+              "target": "csr_module",
+              "artifact_kind": "module",
+              "file": "CPU/Exe/csr_module.v",
+              "children": []
+            },
+            {
+              "instance_name": "bru_module",
+              "target": "bru_module",
+              "artifact_kind": "module",
+              "file": "CPU/Exe/bru_module.v",
+              "children": []
+            },
+            {
+              "instance_name": "u_delayalu_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delaymul_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delaydiv_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delayagu_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delaycsr_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_delaybru_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "cMutexMerge_6_df_exe",
+              "target": "cMutexMerge_6_df_exe",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Exe/cMutexMerge_6_df_exe.v",
+              "family": "MutexMerge"
+            },
+            {
+              "instance_name": "u_delaylsu_donttouch",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "instance_name": "lsu_top",
+          "target": "lsu_top",
+          "artifact_kind": "module",
+          "file": "CPU/LSU/lsu_top.v",
+          "children": [
+            {
+              "instance_name": "u_fifo1",
+              "target": "cFifo1_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cFifo1_lsu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "u_lsu_memReqFormat_comb",
+              "target": "lsu_memReqFormat_comb",
+              "artifact_kind": "module",
+              "file": "CPU/LSU/lsu_memReqFormat_comb.v",
+              "children": []
+            },
+            {
+              "instance_name": "u_sel1",
+              "target": "cSelSplit2_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cSelSplit2_lsu.v",
+              "family": "SelSplit"
+            },
+            {
+              "instance_name": "u_sel2",
+              "target": "cSelSplit2_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cSelSplit2_lsu.v",
+              "family": "SelSplit"
+            },
+            {
+              "instance_name": "u_Nat1",
+              "target": "cNatSplit2_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cNatSplit2_lsu.v",
+              "family": "NatSplit"
+            },
+            {
+              "instance_name": "u_freeSetDelay_Arb1_1",
+              "target": "freeSetDelay_lsu",
+              "artifact_kind": "module",
+              "file": "CPU/LSU/freeSetDelay_lsu.v",
+              "children": [
+                {
+                  "instance_name": "u_conTap_in",
+                  "target": "contTap",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "u_delay1U_genNum",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "u_conTap_out",
+                  "target": "contTap",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "u_delay1U_genWidth",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_Arb1",
+              "target": "cArbMerge2_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cArbMerge2_lsu.v",
+              "family": "ArbMerge"
+            },
+            {
+              "instance_name": "u_Mutex1",
+              "target": "cMutexMerge2_d_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cMutexMerge2_d_lsu.v",
+              "family": "MutexMerge"
+            },
+            {
+              "instance_name": "u_fifo2",
+              "target": "cFifo1_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cFifo1_lsu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "u_fifo3",
+              "target": "cFifo1_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cFifo1_lsu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "u_lsu_memAckFormat_comb",
+              "target": "lsu_memAckFormat_comb",
+              "artifact_kind": "module",
+              "file": "CPU/LSU/lsu_memAckFormat_comb.v",
+              "children": []
+            },
+            {
+              "instance_name": "u_fifo4",
+              "target": "cFifo1_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cFifo1_lsu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "u_fifo5",
+              "target": "cFifo1_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cFifo1_lsu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "u_EventSink1",
+              "target": "eventSink_lsu",
+              "artifact_kind": "module",
+              "file": "CPU/LSU/eventSink_lsu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay",
+                  "target": "delay16U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_EventSource1",
+              "target": "freeSetDelay_lsu",
+              "artifact_kind": "module",
+              "file": "CPU/LSU/freeSetDelay_lsu.v",
+              "children": [
+                {
+                  "instance_name": "u_conTap_in",
+                  "target": "contTap",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "u_delay1U_genNum",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "u_conTap_out",
+                  "target": "contTap",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "u_delay1U_genWidth",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "u_Mutex3",
+              "target": "cMutexMerge2_d_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cMutexMerge2_d_lsu.v",
+              "family": "MutexMerge"
+            },
+            {
+              "instance_name": "u_fifo6",
+              "target": "cFifo1_lsu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/LSU/cFifo1_lsu.v",
+              "family": "Fifo1"
+            }
+          ]
+        },
+        {
+          "instance_name": "mem_slot",
+          "target": "mem_slot",
+          "artifact_kind": "module",
+          "file": "CPU/mem_slot/mem_slot.v",
+          "children": [
+            {
+              "instance_name": "cFifo1_cpu_1",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "cFifo1_cpu_2",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "delay_free_cpu_sel1",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "cSelSplit_2_fetch_1",
+              "target": "cSelSplit_2_fetch",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+              "family": "SelSplit"
+            },
+            {
+              "instance_name": "cArbMerge_2_memslot",
+              "target": "cArbMerge_2_memslot",
+              "artifact_kind": "derived_component",
+              "file": "CPU/mem_slot/cArbMerge_2_memslot.v",
+              "family": "ArbMerge"
+            },
+            {
+              "instance_name": "cFifo1_cpu_3",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "cFifo1_cpu_4",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "cFifo1_cpu_5",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "delay_free_cpu_sel2",
+              "target": "delay_free_cpu",
+              "artifact_kind": "module",
+              "file": "CPU/delay_free_cpu.v",
+              "children": [
+                {
+                  "instance_name": "u_delay1Unit_donttouch",
+                  "target": "delay1U",
+                  "artifact_kind": "external_dependency"
+                }
+              ]
+            },
+            {
+              "instance_name": "cSelSplit_2_fetch_2",
+              "target": "cSelSplit_2_fetch",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+              "family": "SelSplit"
+            },
+            {
+              "instance_name": "cMutexMerge_2_df_memslot",
+              "target": "cMutexMerge_2_df_memslot",
+              "artifact_kind": "derived_component",
+              "file": "CPU/mem_slot/cMutexMerge_2_df_memslot.v",
+              "family": "MutexMerge"
+            }
+          ]
+        },
+        {
+          "instance_name": "writeBack",
+          "target": "writeBack",
+          "artifact_kind": "module",
+          "file": "CPU/WB/writeBack.v",
+          "children": [
+            {
+              "instance_name": "cFifo1_cpu",
+              "target": "cFifo1_cpu",
+              "artifact_kind": "derived_component",
+              "file": "CPU/cFifo1_cpu.v",
+              "family": "Fifo1"
+            },
+            {
+              "instance_name": "cNatSplit_2_fetch_1",
+              "target": "cNatSplit_2_fetch",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+              "family": "NatSplit"
+            },
+            {
+              "instance_name": "delay_free_cpu_sel1",
+              "target": "delay8U",
+              "artifact_kind": "external_dependency"
+            },
+            {
+              "instance_name": "delay_free_cpu_sel2",
+              "target": "delay8U",
+              "artifact_kind": "external_dependency"
+            },
+            {
+              "instance_name": "cSelSplit_2_fetch_1",
+              "target": "cSelSplit_2_fetch",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+              "family": "SelSplit"
+            },
+            {
+              "instance_name": "cSelSplit_2_fetch_2",
+              "target": "cSelSplit_2_fetch",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+              "family": "SelSplit"
+            },
+            {
+              "instance_name": "cNatSplit_2_fetch_2",
+              "target": "cNatSplit_2_fetch",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+              "family": "NatSplit"
+            },
+            {
+              "instance_name": "cNatSplit_2_fetch_3",
+              "target": "cNatSplit_2_fetch",
+              "artifact_kind": "derived_component",
+              "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+              "family": "NatSplit"
+            },
+            {
+              "instance_name": "cMutexMerge_2_WB_1",
+              "target": "cMutexMerge_2_WB",
+              "artifact_kind": "derived_component",
+              "file": "CPU/WB/cMutexMerge_2_WB.v",
+              "family": "MutexMerge"
+            },
+            {
+              "instance_name": "cMutexMerge_2_WB_2",
+              "target": "cMutexMerge_2_WB",
+              "artifact_kind": "derived_component",
+              "file": "CPU/WB/cMutexMerge_2_WB.v",
+              "family": "MutexMerge"
+            },
+            {
+              "instance_name": "cWaitMerge_2_WB",
+              "target": "cWaitMerge_2_WB",
+              "artifact_kind": "derived_component",
+              "file": "CPU/WB/cWaitMerge_2_WB.v",
+              "family": "WaitMerge"
+            }
+          ]
+        }
+      ]
+    },
+    "CPUwithCache": {
+      "module": "CPUwithCache",
+      "file": "CPU/CPUwithCache.v",
+      "children": [
+        {
+          "instance_name": "cpu_top",
+          "target": "cpu_top",
+          "artifact_kind": "module",
+          "file": "CPU/CPU/cpu_top.v",
+          "children": [
+            {
+              "instance_name": "Fetch_top",
+              "target": "Fetch_top",
+              "artifact_kind": "module",
+              "file": "CPU/Fetch/Fetch_top.v",
+              "children": [
+                {
+                  "instance_name": "cMutexMerge_2_WB",
+                  "target": "cMutexMerge_2_WB",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/WB/cMutexMerge_2_WB.v",
+                  "family": "MutexMerge"
+                },
+                {
+                  "instance_name": "cFifo1_cpu_1",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "cMutexMerge_4_d_fetch",
+                  "target": "cMutexMerge_4_d_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cMutexMerge_4_d_fetch.v",
+                  "family": "MutexMerge"
+                },
+                {
+                  "instance_name": "Fetch_Logic",
+                  "target": "Fetch_Logic",
+                  "artifact_kind": "module",
+                  "file": "CPU/Fetch/Fetch_Logic.v",
+                  "children": [
+                    {
+                      "instance_name": "cFifo1_cpu",
+                      "target": "cFifo1_cpu",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/cFifo1_cpu.v",
+                      "family": "Fifo1"
+                    },
+                    {
+                      "instance_name": "delay_free_cpu_sel1",
+                      "target": "delay_free_cpu",
+                      "artifact_kind": "module",
+                      "file": "CPU/delay_free_cpu.v",
+                      "children": [
+                        {
+                          "instance_name": "u_delay1Unit_donttouch",
+                          "target": "delay1U",
+                          "artifact_kind": "external_dependency"
+                        }
+                      ]
+                    },
+                    {
+                      "instance_name": "cSelSplit_2_fetch_1",
+                      "target": "cSelSplit_2_fetch",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+                      "family": "SelSplit"
+                    },
+                    {
+                      "instance_name": "cNatSplit_2_fetch",
+                      "target": "cNatSplit_2_fetch",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+                      "family": "NatSplit"
+                    },
+                    {
+                      "instance_name": "cWaitMerge_2_d_fetch",
+                      "target": "cWaitMerge_2_d_fetch",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/Fetch/cWaitMerge_2_d_fetch.v",
+                      "family": "WaitMerge"
+                    },
+                    {
+                      "instance_name": "delay_free_cpu_sel2",
+                      "target": "delay6U",
+                      "artifact_kind": "external_dependency"
+                    },
+                    {
+                      "instance_name": "cSelSplit_3_fetch",
+                      "target": "cSelSplit_3_fetch",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/Fetch/cSelSplit_3_fetch.v",
+                      "family": "SelSplit"
+                    },
+                    {
+                      "instance_name": "cMutexMerge_3_df_fetch",
+                      "target": "cMutexMerge_3_df_fetch",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/Fetch/cMutexMerge_3_df_fetch.v",
+                      "family": "MutexMerge"
+                    },
+                    {
+                      "instance_name": "cNatSplit_2_fetch_2",
+                      "target": "cNatSplit_2_fetch",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+                      "family": "NatSplit"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "cFifo1_cpu_2",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "eventSink_cpu_1",
+                  "target": "eventSink_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/eventSink_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "dealy",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "cFifo1_cpu_3",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "delay_free_cpu_sel",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "cSelSplit_2_fetch",
+                  "target": "cSelSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+                  "family": "SelSplit"
+                }
+              ]
+            },
+            {
+              "instance_name": "idu_top",
+              "target": "idu_top",
+              "artifact_kind": "module",
+              "file": "CPU/IDU/idu_top.v",
+              "children": [
+                {
+                  "instance_name": "u_fifo_saveInputDataFromIfu",
+                  "target": "cFifo1_idu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/IDU/cFifo1_idu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "u_decoder_c",
+                  "target": "decoder_c",
+                  "artifact_kind": "module",
+                  "file": "CPU/IDU/decoder_c.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "u_decoder",
+                  "target": "decoder",
+                  "artifact_kind": "module",
+                  "file": "CPU/IDU/decoder.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "u_csrf",
+                  "target": "csrf",
+                  "artifact_kind": "module",
+                  "file": "CPU/IDU/csrf.v",
+                  "children": [
+                    {
+                      "instance_name": "u_fifo_write",
+                      "target": "cFifo1_idu",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/IDU/cFifo1_idu.v",
+                      "family": "Fifo1"
+                    },
+                    {
+                      "instance_name": "u_freeSetDelay",
+                      "target": "freeSetDelay",
+                      "artifact_kind": "external_dependency"
+                    },
+                    {
+                      "instance_name": "u_fifo_read",
+                      "target": "cFifo1_idu",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/IDU/cFifo1_idu.v",
+                      "family": "Fifo1"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_grf",
+                  "target": "grf",
+                  "artifact_kind": "module",
+                  "file": "CPU/IDU/grf.v",
+                  "children": [
+                    {
+                      "instance_name": "u_fifo_write",
+                      "target": "cFifo1_idu",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/IDU/cFifo1_idu.v",
+                      "family": "Fifo1"
+                    },
+                    {
+                      "instance_name": "u_freeSetDelay",
+                      "target": "freeSetDelay",
+                      "artifact_kind": "external_dependency"
+                    },
+                    {
+                      "instance_name": "u_fifo_read",
+                      "target": "cFifo1_idu",
+                      "artifact_kind": "derived_component",
+                      "file": "CPU/IDU/cFifo1_idu.v",
+                      "family": "Fifo1"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "instance_name": "exe_top",
+              "target": "exe_top",
+              "artifact_kind": "module",
+              "file": "CPU/Exe/exe_top.v",
+              "children": [
+                {
+                  "instance_name": "cFifo1_cpu_1",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "delay_free_cpu_sel",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "cSelSplit_6_exe",
+                  "target": "cSelSplit_6_exe",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Exe/cSelSplit_6_exe.v",
+                  "family": "SelSplit"
+                },
+                {
+                  "instance_name": "u_delayALU0_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delayMUL0_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delayDIV0_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delayAGU0_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delayCSR0_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delayBRU0_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "alu_module",
+                  "target": "alu_module",
+                  "artifact_kind": "module",
+                  "file": "CPU/Exe/alu_module.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "mul_module",
+                  "target": "mul_module",
+                  "artifact_kind": "module",
+                  "file": "CPU/Exe/mul_module.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "div_module",
+                  "target": "div_module",
+                  "artifact_kind": "module",
+                  "file": "CPU/Exe/div_module.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "agu_module",
+                  "target": "agu_module",
+                  "artifact_kind": "module",
+                  "file": "CPU/Exe/agu_module.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "csr_module",
+                  "target": "csr_module",
+                  "artifact_kind": "module",
+                  "file": "CPU/Exe/csr_module.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "bru_module",
+                  "target": "bru_module",
+                  "artifact_kind": "module",
+                  "file": "CPU/Exe/bru_module.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "u_delayalu_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delaymul_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delaydiv_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delayagu_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delaycsr_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_delaybru_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "cMutexMerge_6_df_exe",
+                  "target": "cMutexMerge_6_df_exe",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Exe/cMutexMerge_6_df_exe.v",
+                  "family": "MutexMerge"
+                },
+                {
+                  "instance_name": "u_delaylsu_donttouch",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "instance_name": "lsu_top",
+              "target": "lsu_top",
+              "artifact_kind": "module",
+              "file": "CPU/LSU/lsu_top.v",
+              "children": [
+                {
+                  "instance_name": "u_fifo1",
+                  "target": "cFifo1_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cFifo1_lsu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "u_lsu_memReqFormat_comb",
+                  "target": "lsu_memReqFormat_comb",
+                  "artifact_kind": "module",
+                  "file": "CPU/LSU/lsu_memReqFormat_comb.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "u_sel1",
+                  "target": "cSelSplit2_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cSelSplit2_lsu.v",
+                  "family": "SelSplit"
+                },
+                {
+                  "instance_name": "u_sel2",
+                  "target": "cSelSplit2_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cSelSplit2_lsu.v",
+                  "family": "SelSplit"
+                },
+                {
+                  "instance_name": "u_Nat1",
+                  "target": "cNatSplit2_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cNatSplit2_lsu.v",
+                  "family": "NatSplit"
+                },
+                {
+                  "instance_name": "u_freeSetDelay_Arb1_1",
+                  "target": "freeSetDelay_lsu",
+                  "artifact_kind": "module",
+                  "file": "CPU/LSU/freeSetDelay_lsu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_conTap_in",
+                      "target": "contTap",
+                      "artifact_kind": "external_dependency"
+                    },
+                    {
+                      "instance_name": "u_delay1U_genNum",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    },
+                    {
+                      "instance_name": "u_conTap_out",
+                      "target": "contTap",
+                      "artifact_kind": "external_dependency"
+                    },
+                    {
+                      "instance_name": "u_delay1U_genWidth",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_Arb1",
+                  "target": "cArbMerge2_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cArbMerge2_lsu.v",
+                  "family": "ArbMerge"
+                },
+                {
+                  "instance_name": "u_Mutex1",
+                  "target": "cMutexMerge2_d_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cMutexMerge2_d_lsu.v",
+                  "family": "MutexMerge"
+                },
+                {
+                  "instance_name": "u_fifo2",
+                  "target": "cFifo1_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cFifo1_lsu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "u_fifo3",
+                  "target": "cFifo1_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cFifo1_lsu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "u_lsu_memAckFormat_comb",
+                  "target": "lsu_memAckFormat_comb",
+                  "artifact_kind": "module",
+                  "file": "CPU/LSU/lsu_memAckFormat_comb.v",
+                  "children": []
+                },
+                {
+                  "instance_name": "u_fifo4",
+                  "target": "cFifo1_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cFifo1_lsu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "u_fifo5",
+                  "target": "cFifo1_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cFifo1_lsu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "u_EventSink1",
+                  "target": "eventSink_lsu",
+                  "artifact_kind": "module",
+                  "file": "CPU/LSU/eventSink_lsu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay",
+                      "target": "delay16U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_EventSource1",
+                  "target": "freeSetDelay_lsu",
+                  "artifact_kind": "module",
+                  "file": "CPU/LSU/freeSetDelay_lsu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_conTap_in",
+                      "target": "contTap",
+                      "artifact_kind": "external_dependency"
+                    },
+                    {
+                      "instance_name": "u_delay1U_genNum",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    },
+                    {
+                      "instance_name": "u_conTap_out",
+                      "target": "contTap",
+                      "artifact_kind": "external_dependency"
+                    },
+                    {
+                      "instance_name": "u_delay1U_genWidth",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "u_Mutex3",
+                  "target": "cMutexMerge2_d_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cMutexMerge2_d_lsu.v",
+                  "family": "MutexMerge"
+                },
+                {
+                  "instance_name": "u_fifo6",
+                  "target": "cFifo1_lsu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/LSU/cFifo1_lsu.v",
+                  "family": "Fifo1"
+                }
+              ]
+            },
+            {
+              "instance_name": "mem_slot",
+              "target": "mem_slot",
+              "artifact_kind": "module",
+              "file": "CPU/mem_slot/mem_slot.v",
+              "children": [
+                {
+                  "instance_name": "cFifo1_cpu_1",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "cFifo1_cpu_2",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "delay_free_cpu_sel1",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "cSelSplit_2_fetch_1",
+                  "target": "cSelSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+                  "family": "SelSplit"
+                },
+                {
+                  "instance_name": "cArbMerge_2_memslot",
+                  "target": "cArbMerge_2_memslot",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/mem_slot/cArbMerge_2_memslot.v",
+                  "family": "ArbMerge"
+                },
+                {
+                  "instance_name": "cFifo1_cpu_3",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "cFifo1_cpu_4",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "cFifo1_cpu_5",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "delay_free_cpu_sel2",
+                  "target": "delay_free_cpu",
+                  "artifact_kind": "module",
+                  "file": "CPU/delay_free_cpu.v",
+                  "children": [
+                    {
+                      "instance_name": "u_delay1Unit_donttouch",
+                      "target": "delay1U",
+                      "artifact_kind": "external_dependency"
+                    }
+                  ]
+                },
+                {
+                  "instance_name": "cSelSplit_2_fetch_2",
+                  "target": "cSelSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+                  "family": "SelSplit"
+                },
+                {
+                  "instance_name": "cMutexMerge_2_df_memslot",
+                  "target": "cMutexMerge_2_df_memslot",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/mem_slot/cMutexMerge_2_df_memslot.v",
+                  "family": "MutexMerge"
+                }
+              ]
+            },
+            {
+              "instance_name": "writeBack",
+              "target": "writeBack",
+              "artifact_kind": "module",
+              "file": "CPU/WB/writeBack.v",
+              "children": [
+                {
+                  "instance_name": "cFifo1_cpu",
+                  "target": "cFifo1_cpu",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/cFifo1_cpu.v",
+                  "family": "Fifo1"
+                },
+                {
+                  "instance_name": "cNatSplit_2_fetch_1",
+                  "target": "cNatSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+                  "family": "NatSplit"
+                },
+                {
+                  "instance_name": "delay_free_cpu_sel1",
+                  "target": "delay8U",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "delay_free_cpu_sel2",
+                  "target": "delay8U",
+                  "artifact_kind": "external_dependency"
+                },
+                {
+                  "instance_name": "cSelSplit_2_fetch_1",
+                  "target": "cSelSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+                  "family": "SelSplit"
+                },
+                {
+                  "instance_name": "cSelSplit_2_fetch_2",
+                  "target": "cSelSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cSelSplit_2_fetch.v",
+                  "family": "SelSplit"
+                },
+                {
+                  "instance_name": "cNatSplit_2_fetch_2",
+                  "target": "cNatSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+                  "family": "NatSplit"
+                },
+                {
+                  "instance_name": "cNatSplit_2_fetch_3",
+                  "target": "cNatSplit_2_fetch",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/Fetch/cNatSplit_2_fetch.v",
+                  "family": "NatSplit"
+                },
+                {
+                  "instance_name": "cMutexMerge_2_WB_1",
+                  "target": "cMutexMerge_2_WB",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/WB/cMutexMerge_2_WB.v",
+                  "family": "MutexMerge"
+                },
+                {
+                  "instance_name": "cMutexMerge_2_WB_2",
+                  "target": "cMutexMerge_2_WB",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/WB/cMutexMerge_2_WB.v",
+                  "family": "MutexMerge"
+                },
+                {
+                  "instance_name": "cWaitMerge_2_WB",
+                  "target": "cWaitMerge_2_WB",
+                  "artifact_kind": "derived_component",
+                  "file": "CPU/WB/cWaitMerge_2_WB.v",
+                  "family": "WaitMerge"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "instance_name": "cpuCache_top",
+          "target": "cpuCache_top",
+          "artifact_kind": "external_dependency"
+        }
+      ]
+    }
+  },
+  "stats": {
+    "module_count": 25,
+    "component_count": 19,
+    "unresolved_instance_count": 13,
+    "warning_count": 13
+  }
+}

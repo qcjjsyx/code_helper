@@ -4,7 +4,7 @@ from pathlib import Path
 
 from .autogen import autogen_for_file, remove_all_cc_blocks
 from .lint import lint_text
-from .parser import FAMILIES, read_text
+from .parser import FAMILIES, extract_cc_block, infer_cc_identity, read_text
 
 
 def main(argv=None):
@@ -82,6 +82,9 @@ def run_lint(repo_root: Path, inputs, strict: bool):
     errors = 0
     for path in files:
         text = read_text(path)
+        cc_text, _ = extract_cc_block(text)
+        if not cc_text and infer_cc_identity(path.name)["family"] == "unknown":
+            continue
         result = lint_text(text, strict=strict)
         if result.errors or result.warnings:
             for err in result.errors:
@@ -98,6 +101,9 @@ def run_scan(repo_root: Path, inputs, strict: bool):
     bad = []
     for path in files:
         text = read_text(path)
+        cc_text, _ = extract_cc_block(text)
+        if not cc_text and infer_cc_identity(path.name)["family"] == "unknown":
+            continue
         result = lint_text(text, strict=strict)
         if result.errors:
             bad.append(path)
@@ -152,7 +158,11 @@ def run_autogen(
         if not inplace and changed:
             continue
         if inplace:
-            result = lint_text(path.read_text(encoding="utf-8", errors="ignore"), strict)
+            text = path.read_text(encoding="utf-8", errors="ignore")
+            cc_text, _ = extract_cc_block(text)
+            if not cc_text:
+                continue
+            result = lint_text(text, strict)
             if result.errors:
                 failed += 1
     return 1 if failed else 0

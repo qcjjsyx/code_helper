@@ -1,0 +1,2279 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "cpu_top",
+  "artifact_kind": "module",
+  "module_role": "top",
+  "file": "CPU/CPU/cpu_top.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "switch",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromTPUtoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dataTPUtoCPU_80",
+        "direction": "input",
+        "width_text": "[79:0]"
+      },
+      {
+        "name": "o_freeFromCPUtoTPU",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromCPUtoTPU",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_freeFromTPUtoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromCPUtoTS",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_dataCPUtoTS_128",
+        "direction": "output",
+        "width_text": "[127:0]"
+      },
+      {
+        "name": "i_freeFromTStoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromTStoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_freeFromCPUtoTS",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromMemtoIcache",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_dataMemtoIcache_136",
+        "direction": "output",
+        "width_text": "[135:0]"
+      },
+      {
+        "name": "i_freeFromIcachetoMem",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromIcachetoMem",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dataIcachetoMem_256",
+        "direction": "input",
+        "width_text": "[255:0]"
+      },
+      {
+        "name": "o_freeFromMemtoIcache",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromMemtoDcache",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_dataMemtoDcache_136",
+        "direction": "output",
+        "width_text": "[135:0]"
+      },
+      {
+        "name": "i_freeFromDcachetoMem",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromDcachetoMem",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dataDcachetoMem_256",
+        "direction": "input",
+        "width_text": "[255:0]"
+      },
+      {
+        "name": "o_freeFromMemtoDcache",
+        "direction": "output",
+        "width_text": null
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_driveFromEXCPtoCPU",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataFromEXCPtoCPU_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_freeFromCPUtoEXCP",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFromWBtoCPU",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataFromWBtoCPU_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_freeFromCPUtoWB",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFromCPUtoIcache",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataCPUtoIcache_136",
+      "kind": "wire",
+      "width_text": "[135:0]"
+    },
+    {
+      "name": "w_freeFromIcachetoCPU",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFromIcachetoCPU",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataIcachetoCPU_256",
+      "kind": "wire",
+      "width_text": "[255:0]"
+    },
+    {
+      "name": "w_freeFromCPUtoIcache",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFromFetchtoDecoder",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataFetchtoDecoder_97",
+      "kind": "wire",
+      "width_text": "[96:0]"
+    },
+    {
+      "name": "w_freeFromDecodertoFetch",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveToExe",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeFromExe",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataToExe_343",
+      "kind": "wire",
+      "width_text": "[342:0]"
+    },
+    {
+      "name": "w_driveNextToLsu",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeNextFrmLsu",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_exeLSUBus_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_driveToMem",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeFromMem",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataToMem_136",
+      "kind": "wire",
+      "width_text": "[135:0]"
+    },
+    {
+      "name": "w_driveFromMem",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeToMem",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataFromMem_256",
+      "kind": "wire",
+      "width_text": "[255:0]"
+    },
+    {
+      "name": "w_driveToRetire",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeFromRetire",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataToRetire_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_dataWbToGrf_69",
+      "kind": "wire",
+      "width_text": "[68:0]"
+    },
+    {
+      "name": "w_driveWbToGrf",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeGrfToWb",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataWbToCsrf_76",
+      "kind": "wire",
+      "width_text": "[75:0]"
+    },
+    {
+      "name": "w_driveWbToCsrf",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeCsrfToWb",
+      "kind": "wire",
+      "width_text": null
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "Fetch_top",
+      "module_type": "Fetch_top",
+      "artifact_kind": "module",
+      "target_ref": "../modules/Fetch_top.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "switch",
+          "signal": "switch",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "i_driveFromTPUtoCPU",
+          "signal": "i_driveFromTPUtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataTPUtoCPU_80",
+          "signal": "i_dataTPUtoCPU_80",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromCPUtoTPU",
+          "signal": "o_freeFromCPUtoTPU",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromCPUtoTPU",
+          "signal": "o_driveFromCPUtoTPU",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeFromTPUtoCPU",
+          "signal": "i_freeFromTPUtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromEXCPtoCPU",
+          "signal": "w_driveFromEXCPtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataFromEXCPtoCPU_64",
+          "signal": "w_dataFromEXCPtoCPU_64",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromCPUtoEXCP",
+          "signal": "w_freeFromCPUtoEXCP",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromWBtoCPU",
+          "signal": "w_driveFromWBtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataFromWBtoCPU_64",
+          "signal": "w_dataFromWBtoCPU_64",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromCPUtoWB",
+          "signal": "w_freeFromCPUtoWB",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromCPUtoIcache",
+          "signal": "w_driveFromCPUtoIcache",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataCPUtoIcache_136",
+          "signal": "w_dataCPUtoIcache_136",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromIcachetoCPU",
+          "signal": "w_freeFromIcachetoCPU",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromIcachetoCPU",
+          "signal": "w_driveFromIcachetoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataIcachetoCPU_256",
+          "signal": "w_dataIcachetoCPU_256",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromCPUtoIcache",
+          "signal": "w_freeFromCPUtoIcache",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromCPUtoTS",
+          "signal": "o_driveFromCPUtoTS",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataCPUtoTS_128",
+          "signal": "o_dataCPUtoTS_128",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromTStoCPU",
+          "signal": "i_freeFromTStoCPU",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromTStoCPU",
+          "signal": "i_driveFromTStoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeFromCPUtoTS",
+          "signal": "o_freeFromCPUtoTS",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromFetchtoDecoder",
+          "signal": "w_driveFromFetchtoDecoder",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataFetchtoDecoder_97",
+          "signal": "w_dataFetchtoDecoder_97",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromDecodertoFetch",
+          "signal": "w_freeFromDecodertoFetch",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        }
+      ]
+    },
+    {
+      "instance_name": "idu_top",
+      "module_type": "idu_top",
+      "artifact_kind": "module",
+      "target_ref": "../modules/idu_top.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        },
+        {
+          "port": "i_driveWriteGrf",
+          "signal": "w_driveWbToGrf",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeWriteGrf",
+          "signal": "w_freeGrfToWb",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_dataWriteGrf_69",
+          "signal": "w_dataWbToGrf_69",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_driveWriteCsr",
+          "signal": "w_driveWbToCsrf",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeWriteCsr",
+          "signal": "w_freeCsrfToWb",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_dataWriteCsr_76",
+          "signal": "w_dataWbToCsrf_76",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_driveFromIfu",
+          "signal": "w_driveFromFetchtoDecoder",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataFromIfu_97",
+          "signal": "w_dataFetchtoDecoder_97",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeToIfu",
+          "signal": "w_freeFromDecodertoFetch",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveToExe",
+          "signal": "w_driveToExe",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeFromExe",
+          "signal": "w_freeFromExe",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_dataToExe_343",
+          "signal": "w_dataToExe_343",
+          "port_direction": "unknown",
+          "signal_role": "payload_data"
+        }
+      ]
+    },
+    {
+      "instance_name": "exe_top",
+      "module_type": "exe_top",
+      "artifact_kind": "module",
+      "target_ref": "../modules/exe_top.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "i_driveToExe",
+          "signal": "w_driveToExe",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeFrmExe",
+          "signal": "w_freeFromExe",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_decoderExeBus_343",
+          "signal": "w_dataToExe_343",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveNextToLsu",
+          "signal": "w_driveNextToLsu",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNextFrmLsu",
+          "signal": "w_freeNextFrmLsu",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_exeLSUBus_246",
+          "signal": "w_exeLSUBus_246",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "lsu_top",
+      "module_type": "lsu_top",
+      "artifact_kind": "module",
+      "target_ref": "../modules/lsu_top.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "i_driveFromExe",
+          "signal": "w_driveNextToLsu",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeToExe",
+          "signal": "w_freeNextFrmLsu",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_dataFromExe_246",
+          "signal": "w_exeLSUBus_246",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_driveToMem",
+          "signal": "w_driveToMem",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeFromMem",
+          "signal": "w_freeFromMem",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_dataToMem_136",
+          "signal": "w_dataToMem_136",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_driveFromMem",
+          "signal": "w_driveFromMem",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeToMem",
+          "signal": "w_freeToMem",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_dataFromMem_256",
+          "signal": "w_dataFromMem_256",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveToRetire",
+          "signal": "w_driveToRetire",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeFromRetire",
+          "signal": "w_freeFromRetire",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_dataToRetire_246",
+          "signal": "w_dataToRetire_246",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ]
+    },
+    {
+      "instance_name": "mem_slot",
+      "module_type": "mem_slot",
+      "artifact_kind": "module",
+      "target_ref": "../modules/mem_slot.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "i_driveFromFetchtoMem",
+          "signal": "w_driveFromCPUtoIcache",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataFetchtoMem_136",
+          "signal": "w_dataCPUtoIcache_136",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromMemtoFetch",
+          "signal": "w_freeFromIcachetoCPU",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromMemtoFetch",
+          "signal": "w_driveFromIcachetoCPU",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataMemtoFetch_256",
+          "signal": "w_dataIcachetoCPU_256",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromFetchtoMem",
+          "signal": "w_freeFromCPUtoIcache",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromLSUtoMem",
+          "signal": "w_driveToMem",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataLSUtoMem_136",
+          "signal": "w_dataToMem_136",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromMemtoLSU",
+          "signal": "w_freeFromMem",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromMemtoLSU",
+          "signal": "w_driveFromMem",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataMemtoLSU_256",
+          "signal": "w_dataFromMem_256",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromLSUtoMem",
+          "signal": "w_freeToMem",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromMemtoIcache",
+          "signal": "o_driveFromMemtoIcache",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataMemtoIcache_136",
+          "signal": "o_dataMemtoIcache_136",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromIcachetoMem",
+          "signal": "i_freeFromIcachetoMem",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromIcachetoMem",
+          "signal": "i_driveFromIcachetoMem",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataIcachetoMem_256",
+          "signal": "i_dataIcachetoMem_256",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromMemtoIcache",
+          "signal": "o_freeFromMemtoIcache",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromMemtoDcache",
+          "signal": "o_driveFromMemtoDcache",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataMemtoDcache_136",
+          "signal": "o_dataMemtoDcache_136",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromDcachetoMem",
+          "signal": "i_freeFromDcachetoMem",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromDcachetoMem",
+          "signal": "i_driveFromDcachetoMem",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataDcachetoMem_256",
+          "signal": "i_dataDcachetoMem_256",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromMemtoDcache",
+          "signal": "o_freeFromMemtoDcache",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        }
+      ]
+    },
+    {
+      "instance_name": "writeBack",
+      "module_type": "writeBack",
+      "artifact_kind": "module",
+      "target_ref": "../modules/writeBack.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "i_dataLSUToWb_246",
+          "signal": "w_dataToRetire_246",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_driveLSUToWb",
+          "signal": "w_driveToRetire",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeWbToLSU",
+          "signal": "w_freeFromRetire",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_dataWbToGrf_69",
+          "signal": "w_dataWbToGrf_69",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveWbToGrf",
+          "signal": "w_driveWbToGrf",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeGrfToWb",
+          "signal": "w_freeGrfToWb",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_dataWbToCsrf_76",
+          "signal": "w_dataWbToCsrf_76",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveWbToCsrf",
+          "signal": "w_driveWbToCsrf",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeCsrfToWb",
+          "signal": "w_freeCsrfToWb",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_dataWbToFetch_64",
+          "signal": "w_dataFromWBtoCPU_64",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveWbToFetch",
+          "signal": "w_driveFromWBtoCPU",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeFetchToWb",
+          "signal": "w_freeFromCPUtoWB",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        }
+      ]
+    }
+  ],
+  "direct_children": {
+    "modules": [
+      "Fetch_top",
+      "exe_top",
+      "idu_top",
+      "lsu_top",
+      "mem_slot",
+      "writeBack"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_dataDcachetoMem_256",
+        "kind": "port_input",
+        "width_text": "[255:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_dataIcachetoMem_256",
+        "kind": "port_input",
+        "width_text": "[255:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_dataTPUtoCPU_80",
+        "kind": "port_input",
+        "width_text": "[79:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_driveFromDcachetoMem",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFromIcachetoMem",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFromTPUtoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFromTStoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_freeFromDcachetoMem",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromIcachetoMem",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromTPUtoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromTStoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_dataCPUtoTS_128",
+        "kind": "port_output",
+        "width_text": "[127:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_dataMemtoDcache_136",
+        "kind": "port_output",
+        "width_text": "[135:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_dataMemtoIcache_136",
+        "kind": "port_output",
+        "width_text": "[135:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_driveFromCPUtoTPU",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveFromCPUtoTS",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveFromMemtoDcache",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveFromMemtoIcache",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_freeFromCPUtoTPU",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFromCPUtoTS",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFromMemtoDcache",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFromMemtoIcache",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "reset"
+      },
+      {
+        "name": "switch",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "condition"
+      },
+      {
+        "name": "w_dataCPUtoIcache_136",
+        "kind": "local_signal",
+        "width_text": "[135:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataFetchtoDecoder_97",
+        "kind": "local_signal",
+        "width_text": "[96:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataFromEXCPtoCPU_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataFromMem_256",
+        "kind": "local_signal",
+        "width_text": "[255:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataFromWBtoCPU_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataIcachetoCPU_256",
+        "kind": "local_signal",
+        "width_text": "[255:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataToExe_343",
+        "kind": "local_signal",
+        "width_text": "[342:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataToMem_136",
+        "kind": "local_signal",
+        "width_text": "[135:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataToRetire_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataWbToCsrf_76",
+        "kind": "local_signal",
+        "width_text": "[75:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataWbToGrf_69",
+        "kind": "local_signal",
+        "width_text": "[68:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_driveFromCPUtoIcache",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromEXCPtoCPU",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromFetchtoDecoder",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromIcachetoCPU",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromMem",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromWBtoCPU",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextToLsu",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveToExe",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveToMem",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveToRetire",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveWbToCsrf",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveWbToGrf",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_exeLSUBus_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_freeCsrfToWb",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromCPUtoEXCP",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromCPUtoIcache",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromCPUtoWB",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromDecodertoFetch",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromExe",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromIcachetoCPU",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromMem",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromRetire",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeGrfToWb",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeNextFrmLsu",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeToMem",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "rst",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "switch",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "switch",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromTPUtoCPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_driveFromTPUtoCPU",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_dataTPUtoCPU_80",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_dataTPUtoCPU_80",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromCPUtoTPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_freeFromCPUtoTPU",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveFromCPUtoTPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_driveFromCPUtoTPU",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromTPUtoCPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_freeFromTPUtoCPU",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFromEXCPtoCPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_driveFromEXCPtoCPU",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataFromEXCPtoCPU_64",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_dataFromEXCPtoCPU_64",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromCPUtoEXCP",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_freeFromCPUtoEXCP",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromWBtoCPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_driveFromWBtoCPU",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataFromWBtoCPU_64",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_dataFromWBtoCPU_64",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromCPUtoWB",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_freeFromCPUtoWB",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromCPUtoIcache",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_driveFromCPUtoIcache",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataCPUtoIcache_136",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_dataCPUtoIcache_136",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromIcachetoCPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_freeFromIcachetoCPU",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFromIcachetoCPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_driveFromIcachetoCPU",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataIcachetoCPU_256",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_dataIcachetoCPU_256",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromCPUtoIcache",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_freeFromCPUtoIcache",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveFromCPUtoTS",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_driveFromCPUtoTS",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_dataCPUtoTS_128",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_dataCPUtoTS_128",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromTStoCPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_freeFromTStoCPU",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromTStoCPU",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_driveFromTStoCPU",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromCPUtoTS",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_freeFromCPUtoTS",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromFetchtoDecoder",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_driveFromFetchtoDecoder",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataFetchtoDecoder_97",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "o_dataFetchtoDecoder_97",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromDecodertoFetch",
+        "instance_name": "Fetch_top",
+        "module_type": "Fetch_top",
+        "port": "i_freeFromDecodertoFetch",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveWbToGrf",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "i_driveWriteGrf",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_freeGrfToWb",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "o_freeWriteGrf",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataWbToGrf_69",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "i_dataWriteGrf_69",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveWbToCsrf",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "i_driveWriteCsr",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_freeCsrfToWb",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "o_freeWriteCsr",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataWbToCsrf_76",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "i_dataWriteCsr_76",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveFromFetchtoDecoder",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "i_driveFromIfu",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataFetchtoDecoder_97",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "i_dataFromIfu_97",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_freeFromDecodertoFetch",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "o_freeToIfu",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveToExe",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "o_driveToExe",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_freeFromExe",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "i_freeFromExe",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dataToExe_343",
+        "instance_name": "idu_top",
+        "module_type": "idu_top",
+        "port": "o_dataToExe_343",
+        "port_direction": "unknown",
+        "signal_role": "payload_data",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "exe_top",
+        "module_type": "exe_top",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveToExe",
+        "instance_name": "exe_top",
+        "module_type": "exe_top",
+        "port": "i_driveToExe",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromExe",
+        "instance_name": "exe_top",
+        "module_type": "exe_top",
+        "port": "o_freeFrmExe",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataToExe_343",
+        "instance_name": "exe_top",
+        "module_type": "exe_top",
+        "port": "i_decoderExeBus_343",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextToLsu",
+        "instance_name": "exe_top",
+        "module_type": "exe_top",
+        "port": "o_driveNextToLsu",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeNextFrmLsu",
+        "instance_name": "exe_top",
+        "module_type": "exe_top",
+        "port": "i_freeNextFrmLsu",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_exeLSUBus_246",
+        "instance_name": "exe_top",
+        "module_type": "exe_top",
+        "port": "o_exeLSUBus_246",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextToLsu",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "i_driveFromExe",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeNextFrmLsu",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "o_freeToExe",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_exeLSUBus_246",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "i_dataFromExe_246",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveToMem",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "o_driveToMem",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromMem",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "i_freeFromMem",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataToMem_136",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "o_dataToMem_136",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromMem",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "i_driveFromMem",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeToMem",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "o_freeToMem",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataFromMem_256",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "i_dataFromMem_256",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveToRetire",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "o_driveToRetire",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromRetire",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "i_freeFromRetire",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataToRetire_246",
+        "instance_name": "lsu_top",
+        "module_type": "lsu_top",
+        "port": "o_dataToRetire_246",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFromCPUtoIcache",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_driveFromFetchtoMem",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataCPUtoIcache_136",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_dataFetchtoMem_136",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromIcachetoCPU",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_freeFromMemtoFetch",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromIcachetoCPU",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_driveFromMemtoFetch",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataIcachetoCPU_256",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_dataMemtoFetch_256",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromCPUtoIcache",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_freeFromFetchtoMem",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveToMem",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_driveFromLSUtoMem",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataToMem_136",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_dataLSUtoMem_136",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromMem",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_freeFromMemtoLSU",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromMem",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_driveFromMemtoLSU",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataFromMem_256",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_dataMemtoLSU_256",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeToMem",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_freeFromLSUtoMem",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveFromMemtoIcache",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_driveFromMemtoIcache",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_dataMemtoIcache_136",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_dataMemtoIcache_136",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromIcachetoMem",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_freeFromIcachetoMem",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromIcachetoMem",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_driveFromIcachetoMem",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_dataIcachetoMem_256",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_dataIcachetoMem_256",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromMemtoIcache",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_freeFromMemtoIcache",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveFromMemtoDcache",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_driveFromMemtoDcache",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_dataMemtoDcache_136",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_dataMemtoDcache_136",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromDcachetoMem",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_freeFromDcachetoMem",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromDcachetoMem",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_driveFromDcachetoMem",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_dataDcachetoMem_256",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "i_dataDcachetoMem_256",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromMemtoDcache",
+        "instance_name": "mem_slot",
+        "module_type": "mem_slot",
+        "port": "o_freeFromMemtoDcache",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataToRetire_246",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "i_dataLSUToWb_246",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveToRetire",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "i_driveLSUToWb",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromRetire",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "o_freeWbToLSU",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataWbToGrf_69",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "o_dataWbToGrf_69",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveWbToGrf",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "o_driveWbToGrf",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeGrfToWb",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "i_freeGrfToWb",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataWbToCsrf_76",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "o_dataWbToCsrf_76",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveWbToCsrf",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "o_driveWbToCsrf",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeCsrfToWb",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "i_freeCsrfToWb",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataFromWBtoCPU_64",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "o_dataWbToFetch_64",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromWBtoCPU",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "o_driveWbToFetch",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromCPUtoWB",
+        "instance_name": "writeBack",
+        "module_type": "writeBack",
+        "port": "i_freeFetchToWb",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "Fetch_Logic",
+      "Fetch_top",
+      "agu_module",
+      "alu_module",
+      "bru_module",
+      "csr_module",
+      "csrf",
+      "decoder",
+      "decoder_c",
+      "delay_free_cpu",
+      "div_module",
+      "eventSink_cpu",
+      "eventSink_lsu",
+      "exe_top",
+      "freeSetDelay_lsu",
+      "grf",
+      "idu_top",
+      "lsu_memAckFormat_comb",
+      "lsu_memReqFormat_comb",
+      "lsu_top",
+      "mem_slot",
+      "mul_module",
+      "writeBack"
+    ],
+    "reachable_components": [
+      "cArbMerge2_lsu",
+      "cArbMerge_2_memslot",
+      "cFifo1_cpu",
+      "cFifo1_idu",
+      "cFifo1_lsu",
+      "cMutexMerge2_d_lsu",
+      "cMutexMerge_2_WB",
+      "cMutexMerge_2_df_memslot",
+      "cMutexMerge_3_df_fetch",
+      "cMutexMerge_4_d_fetch",
+      "cMutexMerge_6_df_exe",
+      "cNatSplit2_lsu",
+      "cNatSplit_2_fetch",
+      "cSelSplit2_lsu",
+      "cSelSplit_2_fetch",
+      "cSelSplit_3_fetch",
+      "cSelSplit_6_exe",
+      "cWaitMerge_2_WB",
+      "cWaitMerge_2_d_fetch"
+    ],
+    "families_used": [
+      "ArbMerge",
+      "Fifo1",
+      "MutexMerge",
+      "NatSplit",
+      "SelSplit",
+      "WaitMerge"
+    ]
+  },
+  "warnings": []
+}

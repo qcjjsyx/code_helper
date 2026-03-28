@@ -1,5 +1,5 @@
 {
-  "parsed_file": "E:\\code\\ai_agent\\code_helper\\CPU\\Exe\\exe_top.v",
+  "parsed_file": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/CPU/Exe/exe_top.v",
   "top_module_name": "exe_top",
   "internal_subnames": [
     "cFifo1_cpu",
@@ -18,37 +18,37 @@
       {
         "index": 0,
         "name": "rst",
-        "width": null
+        "width": 1
       },
       {
         "index": 1,
         "name": "i_driveToExe",
-        "width": null
+        "width": 1
       },
       {
         "index": 2,
         "name": "i_decoderExeBus_343",
-        "width": "[342:0]"
+        "width": 343
       },
       {
         "index": 3,
         "name": "i_freeNextFrmLsu",
-        "width": null
+        "width": 1
       }
     ],
     "output": {
       "ports": [
         {
           "name": "o_freeFrmExe",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_driveNextToLsu",
-          "width": null
+          "width": 1
         },
         {
           "name": "o_exeLSUBus_246",
-          "width": "[245:0]"
+          "width": 246
         }
       ]
     },
