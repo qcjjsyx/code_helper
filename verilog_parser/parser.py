@@ -111,7 +111,7 @@ def _parse_port_list(port_list_str: str) -> Dict[str, Any]:
             else:
                 id_m = re.match(r"([A-Za-z_][\w]*)", s[pos:])
                 if id_m:
-                    add_port(id_m.group(1), width, direction)
+                    add_port(id_m.group(1), width, direction) # type: ignore
                     pos += id_m.end()
                 break
 

@@ -51,6 +51,7 @@ def find_module_name(path: Path) -> str:
     return module_info["name"]
 
 
+## 读取一个 Verilog 文件并产出统一的结构化解析结果，包括模块名、参数、端口、局部信号、实例化等信息
 def parse_verilog_file(path: Path) -> Dict[str, Any]:
     raw = path.read_text(encoding="utf-8", errors="ignore")
     cleaned = strip_comments(raw)
@@ -75,7 +76,7 @@ def parse_verilog_file(path: Path) -> Dict[str, Any]:
         "warnings": warnings,
     }
 
-
+## 把一个module文本拆成“名字 + 参数区 + 端口区 + 正文区”
 def extract_module_header(text: str) -> Dict[str, str]:
     module_match = re.search(r"\bmodule\s+([A-Za-z_]\w*)", text)
     if not module_match:
