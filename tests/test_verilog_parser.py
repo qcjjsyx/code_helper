@@ -7,7 +7,7 @@ from verilog_parser.parser import parse_file
 class VerilogParserTest(unittest.TestCase):
     def test_cpu_top(self):
         here = os.path.dirname(__file__)
-        path = os.path.join(here, "data", "cpu_top_easy.v")
+        path = os.path.join(here, "fixtures", "verilog", "cpu_top_easy.v")
         result = parse_file(path)
 
         self.assertEqual(result.get("top_module_name"), "cpu_top")

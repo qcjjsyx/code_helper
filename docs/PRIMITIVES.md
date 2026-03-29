@@ -4,7 +4,7 @@
 
 ### contTap
 - kind: `primitive`
-- file: `base\contTap.v`
+- file: `test_data/base\contTap.v`
 - ports:
   - `trig` (input, 1)
   - `req` (output, 1)
@@ -17,7 +17,7 @@
 
 ### delay1U
 - kind: `primitive`
-- file: `base\delay1U.v`
+- file: `test_data/base\delay1U.v`
 - ports:
   - `inR` (input, 1)
   - `outR` (output, 1)
@@ -30,7 +30,7 @@
 
 ### eventSink
 - kind: `primitive`
-- file: `base\eventSink.v`
+- file: `test_data/base\eventSink.v`
 - ports:
   - `i_drive` (input, 1)
   - `o_free` (output, 1)
@@ -42,7 +42,7 @@
 
 ### eventSource
 - kind: `primitive`
-- file: `base\eventSource.v`
+- file: `test_data/base\eventSource.v`
 - ports:
   - `switch` (input, 1)
   - `fire` (output, 1)
@@ -56,7 +56,7 @@
 
 ### freeSetDelay
 - kind: `primitive`
-- file: `base\freeSetDelay.v`
+- file: `test_data/base\freeSetDelay.v`
 - ports:
   - `DELAY_UNIT_NUM` (unknown, 1)
 - deps_primitives:
@@ -73,7 +73,7 @@
 
 ### pmtRelay
 - kind: `primitive`
-- file: `base\pmtRelay.v`
+- file: `test_data/base\pmtRelay.v`
 - ports:
   - `inR` (input, 1)
   - `inA` (output, 1)
@@ -95,7 +95,7 @@
 
 ### receiver
 - kind: `primitive`
-- file: `base\receiver.v`
+- file: `test_data/base\receiver.v`
 - ports:
   - `inR` (input, 1)
   - `inA` (output, 1)
@@ -108,7 +108,7 @@
 
 ### relay
 - kind: `primitive`
-- file: `base\relay.v`
+- file: `test_data/base\relay.v`
 - ports:
   - `inR` (input, 1)
   - `inA` (output, 1)
@@ -129,7 +129,7 @@
 
 ### sender
 - kind: `primitive`
-- file: `base\sender.v`
+- file: `test_data/base\sender.v`
 - ports:
   - `i_drive` (input, 1)
   - `o_free` (output, 1)

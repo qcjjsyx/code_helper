@@ -1,0 +1,202 @@
+{
+  "parsed_file": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/test_data/cpu/CPUwithCache.v",
+  "top_module_name": "CPUwithCache",
+  "internal_subnames": [
+    "cpu_top",
+    "cpuCache_top"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "index": 1,
+        "name": "switch",
+        "width": 1
+      },
+      {
+        "index": 2,
+        "name": "i_driveFromTPUtoCPU",
+        "width": 1
+      },
+      {
+        "index": 3,
+        "name": "i_dataTPUtoCPU_80",
+        "width": 80
+      },
+      {
+        "index": 4,
+        "name": "i_freeFromTPUtoCPU",
+        "width": 1
+      },
+      {
+        "index": 5,
+        "name": "i_freeFromTStoCPU",
+        "width": 1
+      },
+      {
+        "index": 6,
+        "name": "i_driveFromTStoCPU",
+        "width": 1
+      },
+      {
+        "index": 7,
+        "name": "i_icache_drvFTPUSlot",
+        "width": 1
+      },
+      {
+        "index": 8,
+        "name": "i_icache_tpuSlotPA_56",
+        "width": 56
+      },
+      {
+        "index": 9,
+        "name": "i_icache_instData_128",
+        "width": 128
+      },
+      {
+        "index": 10,
+        "name": "i_icache_freeFTPUSlot",
+        "width": 1
+      },
+      {
+        "index": 11,
+        "name": "i_dcache_drvFTMU",
+        "width": 1
+      },
+      {
+        "index": 12,
+        "name": "i_dcache_tmuWen",
+        "width": 1
+      },
+      {
+        "index": 13,
+        "name": "i_dcache_tmuPA_56",
+        "width": 56
+      },
+      {
+        "index": 14,
+        "name": "i_dcache_tmuData_64",
+        "width": 64
+      },
+      {
+        "index": 15,
+        "name": "i_dcache_freeFtmuR",
+        "width": 1
+      },
+      {
+        "index": 16,
+        "name": "i_dcache_freeFtmuW",
+        "width": 1
+      },
+      {
+        "index": 17,
+        "name": "i_drvFDDRRefill",
+        "width": 1
+      },
+      {
+        "index": 18,
+        "name": "i_ddrRefillLine_256",
+        "width": 256
+      },
+      {
+        "index": 19,
+        "name": "i_drvFDDRWriteOver",
+        "width": 1
+      },
+      {
+        "index": 20,
+        "name": "i_freeFDDRRead",
+        "width": 1
+      },
+      {
+        "index": 21,
+        "name": "i_freeFDDRWrite",
+        "width": 1
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeFromCPUtoTPU",
+          "width": 1
+        },
+        {
+          "name": "o_driveFromCPUtoTPU",
+          "width": 1
+        },
+        {
+          "name": "o_driveFromCPUtoTS",
+          "width": 1
+        },
+        {
+          "name": "o_dataCPUtoTS_128",
+          "width": 128
+        },
+        {
+          "name": "o_freeFromCPUtoTS",
+          "width": 1
+        },
+        {
+          "name": "o_icache_free2TPUSlot",
+          "width": 1
+        },
+        {
+          "name": "o_icache_drv2TPUSlot",
+          "width": 1
+        },
+        {
+          "name": "o_dcache_free2TMU",
+          "width": 1
+        },
+        {
+          "name": "o_dcache_drv2tmuR",
+          "width": 1
+        },
+        {
+          "name": "o_dcache_tmuRData_64",
+          "width": 64
+        },
+        {
+          "name": "o_dcache_drv2tmuW",
+          "width": 1
+        },
+        {
+          "name": "o_free2DDRRefill",
+          "width": 1
+        },
+        {
+          "name": "o_free2DDRWriteOver",
+          "width": 1
+        },
+        {
+          "name": "o_drv2DDRRead",
+          "width": 1
+        },
+        {
+          "name": "o_readPA_56",
+          "width": 56
+        },
+        {
+          "name": "o_drv2DDRWrite",
+          "width": 1
+        },
+        {
+          "name": "o_writePA_56",
+          "width": 56
+        },
+        {
+          "name": "o_writeLine_256",
+          "width": 256
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}

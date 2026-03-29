@@ -11,7 +11,7 @@ from docgen_components.kb import (
 class TestComponents(unittest.TestCase):
     def test_parse_arb_merge(self):
         repo_root = Path(__file__).resolve().parents[1]
-        path = repo_root / "pipeline" / "cArbMergeN_modName.v"
+        path = repo_root / "test_data" / "pipeline" / "cArbMergeN_modName.v"
         known_primitives = load_known_primitives(repo_root)
         known_components = build_known_components()
         entry = build_entry(path, repo_root, known_primitives, known_components)
@@ -21,7 +21,7 @@ class TestComponents(unittest.TestCase):
 
     def test_parse_nat_split(self):
         repo_root = Path(__file__).resolve().parents[1]
-        path = repo_root / "pipeline" / "cNatSplitN_modName.v"
+        path = repo_root / "test_data" / "pipeline" / "cNatSplitN_modName.v"
         known_primitives = load_known_primitives(repo_root)
         known_components = build_known_components()
         entry = build_entry(path, repo_root, known_primitives, known_components)

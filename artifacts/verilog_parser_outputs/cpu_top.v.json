@@ -1,0 +1,133 @@
+{
+  "parsed_file": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/test_data/cpu/CPU/cpu_top.v",
+  "top_module_name": "cpu_top",
+  "internal_subnames": [
+    "Fetch_top",
+    "idu_top",
+    "exe_top",
+    "lsu_top",
+    "mem_slot",
+    "writeBack"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "index": 1,
+        "name": "switch",
+        "width": 1
+      },
+      {
+        "index": 2,
+        "name": "i_driveFromTPUtoCPU",
+        "width": 1
+      },
+      {
+        "index": 3,
+        "name": "i_dataTPUtoCPU_80",
+        "width": 80
+      },
+      {
+        "index": 4,
+        "name": "i_freeFromTPUtoCPU",
+        "width": 1
+      },
+      {
+        "index": 5,
+        "name": "i_freeFromTStoCPU",
+        "width": 1
+      },
+      {
+        "index": 6,
+        "name": "i_driveFromTStoCPU",
+        "width": 1
+      },
+      {
+        "index": 7,
+        "name": "i_freeFromIcachetoMem",
+        "width": 1
+      },
+      {
+        "index": 8,
+        "name": "i_driveFromIcachetoMem",
+        "width": 1
+      },
+      {
+        "index": 9,
+        "name": "i_dataIcachetoMem_256",
+        "width": 256
+      },
+      {
+        "index": 10,
+        "name": "i_freeFromDcachetoMem",
+        "width": 1
+      },
+      {
+        "index": 11,
+        "name": "i_driveFromDcachetoMem",
+        "width": 1
+      },
+      {
+        "index": 12,
+        "name": "i_dataDcachetoMem_256",
+        "width": 256
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeFromCPUtoTPU",
+          "width": 1
+        },
+        {
+          "name": "o_driveFromCPUtoTPU",
+          "width": 1
+        },
+        {
+          "name": "o_driveFromCPUtoTS",
+          "width": 1
+        },
+        {
+          "name": "o_dataCPUtoTS_128",
+          "width": 128
+        },
+        {
+          "name": "o_freeFromCPUtoTS",
+          "width": 1
+        },
+        {
+          "name": "o_driveFromMemtoIcache",
+          "width": 1
+        },
+        {
+          "name": "o_dataMemtoIcache_136",
+          "width": 136
+        },
+        {
+          "name": "o_freeFromMemtoIcache",
+          "width": 1
+        },
+        {
+          "name": "o_driveFromMemtoDcache",
+          "width": 1
+        },
+        {
+          "name": "o_dataMemtoDcache_136",
+          "width": 136
+        },
+        {
+          "name": "o_freeFromMemtoDcache",
+          "width": 1
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}

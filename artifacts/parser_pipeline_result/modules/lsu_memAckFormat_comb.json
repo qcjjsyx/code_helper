@@ -1,0 +1,144 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "lsu_memAckFormat_comb",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/cpu/LSU/lsu_memAckFormat_comb.v",
+  "interface": {
+    "params": [],
+    "ports": [],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_data_312",
+      "kind": "wire",
+      "width_text": "[311:0]"
+    },
+    {
+      "name": "w_byteEnStart_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_data_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_isDouble",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_isWord",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_isHalf",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_isByte",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataSignExtend_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_dataZeroExtend_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_data2_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    }
+  ],
+  "instances": [],
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "w_byteEnStart_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_data2_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataSignExtend_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataZeroExtend_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_data_312",
+        "kind": "local_signal",
+        "width_text": "[311:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_data_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_isByte",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isDouble",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isHalf",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isWord",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

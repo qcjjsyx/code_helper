@@ -14,18 +14,18 @@ from .parser import parse_file
 def main() -> int:
     base = Path(__file__).resolve().parent.parent
     targets = [
-        base / "CPU" / "CPUwithCache.v",
-        base / "CPU" / "CPU" / "cpu_top.v",
-        base / "CPU" / "Exe" / "exe_top.v",
-        base / "CPU" / "Fetch" / "Fetch_top.v",
-        base / "CPU" / "IDU" / "idu_top.v",
-        base / "CPU" / "LSU" / "lsu_top.v",
-        base / "CPU" / "mem_slot" / "mem_slot.v",
-        base / "CPU" / "WB" / "writeBack.v",
+        base / "test_data" / "cpu" / "CPUwithCache.v",
+        base / "test_data" / "cpu" / "CPU" / "cpu_top.v",
+        base / "test_data" / "cpu" / "Exe" / "exe_top.v",
+        base / "test_data" / "cpu" / "Fetch" / "Fetch_top.v",
+        base / "test_data" / "cpu" / "IDU" / "idu_top.v",
+        base / "test_data" / "cpu" / "LSU" / "lsu_top.v",
+        base / "test_data" / "cpu" / "mem_slot" / "mem_slot.v",
+        base / "test_data" / "cpu" / "WB" / "writeBack.v",
     ]
 
-    out_dir = base / "verilog_parser_outputs"
-    out_dir.mkdir(exist_ok=True)
+    out_dir = base / "artifacts" / "verilog_parser_outputs"
+    out_dir.mkdir(parents=True, exist_ok=True)
 
     any_error = False
     for t in targets:

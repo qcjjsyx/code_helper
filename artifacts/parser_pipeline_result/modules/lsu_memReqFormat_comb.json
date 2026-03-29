@@ -1,0 +1,298 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "lsu_memReqFormat_comb",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/cpu/LSU/lsu_memReqFormat_comb.v",
+  "interface": {
+    "params": [],
+    "ports": [],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_isLoad",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_isStore",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_isMemOp",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_loadSign",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_isDouble",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_isWord",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_isHalf",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_isByte",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_addr_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_data_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_isLineCross",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_offsetByte_4",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_byteEnStart_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_byteEnEnd_5",
+      "kind": "wire",
+      "width_text": "[5:0]"
+    },
+    {
+      "name": "r_byteEn_39",
+      "kind": "reg",
+      "width_text": "[38:0]"
+    },
+    {
+      "name": "w_byteEn_39",
+      "kind": "wire",
+      "width_text": "[38:0]"
+    },
+    {
+      "name": "w_enHigh_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_enLow_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_dataHigh_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_dataLow_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_addrHigh_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_addrLow_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_wenHigh_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_wenLow_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    }
+  ],
+  "instances": [],
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "r_byteEn_39",
+        "kind": "local_signal",
+        "width_text": "[38:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addrHigh_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addrLow_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addr_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_byteEnEnd_5",
+        "kind": "local_signal",
+        "width_text": "[5:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_byteEnStart_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_byteEn_39",
+        "kind": "local_signal",
+        "width_text": "[38:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_dataHigh_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataLow_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_data_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_enHigh_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_enLow_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_isByte",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isDouble",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isHalf",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isLineCross",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isLoad",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isMemOp",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isStore",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_isWord",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadSign",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_offsetByte_4",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_wenHigh_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_wenLow_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

@@ -1,0 +1,2741 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "exe_top",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/cpu/Exe/exe_top.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveToExe",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_freeFrmExe",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_decoderExeBus_343",
+        "direction": "input",
+        "width_text": "[342:0]"
+      },
+      {
+        "name": "o_driveNextToLsu",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_freeNextFrmLsu",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_exeLSUBus_246",
+        "direction": "output",
+        "width_text": "[245:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_freefifo",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_exeLSUBus_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_driveFifoToSel",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeSelToFifo",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_fire_reg",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "r_dataFromDecoder_343",
+      "kind": "reg",
+      "width_text": "[342:0]"
+    },
+    {
+      "name": "w_rs1Value_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_rs2Value_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_imm_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_PC_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_inst_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_aluControl_12",
+      "kind": "wire",
+      "width_text": "[11:0]"
+    },
+    {
+      "name": "w_mul_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_mulLowHigh_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_div_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_remainder_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_mulDivSign_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_CsrType_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_CsrCsw_3",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "w_store_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_load_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_loadSign_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_loadStoreWidth_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_Jal_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_Jalr_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_BType_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_BTypeCon_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_branchSign_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_jumpOrNot_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_rd_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_rs2Csr_12",
+      "kind": "wire",
+      "width_text": "[11:0]"
+    },
+    {
+      "name": "w_Compress_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_rv64_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_alu_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_agu_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_bru_1",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextalu",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextalu_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextalu0_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeNextalu",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextmul",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextmul_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextmul0_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeNextmul",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextdiv",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextdiv_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextdiv0_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeNextdiv",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextagu",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextagu_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextagu0_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeNextagu",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextcsr",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextcsr_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextcsr0_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeNextcsr",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextbru",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextbru_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextbru0_delay",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeNextbru",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveNextToLsu",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_aluResult_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_mulResult_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_divResult_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_aguResult_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_csrResult_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_bruResult_246",
+      "kind": "wire",
+      "width_text": "[245:0]"
+    },
+    {
+      "name": "w_muldata_235",
+      "kind": "wire",
+      "width_text": "[234:0]"
+    },
+    {
+      "name": "w_muldata_valid_235",
+      "kind": "wire",
+      "width_text": "[234:0]"
+    },
+    {
+      "name": "w_divdata_235",
+      "kind": "wire",
+      "width_text": "[234:0]"
+    },
+    {
+      "name": "w_divdata_valid_235",
+      "kind": "wire",
+      "width_text": "[234:0]"
+    },
+    {
+      "name": "w_driveFifoToSel_dealy1",
+      "kind": "wire",
+      "width_text": null
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "cFifo1_cpu_1",
+      "module_type": "cFifo1_cpu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_cpu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "i_driveToExe",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freefifo",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFifoToSel",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_freeSelToFifo",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire",
+          "signal": "w_fire_reg",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "delay_free_cpu_sel",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "15"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveFifoToSel",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveFifoToSel_dealy1",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "cSelSplit_6_exe",
+      "module_type": "cSelSplit_6_exe",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cSelSplit_6_exe.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_driveFifoToSel_dealy1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext0",
+          "signal": "w_driveNextalu0_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext1",
+          "signal": "w_driveNextmul0_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext2",
+          "signal": "w_driveNextdiv0_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext3",
+          "signal": "w_driveNextagu0_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext4",
+          "signal": "w_driveNextcsr0_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext5",
+          "signal": "w_driveNextbru0_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "valid0",
+          "signal": "w_alu_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "valid1",
+          "signal": "w_mul_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "valid2",
+          "signal": "w_div_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "valid3",
+          "signal": "w_agu_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "valid4",
+          "signal": "w_CsrType_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "valid5",
+          "signal": "w_bru_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeSelToFifo",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext0",
+          "signal": "w_driveNextalu",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_driveNext1",
+          "signal": "w_driveNextmul",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_driveNext2",
+          "signal": "w_driveNextdiv",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_driveNext3",
+          "signal": "w_driveNextagu",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_driveNext4",
+          "signal": "w_driveNextcsr",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_driveNext5",
+          "signal": "w_driveNextbru",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "SelSplit"
+    },
+    {
+      "instance_name": "u_delayALU0_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "1"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextalu",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextalu0_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delayMUL0_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "1"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextmul",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextmul0_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delayDIV0_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "1"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextdiv",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextdiv0_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delayAGU0_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "1"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextagu",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextagu0_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delayCSR0_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "1"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextcsr",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextcsr0_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delayBRU0_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "1"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextbru",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextbru0_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "alu_module",
+      "module_type": "alu_module",
+      "artifact_kind": "module",
+      "target_ref": "../modules/alu_module.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_aludata_307",
+          "signal": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64,w_imm_64, w_rv64_1, w_aluControl_12}",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_aluResult_246",
+          "signal": "w_aluResult_246",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "mul_module",
+      "module_type": "mul_module",
+      "artifact_kind": "module",
+      "target_ref": "../modules/mul_module.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_muldata_235",
+          "signal": "w_muldata_valid_235",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "o_mulResult_246",
+          "signal": "w_mulResult_246",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "div_module",
+      "module_type": "div_module",
+      "artifact_kind": "module",
+      "target_ref": "../modules/div_module.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_divdata_235",
+          "signal": "w_divdata_valid_235",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "o_divResult_246",
+          "signal": "w_divResult_246",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "agu_module",
+      "module_type": "agu_module",
+      "artifact_kind": "module",
+      "target_ref": "../modules/agu_module.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_agudata_300",
+          "signal": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64, w_imm_64, w_rv64_1, w_store_1, w_load_1, w_loadSign_1, w_loadStoreWidth_2}",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_aguResult_246",
+          "signal": "w_aguResult_246",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "csr_module",
+      "module_type": "csr_module",
+      "artifact_kind": "module",
+      "target_ref": "../modules/csr_module.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_csrdata_247",
+          "signal": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64, w_rv64_1, w_CsrType_1, w_CsrCsw_3, w_rs2Csr_12}",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_csrResult_246",
+          "signal": "w_csrResult_246",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "bru_module",
+      "module_type": "bru_module",
+      "artifact_kind": "module",
+      "target_ref": "../modules/bru_module.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_brudata_303",
+          "signal": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64, w_imm_64, w_rv64_1, w_Jal_1, w_Jalr_1, w_BType_1, w_BTypeCon_4, w_branchSign_1}",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_bruResult_246",
+          "signal": "w_bruResult_246",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delayalu_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "4"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextalu",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextalu_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delaymul_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "40"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextmul",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextmul_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delaydiv_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "120"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextdiv",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextdiv_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delayagu_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "4"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextagu",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextagu_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delaycsr_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "4"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextcsr",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextcsr_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_delaybru_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "8"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextbru",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveNextbru_delay",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "cMutexMerge_6_df_exe",
+      "module_type": "cMutexMerge_6_df_exe",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cMutexMerge_6_df_exe.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive0",
+          "signal": "w_driveNextalu_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive1",
+          "signal": "w_driveNextmul_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive2",
+          "signal": "w_driveNextdiv_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive3",
+          "signal": "w_driveNextagu_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive4",
+          "signal": "w_driveNextcsr_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive5",
+          "signal": "w_driveNextbru_delay",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data0",
+          "signal": "w_aluResult_246",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data1",
+          "signal": "w_mulResult_246",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data2",
+          "signal": "w_divResult_246",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data3",
+          "signal": "w_aguResult_246",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data4",
+          "signal": "w_csrResult_246",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data5",
+          "signal": "w_bruResult_246",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNextFrmLsu",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free0",
+          "signal": "w_freeNextalu",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free1",
+          "signal": "w_freeNextmul",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free2",
+          "signal": "w_freeNextdiv",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free3",
+          "signal": "w_freeNextagu",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free4",
+          "signal": "w_freeNextcsr",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free5",
+          "signal": "w_freeNextbru",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveNextToLsu",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data",
+          "signal": "w_exeLSUBus_246",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "MutexMerge"
+    },
+    {
+      "instance_name": "u_delaylsu_donttouch",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "5"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveNextToLsu",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "o_driveNextToLsu",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    }
+  ],
+  "direct_children": {
+    "modules": [
+      "agu_module",
+      "alu_module",
+      "bru_module",
+      "csr_module",
+      "delay_free_cpu",
+      "div_module",
+      "mul_module"
+    ],
+    "components": [
+      "cFifo1_cpu",
+      "cMutexMerge_6_df_exe",
+      "cSelSplit_6_exe"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_decoderExeBus_343",
+        "kind": "port_input",
+        "width_text": "[342:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_driveToExe",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_freeNextFrmLsu",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_driveNextToLsu",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_exeLSUBus_246",
+        "kind": "port_output",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_freeFrmExe",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "r_dataFromDecoder_343",
+        "kind": "local_signal",
+        "width_text": "[342:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "reset"
+      },
+      {
+        "name": "w_BTypeCon_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_BType_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Compress_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_CsrCsw_3",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_CsrType_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Jal_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_Jalr_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_PC_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_aguResult_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_agu_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_aluControl_12",
+        "kind": "local_signal",
+        "width_text": "[11:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_aluResult_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_alu_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_branchSign_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_bruResult_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bru_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_csrResult_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_divResult_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_div_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_divdata_235",
+        "kind": "local_signal",
+        "width_text": "[234:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_divdata_valid_235",
+        "kind": "local_signal",
+        "width_text": "[234:0]",
+        "role": "condition"
+      },
+      {
+        "name": "w_driveFifoToSel",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFifoToSel_dealy1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextToLsu",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextagu",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextagu0_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextagu_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextalu",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextalu0_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextalu_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextbru",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextbru0_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextbru_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextcsr",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextcsr0_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextcsr_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextdiv",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextdiv0_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextdiv_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextmul",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextmul0_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextmul_delay",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_exeLSUBus_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire_reg",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_freeNextagu",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeNextalu",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeNextbru",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeNextcsr",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeNextdiv",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeNextmul",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeSelToFifo",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freefifo",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_imm_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_jumpOrNot_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadSign_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadStoreWidth_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_load_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_mulDivSign_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mulLowHigh_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_mulResult_246",
+        "kind": "local_signal",
+        "width_text": "[245:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mul_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_muldata_235",
+        "kind": "local_signal",
+        "width_text": "[234:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_muldata_valid_235",
+        "kind": "local_signal",
+        "width_text": "[234:0]",
+        "role": "condition"
+      },
+      {
+        "name": "w_rd_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_remainder_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs1Value_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs2Csr_12",
+        "kind": "local_signal",
+        "width_text": "[11:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rs2Value_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rv64_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_store_1",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64, w_imm_64, w_rv64_1, w_Jal_1, w_Jalr_1, w_BType_1, w_BTypeCon_4, w_branchSign_1}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64, w_imm_64, w_rv64_1, w_store_1, w_load_1, w_loadSign_1, w_loadStoreWidth_2}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64, w_rv64_1, w_CsrType_1, w_CsrCsw_3, w_rs2Csr_12}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64,w_imm_64, w_rv64_1, w_aluControl_12}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "i_driveToExe",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freefifo",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFifoToSel",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeSelToFifo",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_fire_reg",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "o_fire",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFifoToSel",
+        "instance_name": "delay_free_cpu_sel",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveFifoToSel_dealy1",
+        "instance_name": "delay_free_cpu_sel",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "delay_free_cpu_sel",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveFifoToSel_dealy1",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextalu0_delay",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "i_freeNext0",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextmul0_delay",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "i_freeNext1",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextdiv0_delay",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "i_freeNext2",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextagu0_delay",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "i_freeNext3",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextcsr0_delay",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "i_freeNext4",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextbru0_delay",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "i_freeNext5",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_alu_1",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "valid0",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_mul_1",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "valid1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_div_1",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "valid2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_agu_1",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "valid3",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_CsrType_1",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "valid4",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_bru_1",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "valid5",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeSelToFifo",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveNextalu",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "o_driveNext0",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveNextmul",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "o_driveNext1",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveNextdiv",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "o_driveNext2",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveNextagu",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "o_driveNext3",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveNextcsr",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "o_driveNext4",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveNextbru",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "o_driveNext5",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cSelSplit_6_exe",
+        "module_type": "cSelSplit_6_exe",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextalu",
+        "instance_name": "u_delayALU0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextalu0_delay",
+        "instance_name": "u_delayALU0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delayALU0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextmul",
+        "instance_name": "u_delayMUL0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextmul0_delay",
+        "instance_name": "u_delayMUL0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delayMUL0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextdiv",
+        "instance_name": "u_delayDIV0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextdiv0_delay",
+        "instance_name": "u_delayDIV0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delayDIV0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextagu",
+        "instance_name": "u_delayAGU0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextagu0_delay",
+        "instance_name": "u_delayAGU0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delayAGU0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextcsr",
+        "instance_name": "u_delayCSR0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextcsr0_delay",
+        "instance_name": "u_delayCSR0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delayCSR0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextbru",
+        "instance_name": "u_delayBRU0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextbru0_delay",
+        "instance_name": "u_delayBRU0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delayBRU0_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64,w_imm_64, w_rv64_1, w_aluControl_12}",
+        "instance_name": "alu_module",
+        "module_type": "alu_module",
+        "port": "i_aludata_307",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_aluResult_246",
+        "instance_name": "alu_module",
+        "module_type": "alu_module",
+        "port": "o_aluResult_246",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_muldata_valid_235",
+        "instance_name": "mul_module",
+        "module_type": "mul_module",
+        "port": "i_muldata_235",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_mulResult_246",
+        "instance_name": "mul_module",
+        "module_type": "mul_module",
+        "port": "o_mulResult_246",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_divdata_valid_235",
+        "instance_name": "div_module",
+        "module_type": "div_module",
+        "port": "i_divdata_235",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_divResult_246",
+        "instance_name": "div_module",
+        "module_type": "div_module",
+        "port": "o_divResult_246",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64, w_imm_64, w_rv64_1, w_store_1, w_load_1, w_loadSign_1, w_loadStoreWidth_2}",
+        "instance_name": "agu_module",
+        "module_type": "agu_module",
+        "port": "i_agudata_300",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_aguResult_246",
+        "instance_name": "agu_module",
+        "module_type": "agu_module",
+        "port": "o_aguResult_246",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64, w_rv64_1, w_CsrType_1, w_CsrCsw_3, w_rs2Csr_12}",
+        "instance_name": "csr_module",
+        "module_type": "csr_module",
+        "port": "i_csrdata_247",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_csrResult_246",
+        "instance_name": "csr_module",
+        "module_type": "csr_module",
+        "port": "o_csrResult_246",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_Compress_1, w_inst_32, w_rd_5, w_rs1Value_64, w_rs2Value_64, w_PC_64, w_imm_64, w_rv64_1, w_Jal_1, w_Jalr_1, w_BType_1, w_BTypeCon_4, w_branchSign_1}",
+        "instance_name": "bru_module",
+        "module_type": "bru_module",
+        "port": "i_brudata_303",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_bruResult_246",
+        "instance_name": "bru_module",
+        "module_type": "bru_module",
+        "port": "o_bruResult_246",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveNextalu",
+        "instance_name": "u_delayalu_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextalu_delay",
+        "instance_name": "u_delayalu_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delayalu_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextmul",
+        "instance_name": "u_delaymul_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextmul_delay",
+        "instance_name": "u_delaymul_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delaymul_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextdiv",
+        "instance_name": "u_delaydiv_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextdiv_delay",
+        "instance_name": "u_delaydiv_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delaydiv_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextagu",
+        "instance_name": "u_delayagu_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextagu_delay",
+        "instance_name": "u_delayagu_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delayagu_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextcsr",
+        "instance_name": "u_delaycsr_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextcsr_delay",
+        "instance_name": "u_delaycsr_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delaycsr_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextbru",
+        "instance_name": "u_delaybru_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextbru_delay",
+        "instance_name": "u_delaybru_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delaybru_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveNextalu_delay",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_drive0",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextmul_delay",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_drive1",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextdiv_delay",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_drive2",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextagu_delay",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_drive3",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextcsr_delay",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_drive4",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextbru_delay",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_drive5",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_aluResult_246",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_data0",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_mulResult_246",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_data1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_divResult_246",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_data2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_aguResult_246",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_data3",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_csrResult_246",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_data4",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_bruResult_246",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_data5",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeNextFrmLsu",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeNextalu",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "o_free0",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeNextmul",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "o_free1",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeNextdiv",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "o_free2",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeNextagu",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "o_free3",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeNextcsr",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "o_free4",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeNextbru",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "o_free5",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveNextToLsu",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_exeLSUBus_246",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "o_data",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cMutexMerge_6_df_exe",
+        "module_type": "cMutexMerge_6_df_exe",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextToLsu",
+        "instance_name": "u_delaylsu_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "o_driveNextToLsu",
+        "instance_name": "u_delaylsu_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_delaylsu_donttouch",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "agu_module",
+      "alu_module",
+      "bru_module",
+      "csr_module",
+      "delay_free_cpu",
+      "div_module",
+      "mul_module"
+    ],
+    "reachable_components": [
+      "cFifo1_cpu",
+      "cMutexMerge_6_df_exe",
+      "cSelSplit_6_exe"
+    ],
+    "families_used": [
+      "Fifo1",
+      "MutexMerge",
+      "SelSplit"
+    ]
+  },
+  "warnings": []
+}

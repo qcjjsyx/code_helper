@@ -1,0 +1,60 @@
+{
+  "parsed_file": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/test_data/cpu/Exe/exe_top.v",
+  "top_module_name": "exe_top",
+  "internal_subnames": [
+    "cFifo1_cpu",
+    "delay_free_cpu",
+    "cSelSplit_6_exe",
+    "alu_module",
+    "mul_module",
+    "div_module",
+    "agu_module",
+    "csr_module",
+    "bru_module",
+    "cMutexMerge_6_df_exe"
+  ],
+  "interface": {
+    "inputs": [
+      {
+        "index": 0,
+        "name": "rst",
+        "width": 1
+      },
+      {
+        "index": 1,
+        "name": "i_driveToExe",
+        "width": 1
+      },
+      {
+        "index": 2,
+        "name": "i_decoderExeBus_343",
+        "width": 343
+      },
+      {
+        "index": 3,
+        "name": "i_freeNextFrmLsu",
+        "width": 1
+      }
+    ],
+    "output": {
+      "ports": [
+        {
+          "name": "o_freeFrmExe",
+          "width": 1
+        },
+        {
+          "name": "o_driveNextToLsu",
+          "width": 1
+        },
+        {
+          "name": "o_exeLSUBus_246",
+          "width": 246
+        }
+      ]
+    },
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  }
+}

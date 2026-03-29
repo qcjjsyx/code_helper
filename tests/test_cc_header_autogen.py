@@ -29,8 +29,8 @@ def _header(path: Path):
 
 def test_autogen_infers_family_and_num_ports(tmp_path):
     repo_root = REPO_ROOT
-    src_dir = repo_root / "tests" / "data"
-    work_dir = tmp_path / "data_copy"
+    src_dir = repo_root / "tests" / "fixtures" / "verilog"
+    work_dir = tmp_path / "fixture_copy"
     shutil.copytree(src_dir, work_dir)
 
     (work_dir / "cPmtFifo_cpu.v").write_text(
@@ -134,7 +134,7 @@ def test_autogen_infers_family_and_num_ports(tmp_path):
 
 def test_autogen_extracts_data_width_and_fallback_num_ports(tmp_path):
     repo_root = REPO_ROOT
-    work_dir = tmp_path / "data_copy"
+    work_dir = tmp_path / "fixture_copy"
     work_dir.mkdir(parents=True, exist_ok=True)
 
     test_file = work_dir / "cArbMerge_custom.v"

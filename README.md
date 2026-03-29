@@ -1,63 +1,146 @@
-# Parser Pipeline For Verilog Project Handoff
+# Verilog Project Parser And Qwen Agent
 
-本仓库当前以 `parser_pipeline` 为主工作流，目标是把工程模块层级、派生结构子、以及关键 event/data flow 自动整理成 JSON，供后续 AI 按需读取并生成代码手册。
+本仓库现在分成 5 类内容：
 
-## 主工作流
+- `parser_pipeline/`、`ai_agent/`、`cc_header_tools/`、`docgen_components/`、`verilog_parser/`
+  - Python 代码
+- `test_data/`
+  - 示例 Verilog 工程、结构子模板、测试样本
+- `tests/`
+  - 自动化测试
+- `docs/`
+  - 项目文档
+- `docs/notes/`
+  - 历史说明、需求记录、设计草稿
+- `artifacts/`
+  - 生成结果
+
+## 目录说明
+
+- `parser_pipeline/`
+  - 顶层模块到模块/派生结构子 JSON 的主工作流
+- `ai_agent/`
+  - 基于阿里千问 API 的项目问答 agent
+- `cc_header_tools/`
+  - `//@cc:` 头生成与校验
+- `docgen_components/`
+  - 旧组件知识库代码，仅保留作参考
+- `verilog_parser/`
+  - 旧轻量解析器
+- `test_data/cpu/`
+  - CPU 示例工程
+- `test_data/base/`
+  - primitive 示例数据
+- `test_data/pipeline/`
+  - 派生结构子模板数据
+- `tests/fixtures/verilog/`
+  - 单元测试夹具
+- `artifacts/parser_pipeline_result/`
+  - `parser_pipeline` 生成的 JSON
+- `artifacts/verilog_parser_outputs/`
+  - 旧 `verilog_parser` 的输出
+- `config/json_templates/`
+  - JSON 模板
+- `config/cc_headers/`
+  - `//@cc:` header 模板
+
+## Parser Pipeline
 
 统一入口：
 
 ```bash
 python -m parser_pipeline build \
   --repo . \
-  --inputs CPU \
-  --tops CPU/CPU/cpu_top.v CPU/CPUwithCache.v \
-  --output parser_pipeline_result
+  --inputs test_data/cpu \
+  --tops test_data/cpu/CPU/cpu_top.v test_data/cpu/CPUwithCache.v \
+  --output artifacts/parser_pipeline_result
 ```
 
-参数说明：
+输出内容：
 
-- `--repo`：项目根目录
-- `--inputs`：扫描范围，可传目录或文件
-- `--tops`：要递归展开的顶层模块文件
-- `--output`：输出目录，默认 `parser_pipeline_result`
+- `artifacts/parser_pipeline_result/project_index.json`
+- `artifacts/parser_pipeline_result/modules/<module_name>.json`
+- `artifacts/parser_pipeline_result/components/<component_name>.json`
+- `artifacts/parser_pipeline_result/build_report.json`
 
-## 输出内容
+## Qwen AI Agent
 
-构建完成后会生成：
+Agent 基于 `parser_pipeline` 结果做本地检索，再调用千问 API 回答问题。
 
-- `parser_pipeline_result/project_index.json`
-- `parser_pipeline_result/modules/<module_name>.json`
-- `parser_pipeline_result/components/<component_name>.json`
-- `parser_pipeline_result/build_report.json`
+推荐先在项目根目录准备 `.env`：
 
-其中：
+```bash
+cp .env.example .env
+```
 
-- `project_index.json`：项目级索引、顶层入口、层级树摘要、统计信息
-- `modules/*.json`：普通工程模块的接口、实例、局部信号、flow graph、传递摘要
-- `components/*.json`：派生结构子的 family 模板映射、contract、flow 语义
+然后填写：
 
-## 目录说明
+```env
+DASHSCOPE_API_KEY=your_api_key
+QWEN_MODEL=qwen-plus
+QWEN_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
+```
 
-- `parser_pipeline/`
-  - 新的主实现
-- `parser_pipeline_result/`
-  - 生成结果
-- `JSON_Template/family_level.json`
-  - 派生结构子 family 语义模板
-- `test/`
-  - 新工作流测试
-- `cc_header_tools/`
-  - 旧的 `//@cc:` 头工具，当前保留作为辅助工具
-- `docgen_components/`
-  - 旧组件知识库代码，当前仅保留作参考，不是主运行链路
+也可以直接手工导出环境变量：
+
+```bash
+export DASHSCOPE_API_KEY="your_api_key"
+export QWEN_MODEL="qwen-plus"
+export QWEN_BASE_URL="https://dashscope.aliyuncs.com/compatible-mode/v1"
+```
+
+### AI 命令行用法
+
+1. 问答模式
+
+```bash
+python -m ai_agent ask \
+  --repo . \
+  --question "解释 cpu_top 的整体层级，以及 Fetch_top 为什么能完成取指"
+```
+
+2. 输出 JSON 格式结果
+
+```bash
+python -m ai_agent ask \
+  --repo . \
+  --question "Fetch_top 由哪些结构子构成" \
+  --json
+```
+
+3. 生成代码手册
+
+```bash
+python -m ai_agent generate-manual \
+  --repo . \
+  --top-module cpu_top \
+  --output docs/manuals/cpu_top.md
+```
+
+可选参数：
+
+- `--artifacts-root`
+  - 指定 JSON 目录，默认 `artifacts/parser_pipeline_result`
+- `--model`
+  - 覆盖默认模型
+- `--base-url`
+  - 覆盖 API 地址
+- `--previous-response-id`
+  - 继续上一轮对话
+- `--json`
+  - 返回结构化输出
+- `--output`
+  - 仅 `generate-manual` 使用，指定生成的 Markdown 文件路径
+
+更多说明见 [AI_AGENT.md](/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/docs/AI_AGENT.md)。
 
 ## `cc_header_tools`
 
-如果你仍然需要为 `pipeline/` 或其他派生结构子文件维护 `//@cc:` 头，可继续使用：
+如果你仍然需要为派生结构子文件维护 `//@cc:` 头，可继续使用：
 
 ```bash
-python -m cc_header_tools autogen --repo . --inputs pipeline --only-missing --inplace
-python -m cc_header_tools lint --repo . --inputs pipeline
+python -m cc_header_tools autogen --repo . --inputs test_data/pipeline --only-missing --inplace
+python -m cc_header_tools lint --repo . --inputs test_data/pipeline
 ```
 
 当前行为：
@@ -67,13 +150,16 @@ python -m cc_header_tools lint --repo . --inputs pipeline
 
 ## 测试
 
-运行当前主测试集：
+安装依赖后运行：
 
 ```bash
 pytest
 ```
 
-`pytest.ini` 已固定 `pythonpath = .`，并同时收集 `tests/` 与 `test/`。
+`pytest.ini` 当前固定：
+
+- `pythonpath = .`
+- `testpaths = tests`
 
 ## 推荐的 AI 交互方式
 

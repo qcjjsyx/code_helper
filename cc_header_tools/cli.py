@@ -113,7 +113,7 @@ def run_scan(repo_root: Path, inputs, strict: bool):
 
 
 def run_skeleton(repo_root: Path, family: str, file_path: str, inplace: bool):
-    template_path = repo_root / "templates" / "cc_headers" / f"{family}.txt"
+    template_path = repo_root / "config" / "cc_headers" / f"{family}.txt"
     if not template_path.exists():
         print(f"template not found: {template_path}")
         return 1

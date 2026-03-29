@@ -18,7 +18,7 @@ def main(argv: Optional[list[str]] = None) -> int:
     build_parser.add_argument("--repo", required=True)
     build_parser.add_argument("--inputs", nargs="+", required=True)
     build_parser.add_argument("--tops", nargs="+", required=True)
-    build_parser.add_argument("--output", default="parser_pipeline_result")
+    build_parser.add_argument("--output", default="artifacts/parser_pipeline_result")
 
     args = parser.parse_args(argv)
     repo_root = Path(args.repo).resolve()

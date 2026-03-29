@@ -1,0 +1,2025 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "Fetch_top",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/cpu/Fetch/Fetch_top.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "switch",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromTPUtoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dataTPUtoCPU_80",
+        "direction": "input",
+        "width_text": "[79:0]"
+      },
+      {
+        "name": "o_freeFromCPUtoTPU",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromCPUtoTPU",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_freeFromTPUtoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromEXCPtoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dataFromEXCPtoCPU_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_freeFromCPUtoEXCP",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromWBtoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dataFromWBtoCPU_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_freeFromCPUtoWB",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromCPUtoIcache",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_dataCPUtoIcache_136",
+        "direction": "output",
+        "width_text": "[135:0]"
+      },
+      {
+        "name": "i_freeFromIcachetoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromIcachetoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_dataIcachetoCPU_256",
+        "direction": "input",
+        "width_text": "[255:0]"
+      },
+      {
+        "name": "o_freeFromCPUtoIcache",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromCPUtoTS",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_dataCPUtoTS_128",
+        "direction": "output",
+        "width_text": "[127:0]"
+      },
+      {
+        "name": "i_freeFromTStoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "i_driveFromTStoCPU",
+        "direction": "input",
+        "width_text": null
+      },
+      {
+        "name": "o_freeFromCPUtoTS",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_driveFromFetchtoDecoder",
+        "direction": "output",
+        "width_text": null
+      },
+      {
+        "name": "o_dataFetchtoDecoder_97",
+        "direction": "output",
+        "width_text": "[96:0]"
+      },
+      {
+        "name": "i_freeFromDecodertoFetch",
+        "direction": "input",
+        "width_text": null
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_fire_reg",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "r_dataFromTPU_80",
+      "kind": "reg",
+      "width_text": "[79:0]"
+    },
+    {
+      "name": "w_nofree",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveSwitchToMutex",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFifoToMutex",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeMutexToSwitch",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeMutexToFifo",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeMutexToTS",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeLogicToMutex",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveMutexToLogic",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataMutexToLogic_81",
+      "kind": "wire",
+      "width_text": "[80:0]"
+    },
+    {
+      "name": "w_drivetoReg",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_datatoReg_80",
+      "kind": "wire",
+      "width_text": "[79:0]"
+    },
+    {
+      "name": "w_freefromReg",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveLogicToSel",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_dataLogicToSel_210",
+      "kind": "wire",
+      "width_text": "[209:0]"
+    },
+    {
+      "name": "w_freeSelToLogic",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFromFifoToSink",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeFromSinkToFifo",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_fire_updatereg",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "r_dataFromLogic_80",
+      "kind": "reg",
+      "width_text": "[79:0]"
+    },
+    {
+      "name": "w_finalreg_80",
+      "kind": "wire",
+      "width_text": "[79:0]"
+    },
+    {
+      "name": "w_reg_80",
+      "kind": "wire",
+      "width_text": "[79:0]"
+    },
+    {
+      "name": "w_dataFromWBtoCPU_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_valid0_TS",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_valid1_Decoder",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeFromSinkToSel",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_fire_reg_dealy",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_fire_updatereg_dealy",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveLogicToSel_dealy",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveFromFifo2ToFifo3",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeFromFifo3ToFifo2",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_fire_finalreg",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "r_datafinal_80",
+      "kind": "reg",
+      "width_text": "[79:0]"
+    },
+    {
+      "name": "w_driveFromLogictoMutex",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freeFromMutextoLogic",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_driveLogicTofifo3",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_freefifo3ToLogic",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "w_fire_dataLogic",
+      "kind": "wire",
+      "width_text": null
+    },
+    {
+      "name": "r_dataLogic_210",
+      "kind": "reg",
+      "width_text": "[209:0]"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "cMutexMerge_2_WB",
+      "module_type": "cMutexMerge_2_WB",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cMutexMerge_2_WB.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive0",
+          "signal": "switch",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "o_free0",
+          "signal": "w_nofree",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_drive1",
+          "signal": "w_driveFromLogictoMutex",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free1",
+          "signal": "w_freeFromMutextoLogic",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_driveFromCPUtoTPU",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeFromTPUtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "MutexMerge"
+    },
+    {
+      "instance_name": "cFifo1_cpu_1",
+      "module_type": "cFifo1_cpu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_cpu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "i_driveFromTPUtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "o_freeFromCPUtoTPU",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFifoToMutex",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_freeMutexToFifo",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire",
+          "signal": "w_fire_reg",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "cMutexMerge_4_d_fetch",
+      "module_type": "cMutexMerge_4_d_fetch",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cMutexMerge_4_d_fetch.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive0",
+          "signal": "i_driveFromEXCPtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive1",
+          "signal": "w_driveFifoToMutex",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive2",
+          "signal": "i_driveFromWBtoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive3",
+          "signal": "i_driveFromTStoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data0",
+          "signal": "{1'b1,16'b0,i_dataFromEXCPtoCPU_64}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_data1",
+          "signal": "{1'b0,r_dataFromTPU_80}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_data2",
+          "signal": "{1'b0,w_finalreg_80[79:64],w_dataFromWBtoCPU_64}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_data3",
+          "signal": "{1'b0,w_finalreg_80}",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_freeLogicToMutex",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free0",
+          "signal": "o_freeFromCPUtoEXCP",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free1",
+          "signal": "w_freeMutexToFifo",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free2",
+          "signal": "o_freeFromCPUtoWB",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free3",
+          "signal": "o_freeFromCPUtoTS",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveMutexToLogic",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data",
+          "signal": "w_dataMutexToLogic_81",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "MutexMerge"
+    },
+    {
+      "instance_name": "Fetch_Logic",
+      "module_type": "Fetch_Logic",
+      "artifact_kind": "module",
+      "target_ref": "../modules/Fetch_Logic.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_driveMutexToLogic",
+          "signal": "w_driveMutexToLogic",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataMutexToLogic_81",
+          "signal": "w_dataMutexToLogic_81",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeLogicToMutex",
+          "signal": "w_freeLogicToMutex",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromCPUtoIcache",
+          "signal": "o_driveFromCPUtoIcache",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataCPUtoIcache_136",
+          "signal": "o_dataCPUtoIcache_136",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeFromIcachetoCPU",
+          "signal": "i_freeFromIcachetoCPU",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_driveFromIcachetoCPU",
+          "signal": "i_driveFromIcachetoCPU",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_dataIcachetoCPU_256",
+          "signal": "i_dataIcachetoCPU_256",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_freeFromCPUtoIcache",
+          "signal": "o_freeFromCPUtoIcache",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveFromLogictoMutex",
+          "signal": "w_driveFromLogictoMutex",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeFromMutextoLogic",
+          "signal": "w_freeFromMutextoLogic",
+          "port_direction": "inout",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_drivetoReg",
+          "signal": "w_drivetoReg",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_datatoReg_80",
+          "signal": "w_datatoReg_80",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freefromReg",
+          "signal": "w_freefromReg",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveLogicToSel",
+          "signal": "w_driveLogicTofifo3",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_dataLogicToSel_210",
+          "signal": "w_dataLogicToSel_210",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeSelToLogic",
+          "signal": "w_freefifo3ToLogic",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "cFifo1_cpu_2",
+      "module_type": "cFifo1_cpu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_cpu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_drivetoReg",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freefromReg",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFromFifoToSink",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_freeFromSinkToFifo",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire",
+          "signal": "w_fire_updatereg",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "eventSink_cpu_1",
+      "module_type": "eventSink_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/eventSink_cpu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_driveFromFifoToSink",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFromSinkToFifo",
+          "port_direction": "unknown",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "cFifo1_cpu_3",
+      "module_type": "cFifo1_cpu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_cpu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_driveLogicTofifo3",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freefifo3ToLogic",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveLogicToSel",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_freeSelToLogic",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire",
+          "signal": "w_fire_dataLogic",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "delay_free_cpu_sel",
+      "module_type": "delay_free_cpu",
+      "artifact_kind": "module",
+      "target_ref": "../modules/delay_free_cpu.json",
+      "parameter_overrides": {
+        "$0": "6"
+      },
+      "connections": [
+        {
+          "port": "inR",
+          "signal": "w_driveLogicToSel",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "outR",
+          "signal": "w_driveLogicToSel_dealy",
+          "port_direction": "unknown",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "cSelSplit_2_fetch",
+      "module_type": "cSelSplit_2_fetch",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cSelSplit_2_fetch.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_driveLogicToSel_dealy",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext0",
+          "signal": "i_freeFromTStoCPU",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_freeNext1",
+          "signal": "i_freeFromDecodertoFetch",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "valid0",
+          "signal": "w_valid0_TS",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "valid1",
+          "signal": "w_valid1_Decoder",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeSelToLogic",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext0",
+          "signal": "o_driveFromCPUtoTS",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_driveNext1",
+          "signal": "o_driveFromFetchtoDecoder",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "SelSplit"
+    }
+  ],
+  "direct_children": {
+    "modules": [
+      "Fetch_Logic",
+      "delay_free_cpu",
+      "eventSink_cpu"
+    ],
+    "components": [
+      "cFifo1_cpu",
+      "cMutexMerge_2_WB",
+      "cMutexMerge_4_d_fetch",
+      "cSelSplit_2_fetch"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_dataFromEXCPtoCPU_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_dataFromWBtoCPU_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_dataIcachetoCPU_256",
+        "kind": "port_input",
+        "width_text": "[255:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_dataTPUtoCPU_80",
+        "kind": "port_input",
+        "width_text": "[79:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_driveFromEXCPtoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFromIcachetoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFromTPUtoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFromTStoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFromWBtoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "i_freeFromDecodertoFetch",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromIcachetoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromTPUtoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromTStoCPU",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_dataCPUtoIcache_136",
+        "kind": "port_output",
+        "width_text": "[135:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_dataCPUtoTS_128",
+        "kind": "port_output",
+        "width_text": "[127:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_dataFetchtoDecoder_97",
+        "kind": "port_output",
+        "width_text": "[96:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_driveFromCPUtoIcache",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveFromCPUtoTPU",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveFromCPUtoTS",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveFromFetchtoDecoder",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_freeFromCPUtoEXCP",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFromCPUtoIcache",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFromCPUtoTPU",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFromCPUtoTS",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFromCPUtoWB",
+        "kind": "port_output",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "r_dataFromLogic_80",
+        "kind": "local_signal",
+        "width_text": "[79:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_dataFromTPU_80",
+        "kind": "local_signal",
+        "width_text": "[79:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_dataLogic_210",
+        "kind": "local_signal",
+        "width_text": "[209:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_datafinal_80",
+        "kind": "local_signal",
+        "width_text": "[79:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "reset"
+      },
+      {
+        "name": "switch",
+        "kind": "port_input",
+        "width_text": null,
+        "role": "condition"
+      },
+      {
+        "name": "w_dataFromWBtoCPU_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataLogicToSel_210",
+        "kind": "local_signal",
+        "width_text": "[209:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataMutexToLogic_81",
+        "kind": "local_signal",
+        "width_text": "[80:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_datatoReg_80",
+        "kind": "local_signal",
+        "width_text": "[79:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_driveFifoToMutex",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromFifo2ToFifo3",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromFifoToSink",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFromLogictoMutex",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveLogicToSel",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveLogicToSel_dealy",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveLogicTofifo3",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveMutexToLogic",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveSwitchToMutex",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "condition"
+      },
+      {
+        "name": "w_drivetoReg",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_finalreg_80",
+        "kind": "local_signal",
+        "width_text": "[79:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire_dataLogic",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "w_fire_finalreg",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire_reg",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire_reg_dealy",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire_updatereg",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire_updatereg_dealy",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_freeFromFifo3ToFifo2",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromMutextoLogic",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromSinkToFifo",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromSinkToSel",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeLogicToMutex",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeMutexToFifo",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeMutexToSwitch",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "condition"
+      },
+      {
+        "name": "w_freeMutexToTS",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeSelToLogic",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freefifo3ToLogic",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_freefromReg",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_nofree",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "w_reg_80",
+        "kind": "local_signal",
+        "width_text": "[79:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_valid0_TS",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "condition"
+      },
+      {
+        "name": "w_valid1_Decoder",
+        "kind": "local_signal",
+        "width_text": null,
+        "role": "condition"
+      },
+      {
+        "name": "{1'b0,r_dataFromTPU_80}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{1'b0,w_finalreg_80[79:64],w_dataFromWBtoCPU_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{1'b0,w_finalreg_80}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{1'b1,16'b0,i_dataFromEXCPtoCPU_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "switch",
+        "instance_name": "cMutexMerge_2_WB",
+        "module_type": "cMutexMerge_2_WB",
+        "port": "i_drive0",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_nofree",
+        "instance_name": "cMutexMerge_2_WB",
+        "module_type": "cMutexMerge_2_WB",
+        "port": "o_free0",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromLogictoMutex",
+        "instance_name": "cMutexMerge_2_WB",
+        "module_type": "cMutexMerge_2_WB",
+        "port": "i_drive1",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromMutextoLogic",
+        "instance_name": "cMutexMerge_2_WB",
+        "module_type": "cMutexMerge_2_WB",
+        "port": "o_free1",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveFromCPUtoTPU",
+        "instance_name": "cMutexMerge_2_WB",
+        "module_type": "cMutexMerge_2_WB",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromTPUtoCPU",
+        "instance_name": "cMutexMerge_2_WB",
+        "module_type": "cMutexMerge_2_WB",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cMutexMerge_2_WB",
+        "module_type": "cMutexMerge_2_WB",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromTPUtoCPU",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromCPUtoTPU",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFifoToMutex",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeMutexToFifo",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_fire_reg",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "o_fire",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cFifo1_cpu_1",
+        "module_type": "cFifo1_cpu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromEXCPtoCPU",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "i_drive0",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFifoToMutex",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "i_drive1",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromWBtoCPU",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "i_drive2",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromTStoCPU",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "i_drive3",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{1'b1,16'b0,i_dataFromEXCPtoCPU_64}",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "i_data0",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{1'b0,r_dataFromTPU_80}",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "i_data1",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{1'b0,w_finalreg_80[79:64],w_dataFromWBtoCPU_64}",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "i_data2",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{1'b0,w_finalreg_80}",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "i_data3",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeLogicToMutex",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromCPUtoEXCP",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "o_free0",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeMutexToFifo",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "o_free1",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_freeFromCPUtoWB",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "o_free2",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_freeFromCPUtoTS",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "o_free3",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveMutexToLogic",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataMutexToLogic_81",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "o_data",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cMutexMerge_4_d_fetch",
+        "module_type": "cMutexMerge_4_d_fetch",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveMutexToLogic",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "i_driveMutexToLogic",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataMutexToLogic_81",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "i_dataMutexToLogic_81",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeLogicToMutex",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "o_freeLogicToMutex",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveFromCPUtoIcache",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "o_driveFromCPUtoIcache",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_dataCPUtoIcache_136",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "o_dataCPUtoIcache_136",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromIcachetoCPU",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "i_freeFromIcachetoCPU",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromIcachetoCPU",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "i_driveFromIcachetoCPU",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_dataIcachetoCPU_256",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "i_dataIcachetoCPU_256",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromCPUtoIcache",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "o_freeFromCPUtoIcache",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromLogictoMutex",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "o_driveFromLogictoMutex",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromMutextoLogic",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "i_freeFromMutextoLogic",
+        "port_direction": "inout",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_drivetoReg",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "o_drivetoReg",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_datatoReg_80",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "o_datatoReg_80",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freefromReg",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "i_freefromReg",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveLogicTofifo3",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "o_driveLogicToSel",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataLogicToSel_210",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "o_dataLogicToSel_210",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freefifo3ToLogic",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "i_freeSelToLogic",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "Fetch_Logic",
+        "module_type": "Fetch_Logic",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_drivetoReg",
+        "instance_name": "cFifo1_cpu_2",
+        "module_type": "cFifo1_cpu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freefromReg",
+        "instance_name": "cFifo1_cpu_2",
+        "module_type": "cFifo1_cpu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFromFifoToSink",
+        "instance_name": "cFifo1_cpu_2",
+        "module_type": "cFifo1_cpu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromSinkToFifo",
+        "instance_name": "cFifo1_cpu_2",
+        "module_type": "cFifo1_cpu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_fire_updatereg",
+        "instance_name": "cFifo1_cpu_2",
+        "module_type": "cFifo1_cpu",
+        "port": "o_fire",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cFifo1_cpu_2",
+        "module_type": "cFifo1_cpu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFromFifoToSink",
+        "instance_name": "eventSink_cpu_1",
+        "module_type": "eventSink_cpu",
+        "port": "i_drive",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_freeFromSinkToFifo",
+        "instance_name": "eventSink_cpu_1",
+        "module_type": "eventSink_cpu",
+        "port": "o_free",
+        "port_direction": "unknown",
+        "signal_role": "event_free",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "eventSink_cpu_1",
+        "module_type": "eventSink_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveLogicTofifo3",
+        "instance_name": "cFifo1_cpu_3",
+        "module_type": "cFifo1_cpu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freefifo3ToLogic",
+        "instance_name": "cFifo1_cpu_3",
+        "module_type": "cFifo1_cpu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveLogicToSel",
+        "instance_name": "cFifo1_cpu_3",
+        "module_type": "cFifo1_cpu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeSelToLogic",
+        "instance_name": "cFifo1_cpu_3",
+        "module_type": "cFifo1_cpu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_fire_dataLogic",
+        "instance_name": "cFifo1_cpu_3",
+        "module_type": "cFifo1_cpu",
+        "port": "o_fire",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cFifo1_cpu_3",
+        "module_type": "cFifo1_cpu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveLogicToSel",
+        "instance_name": "delay_free_cpu_sel",
+        "module_type": "delay_free_cpu",
+        "port": "inR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveLogicToSel_dealy",
+        "instance_name": "delay_free_cpu_sel",
+        "module_type": "delay_free_cpu",
+        "port": "outR",
+        "port_direction": "unknown",
+        "signal_role": "event_drive",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "delay_free_cpu_sel",
+        "module_type": "delay_free_cpu",
+        "port": "rst",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_driveLogicToSel_dealy",
+        "instance_name": "cSelSplit_2_fetch",
+        "module_type": "cSelSplit_2_fetch",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeFromTStoCPU",
+        "instance_name": "cSelSplit_2_fetch",
+        "module_type": "cSelSplit_2_fetch",
+        "port": "i_freeNext0",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeFromDecodertoFetch",
+        "instance_name": "cSelSplit_2_fetch",
+        "module_type": "cSelSplit_2_fetch",
+        "port": "i_freeNext1",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_valid0_TS",
+        "instance_name": "cSelSplit_2_fetch",
+        "module_type": "cSelSplit_2_fetch",
+        "port": "valid0",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_valid1_Decoder",
+        "instance_name": "cSelSplit_2_fetch",
+        "module_type": "cSelSplit_2_fetch",
+        "port": "valid1",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeSelToLogic",
+        "instance_name": "cSelSplit_2_fetch",
+        "module_type": "cSelSplit_2_fetch",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveFromCPUtoTS",
+        "instance_name": "cSelSplit_2_fetch",
+        "module_type": "cSelSplit_2_fetch",
+        "port": "o_driveNext0",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveFromFetchtoDecoder",
+        "instance_name": "cSelSplit_2_fetch",
+        "module_type": "cSelSplit_2_fetch",
+        "port": "o_driveNext1",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cSelSplit_2_fetch",
+        "module_type": "cSelSplit_2_fetch",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "Fetch_Logic",
+      "delay_free_cpu",
+      "eventSink_cpu"
+    ],
+    "reachable_components": [
+      "cFifo1_cpu",
+      "cMutexMerge_2_WB",
+      "cMutexMerge_3_df_fetch",
+      "cMutexMerge_4_d_fetch",
+      "cNatSplit_2_fetch",
+      "cSelSplit_2_fetch",
+      "cSelSplit_3_fetch",
+      "cWaitMerge_2_d_fetch"
+    ],
+    "families_used": [
+      "Fifo1",
+      "MutexMerge",
+      "NatSplit",
+      "SelSplit",
+      "WaitMerge"
+    ]
+  },
+  "warnings": []
+}
