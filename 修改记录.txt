@@ -2,3 +2,4 @@
 1. 新增 `parser_pipeline` 主工作流，并将生成结果统一放到 `artifacts/parser_pipeline_result`，实现从顶层模块递归到子模块、派生结构子的 JSON 生成。
 2. 新增基于阿里千问兼容接口的 `ai_agent`，可读取本地 parser artifacts 后做检索问答；相关说明见 `docs/AI_AGENT.md`。
 3. 整理了项目目录结构：代码保留在各 Python 包中，测试数据移动到 `test_data`，自动化测试统一到 `tests`，模板配置移到 `config`，生成物移到 `artifacts`，历史说明放到 `docs/notes`。
+4. 删除了项目中原本的API_KEY
