@@ -4,6 +4,7 @@
 
 - `parser_pipeline/`、`ai_agent/`、`cc_header_tools/`、`docgen_components/`、`verilog_parser/`
   - Python 代码
+  - 目前docgen_components  已不再使用
 - `test_data/`
   - 示例 Verilog 工程、结构子模板、测试样本
 - `tests/`
