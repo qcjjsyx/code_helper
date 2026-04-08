@@ -1,4 +1,4 @@
-from parser_pipeline.flow_inference import build_flow_graph, infer_signal_role
+from parser.pipeline.flow_inference import build_flow_graph, infer_signal_role
 
 
 def test_signal_role_rules_cover_core_protocol_names():

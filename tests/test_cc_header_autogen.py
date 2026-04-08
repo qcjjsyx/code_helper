@@ -7,12 +7,12 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from cc_header_tools.parser import extract_cc_block, parse_yaml_min
+from tools.cc_header_tools.parser import extract_cc_block, parse_yaml_min
 
 
 def _run(repo_root: Path, *args: str) -> subprocess.CompletedProcess:
     return subprocess.run(
-        [sys.executable, "-m", "cc_header_tools", *args],
+        [sys.executable, "-m", "tools.cc_header_tools", *args],
         cwd=repo_root,
         text=True,
         capture_output=True,

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from parser_pipeline.module_parser import parse_verilog_file
+from parser.pipeline.module_parser import parse_verilog_file
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]

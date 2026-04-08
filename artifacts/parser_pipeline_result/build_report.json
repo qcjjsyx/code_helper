@@ -3,7 +3,7 @@
   "schema_version": "1.0",
   "generated_at": "2026-03-29T06:52:00Z",
   "output_dir": "/Users/huangyuan/qcjjsyx/AI_Agent/code_helper/artifacts/parser_pipeline_result",
-  "issues": [
+  "issues": [ 
     {
       "level": "warning",
       "message": "unresolved instance target: delay1U",

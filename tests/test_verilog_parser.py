@@ -1,7 +1,7 @@
 import os
 import unittest
 
-from verilog_parser.parser import parse_file
+from parser.verilog.parser import parse_file
 
 
 class VerilogParserTest(unittest.TestCase):

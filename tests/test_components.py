@@ -1,7 +1,7 @@
 import unittest
 from pathlib import Path
 
-from docgen_components.kb import (
+from knowledge.indexes.docgen_components.kb import (
     build_entry,
     build_known_components,
     load_known_primitives,

@@ -1,9 +1,9 @@
 import json
 from pathlib import Path
 
-from ai_agent.knowledge_base import load_knowledge_base
-from ai_agent.prompts import build_user_prompt
-from ai_agent.retriever import retrieve_relevant_artifacts
+from agent.prompts.prompt_builder import build_user_prompt
+from knowledge.loaders.knowledge_base import load_knowledge_base
+from knowledge.retrieval.retriever import retrieve_relevant_artifacts
 
 
 def _write_json(path: Path, payload: dict) -> None:

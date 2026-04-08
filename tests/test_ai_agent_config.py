@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 
-from ai_agent.config import load_config
+from agent.writer.config import load_config
 
 
 def test_load_config_reads_repo_dotenv(tmp_path, monkeypatch):

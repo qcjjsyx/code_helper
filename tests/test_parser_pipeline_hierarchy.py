@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from parser_pipeline.hierarchy_builder import build_project
+from parser.pipeline.hierarchy_builder import build_project
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]

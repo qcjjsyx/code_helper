@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
 
-from ai_agent.knowledge_base import load_knowledge_base
-from ai_agent.manual_context import build_manual_context
+from knowledge.loaders.knowledge_base import load_knowledge_base
+from knowledge.manual_ir.manual_context import build_manual_context
 
 
 def _write_json(path: Path, payload: dict) -> None:

@@ -13,7 +13,7 @@ def test_cli_build_writes_expected_cpu_outputs(tmp_path):
         [
             sys.executable,
             "-m",
-            "parser_pipeline",
+            "parser.pipeline",
             "build",
             "--repo",
             str(REPO_ROOT),

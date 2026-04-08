@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from parser_pipeline.family_inference import infer_family
+from parser.pipeline.family_inference import infer_family
 
 
 def test_infer_family_supports_underscore_and_compact_names():
