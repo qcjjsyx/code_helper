@@ -32,8 +32,10 @@
   - CPU 示例工程
 - `test_data/base/`
   - primitive 示例数据
+  - 目前不再使用
 - `test_data/pipeline/`
   - 派生结构子模板数据
+  - 目前使用较少
 - `tests/fixtures/verilog/`
   - 单元测试夹具
 - `artifacts/parser_pipeline_result/`
