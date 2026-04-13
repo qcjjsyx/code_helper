@@ -15,6 +15,7 @@
   - `manual_ir/`: 面向手册写作的中间表示
   - `retrieval/`: 检索与重排
 - `agent/`
+  - `context/`: session、context budget、context assembly 的接口层
   - `planner/`: 手册规划阶段
   - `writer/`: 生成阶段
   - `critic/`: 审校阶段
@@ -81,6 +82,26 @@ python -m agent generate-manual \
   --top-module cpu_top \
   --output docs/manuals/cpu_top.md
 ```
+
+## Agent Context Management
+
+这个项目的目标不仅是“调用一次模型生成文档”，而是逐步整理成一个更完整的 agent 项目。
+
+因此当前版本已经预留了 `agent/context/` 这一层，用于承载后续会逐步补齐的 agent 基础设施：
+
+- session 生命周期管理
+- context window 的 budget 与裁剪
+- 检索结果、Manual IR、对话摘要的统一装配
+- 多阶段生成过程中的章节级上下文
+- 后续可扩展的 memory / snapshot / persistence backend
+
+当前状态：
+
+- 当前默认实现是一个很轻量的 `InMemoryContextManager`
+- 它主要用于保留统一接口和最基础的上下文选择入口
+- 复杂的长期记忆、摘要压缩、跨轮持久化、context ranking 还没有实现
+
+这样做的目的，是让项目在保持当前最小闭环可运行的同时，为后续扩展成更完整的 agent 系统预留稳定接口。
 
 ## `cc_header_tools`
 

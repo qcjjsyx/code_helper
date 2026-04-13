@@ -18,7 +18,7 @@ ManualIRObjectKind = Literal[
 ]
 SystemRole = Literal["cpu_core", "cpu_with_cache", "subsystem", "unknown"]
 BoundaryDirection = Literal["ingress", "egress", "bidirectional"]
-ModuleRole = Literal["top", "submodule", "leaf"]
+ModuleRole = Literal["top", "submodule", "leaf"] ## leaf 就是 component
 DocumentRole = Literal[
     "front_end",
     "execute",
