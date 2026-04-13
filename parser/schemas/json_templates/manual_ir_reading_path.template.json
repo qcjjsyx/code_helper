@@ -1,0 +1,30 @@
+{
+  "id": "reading:<top_module_name>:default",
+  "kind": "reading_path",
+  "title": "<top_module_name> reading path",
+  "summary": "<reading_path_summary>",
+  "top_module": "<top_module_name>",
+  "tags": [],
+  "source_refs": [
+    {
+      "artifact_kind": "project_index",
+      "artifact_name": "<top_module_name>",
+      "json_ref": "project_index.json",
+      "evidence_paths": []
+    }
+  ],
+  "warnings": [],
+  "confidence": "medium",
+  "audience": "newcomer",
+  "goals": [],
+  "ordered_sections": [
+    {
+      "section_id": "<section_id>",
+      "title": "<section_title>",
+      "covers": []
+    }
+  ],
+  "must_cover": [],
+  "defer_sections": [],
+  "risk_reminders": []
+}

@@ -1,0 +1,46 @@
+{
+  "id": "module:<module_name>",
+  "kind": "module_card",
+  "title": "<module_name>",
+  "summary": "<module_summary>",
+  "top_module": "<top_module_name>",
+  "tags": [],
+  "source_refs": [
+    {
+      "artifact_kind": "module",
+      "artifact_name": "<module_name>",
+      "json_ref": "modules/<module_name>.json",
+      "evidence_paths": []
+    }
+  ],
+  "warnings": [],
+  "confidence": "medium",
+  "module_name": "<module_name>",
+  "module_role": "submodule",
+  "parent_modules": [],
+  "document_role": "unknown",
+  "responsibilities": [],
+  "key_interfaces": {
+    "ingress_channels": [],
+    "egress_channels": [],
+    "control_signals": []
+  },
+  "upstream_modules": [],
+  "downstream_modules": [],
+  "child_modules": [],
+  "child_components": [],
+  "key_component_roles": [
+    {
+      "component": "<component_name>",
+      "role": "<component_role>"
+    }
+  ],
+  "internal_flow_paths": [],
+  "backpressure_points": [
+    {
+      "via": "<component_or_signal>",
+      "effect": "<backpressure_effect>"
+    }
+  ],
+  "risk_points": []
+}

@@ -1,0 +1,44 @@
+{
+  "id": "contract:<component_name>",
+  "kind": "component_contract",
+  "title": "<component_name> contract",
+  "summary": "<contract_summary>",
+  "top_module": "<top_module_name>",
+  "tags": [],
+  "source_refs": [
+    {
+      "artifact_kind": "component",
+      "artifact_name": "<component_name>",
+      "json_ref": "components/<component_name>.json",
+      "evidence_paths": []
+    }
+  ],
+  "warnings": [],
+  "confidence": "medium",
+  "component_name": "<component_name>",
+  "family": "<family_name>",
+  "instance_scope": "<scope_module>",
+  "document_role": "unknown",
+  "role_mapping": {
+    "upstream": [],
+    "downstream": [],
+    "payload": [],
+    "condition": []
+  },
+  "semantic_contract": {
+    "event_behavior": "<event_behavior>",
+    "data_behavior": "<data_behavior>",
+    "completion_behavior": "<completion_behavior>"
+  },
+  "release_rule": {
+    "policy": "<policy>",
+    "details": "<details>"
+  },
+  "backpressure_behavior": {
+    "can_block_upstream": true,
+    "blocking_condition": "<blocking_condition>"
+  },
+  "family_invariants": [],
+  "implementation_notes": [],
+  "used_in_channels": []
+}

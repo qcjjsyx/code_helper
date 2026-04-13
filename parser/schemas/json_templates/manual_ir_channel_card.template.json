@@ -1,0 +1,49 @@
+{
+  "id": "channel:<scope_module>:<channel_name>",
+  "kind": "channel_card",
+  "title": "<channel_title>",
+  "summary": "<channel_summary>",
+  "top_module": "<top_module_name>",
+  "tags": [],
+  "source_refs": [
+    {
+      "artifact_kind": "module",
+      "artifact_name": "<scope_module>",
+      "json_ref": "modules/<scope_module>.json",
+      "evidence_paths": []
+    }
+  ],
+  "warnings": [],
+  "confidence": "medium",
+  "scope_module": "<scope_module>",
+  "channel_name": "<channel_name>",
+  "channel_type": "event_with_payload",
+  "producer": {
+    "owner_kind": "module",
+    "owner_name": "<producer_name>",
+    "drive_signal": "<drive_signal>",
+    "payload_signals": []
+  },
+  "consumer": {
+    "owner_kind": "module",
+    "owner_name": "<consumer_name>",
+    "free_signal": "<free_signal>"
+  },
+  "payload": {
+    "present": true,
+    "width_text": "<width_text>",
+    "signals": []
+  },
+  "handshake": {
+    "drive": "<drive_signal>",
+    "free": "<free_signal>",
+    "completion_rule": "<completion_rule>",
+    "backpressure_supported": true
+  },
+  "conditioning": {
+    "has_condition": false,
+    "signals": []
+  },
+  "implemented_by_path": [],
+  "related_flow_paths": []
+}

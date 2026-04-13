@@ -1,0 +1,24 @@
+{
+  "schema": "manual_ir",
+  "schema_version": "0.1",
+  "top_module": "<top_module_name>",
+  "generated_from": {
+    "artifacts_root": "<artifacts_root>",
+    "project_index_ref": "project_index.json"
+  },
+  "objects": {
+    "system_views": [],
+    "module_cards": [],
+    "channel_cards": [],
+    "component_contracts": [],
+    "flow_paths": [],
+    "reading_paths": []
+  },
+  "indexes": {
+    "by_id": {},
+    "by_module": {},
+    "by_family": {},
+    "by_tag": {}
+  },
+  "warnings": []
+}

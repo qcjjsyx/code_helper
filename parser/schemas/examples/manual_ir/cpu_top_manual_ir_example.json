@@ -1,0 +1,544 @@
+{
+  "schema": "manual_ir",
+  "schema_version": "0.1",
+  "top_module": "cpu_top",
+  "generated_from": {
+    "artifacts_root": "artifacts/parser_pipeline_result",
+    "project_index_ref": "project_index.json"
+  },
+  "objects": {
+    "system_views": [
+      {
+        "id": "system:cpu_top",
+        "kind": "system_view",
+        "title": "cpu_top 系统视图",
+        "summary": "描述 cpu_top 的总体职责、系统边界、主要模块与关键结构子家族。",
+        "top_module": "cpu_top",
+        "tags": [
+          "overview",
+          "topology"
+        ],
+        "source_refs": [
+          {
+            "artifact_kind": "project_index",
+            "artifact_name": "cpu_top",
+            "json_ref": "project_index.json",
+            "evidence_paths": [
+              "top_modules",
+              "artifacts.modules",
+              "stats"
+            ]
+          },
+          {
+            "artifact_kind": "module",
+            "artifact_name": "cpu_top",
+            "json_ref": "modules/cpu_top.json",
+            "evidence_paths": [
+              "interface.ports",
+              "direct_children",
+              "transitive_summary.families_used"
+            ]
+          }
+        ],
+        "warnings": [],
+        "confidence": "medium",
+        "system_role": "cpu_core",
+        "boundary_interfaces": [
+          {
+            "name": "TPU",
+            "direction": "bidirectional",
+            "channels": [
+              "channel:cpu_top:TPU_to_CPU"
+            ]
+          },
+          {
+            "name": "TS",
+            "direction": "bidirectional",
+            "channels": [
+              "channel:cpu_top:CPU_to_TS"
+            ]
+          }
+        ],
+        "primary_modules": [
+          {
+            "module": "Fetch_top",
+            "role": "取指入口"
+          },
+          {
+            "module": "idu_top",
+            "role": "译码与寄存器相关控制"
+          },
+          {
+            "module": "exe_top",
+            "role": "执行路径"
+          },
+          {
+            "module": "lsu_top",
+            "role": "访存路径"
+          },
+          {
+            "module": "writeBack",
+            "role": "回写与完成收束"
+          }
+        ],
+        "primary_components": [
+          {
+            "component": "cFifo1_cpu",
+            "family": "Fifo1",
+            "role": "一级事件缓冲"
+          }
+        ],
+        "families_used": [
+          "Fifo1",
+          "SelSplit",
+          "MutexMerge",
+          "WaitMerge",
+          "ArbMerge",
+          "NatSplit"
+        ],
+        "external_dependencies": [
+          {
+            "name": "Icache",
+            "status": "interface_only"
+          },
+          {
+            "name": "Dcache",
+            "status": "interface_only"
+          }
+        ],
+        "global_risks": [
+          "部分外部模块当前只有接口边界，无法确认其内部实现。",
+          "多路分流与合流较多，completion 返回路径容易被误读。"
+        ]
+      }
+    ],
+    "module_cards": [
+      {
+        "id": "module:Fetch_top",
+        "kind": "module_card",
+        "title": "Fetch_top",
+        "summary": "取指相关控制与通道路由模块。",
+        "top_module": "cpu_top",
+        "tags": [
+          "frontend",
+          "fetch"
+        ],
+        "source_refs": [
+          {
+            "artifact_kind": "module",
+            "artifact_name": "Fetch_top",
+            "json_ref": "modules/Fetch_top.json",
+            "evidence_paths": [
+              "interface.ports",
+              "instances",
+              "direct_children",
+              "flow_graph"
+            ]
+          }
+        ],
+        "warnings": [],
+        "confidence": "medium",
+        "module_name": "Fetch_top",
+        "module_role": "submodule",
+        "parent_modules": [
+          "cpu_top"
+        ],
+        "document_role": "front_end",
+        "responsibilities": [
+          "接收上游事件并组织取指路径",
+          "向 Decoder 输出取指结果",
+          "与 Icache、TS 等边界交互"
+        ],
+        "key_interfaces": {
+          "ingress_channels": [
+            "channel:Fetch_top:TPU_to_fetch"
+          ],
+          "egress_channels": [
+            "channel:Fetch_top:fetch_to_decoder",
+            "channel:Fetch_top:fetch_to_icache"
+          ],
+          "control_signals": [
+            "switch"
+          ]
+        },
+        "upstream_modules": [
+          "TPU",
+          "EXCP",
+          "WB"
+        ],
+        "downstream_modules": [
+          "Icache",
+          "Decoder",
+          "TS"
+        ],
+        "child_modules": [
+          "Fetch_Logic"
+        ],
+        "child_components": [
+          "cMutexMerge_3_df_fetch",
+          "cMutexMerge_4_d_fetch",
+          "cMutexMerge_5_df_fetch",
+          "cNatSplit_2_fetch",
+          "cSelSplit_2_fetch",
+          "cSelSplit_3_fetch",
+          "cWaitMerge_2_d_fetch"
+        ],
+        "key_component_roles": [
+          {
+            "component": "cMutexMerge_3_df_fetch",
+            "role": "多源合流"
+          },
+          {
+            "component": "cSelSplit_2_fetch",
+            "role": "条件分流"
+          }
+        ],
+        "internal_flow_paths": [
+          "flow:Fetch_top:main_fetch_path",
+          "flow:Fetch_top:completion_return_path"
+        ],
+        "backpressure_points": [
+          {
+            "via": "i_freeFromDecodertoFetch",
+            "effect": "Decoder 未返回 free 时，上游事务无法继续完成。"
+          }
+        ],
+        "risk_points": [
+          "存在多路输入与多路输出，读文档时应区分主路径与异常/回流路径。"
+        ]
+      }
+    ],
+    "channel_cards": [
+      {
+        "id": "channel:Fetch_top:fetch_to_decoder",
+        "kind": "channel_card",
+        "title": "Fetch 到 Decoder 通道",
+        "summary": "Fetch_top 向 Decoder 输出取指结果的事务通道。",
+        "top_module": "cpu_top",
+        "tags": [
+          "channel",
+          "fetch"
+        ],
+        "source_refs": [
+          {
+            "artifact_kind": "module",
+            "artifact_name": "Fetch_top",
+            "json_ref": "modules/Fetch_top.json",
+            "evidence_paths": [
+              "interface.ports",
+              "flow_graph.signals",
+              "flow_graph.edges"
+            ]
+          }
+        ],
+        "warnings": [],
+        "confidence": "medium",
+        "scope_module": "Fetch_top",
+        "channel_name": "fetch_to_decoder",
+        "channel_type": "event_with_payload",
+        "producer": {
+          "owner_kind": "module",
+          "owner_name": "Fetch_top",
+          "drive_signal": "o_driveFromFetchtoDecoder",
+          "payload_signals": [
+            "o_dataFetchtoDecoder_97"
+          ]
+        },
+        "consumer": {
+          "owner_kind": "external",
+          "owner_name": "Decoder",
+          "free_signal": "i_freeFromDecodertoFetch"
+        },
+        "payload": {
+          "present": true,
+          "width_text": "[96:0]",
+          "signals": [
+            "o_dataFetchtoDecoder_97"
+          ]
+        },
+        "handshake": {
+          "drive": "o_driveFromFetchtoDecoder",
+          "free": "i_freeFromDecodertoFetch",
+          "completion_rule": "producer waits for paired free",
+          "backpressure_supported": true
+        },
+        "conditioning": {
+          "has_condition": false,
+          "signals": []
+        },
+        "implemented_by_path": [
+          "Fetch_Logic",
+          "cSelSplit_2_fetch"
+        ],
+        "related_flow_paths": [
+          "flow:Fetch_top:main_fetch_path"
+        ]
+      }
+    ],
+    "component_contracts": [
+      {
+        "id": "contract:cSelSplit_2_fetch",
+        "kind": "component_contract",
+        "title": "cSelSplit_2_fetch 协议说明",
+        "summary": "一个基于条件选择的分流结构子。",
+        "top_module": "cpu_top",
+        "tags": [
+          "contract",
+          "selsplit"
+        ],
+        "source_refs": [
+          {
+            "artifact_kind": "component",
+            "artifact_name": "cSelSplit_2_fetch",
+            "json_ref": "components/cSelSplit_2_fetch.json",
+            "evidence_paths": [
+              "family",
+              "role_mapping",
+              "contract",
+              "flow_semantics"
+            ]
+          }
+        ],
+        "warnings": [],
+        "confidence": "medium",
+        "component_name": "cSelSplit_2_fetch",
+        "family": "SelSplit",
+        "instance_scope": "Fetch_top",
+        "document_role": "splitter",
+        "role_mapping": {
+          "upstream": [
+            "i_drive",
+            "o_free"
+          ],
+          "downstream": [
+            "o_drive0",
+            "i_free0",
+            "o_drive1",
+            "i_free1"
+          ],
+          "payload": [
+            "i_data"
+          ],
+          "condition": [
+            "sel"
+          ]
+        },
+        "semantic_contract": {
+          "event_behavior": "选择一路向下游发送 drive。",
+          "data_behavior": "payload 随被选中路径传播。",
+          "completion_behavior": "上游 free 由被选路径 free 决定。"
+        },
+        "release_rule": {
+          "policy": "selected_only",
+          "details": "只等待被选中的下游返回 free。"
+        },
+        "backpressure_behavior": {
+          "can_block_upstream": true,
+          "blocking_condition": "被选中下游未完成。"
+        },
+        "family_invariants": [
+          "仅一路被选中接收 drive。"
+        ],
+        "implementation_notes": [
+          "选择编码方式当前 JSON 无法进一步确认。"
+        ],
+        "used_in_channels": [
+          "channel:Fetch_top:fetch_to_decoder"
+        ]
+      }
+    ],
+    "flow_paths": [
+      {
+        "id": "flow:Fetch_top:main_fetch_path",
+        "kind": "flow_path",
+        "title": "Fetch 主路径",
+        "summary": "从上游输入到 Decoder 的主事务路径。",
+        "top_module": "cpu_top",
+        "tags": [
+          "flow",
+          "fetch"
+        ],
+        "source_refs": [
+          {
+            "artifact_kind": "module",
+            "artifact_name": "Fetch_top",
+            "json_ref": "modules/Fetch_top.json",
+            "evidence_paths": [
+              "instances",
+              "flow_graph.edges"
+            ]
+          }
+        ],
+        "warnings": [],
+        "confidence": "medium",
+        "scope_module": "Fetch_top",
+        "path_type": "mixed",
+        "startpoints": [
+          {
+            "owner": "TPU",
+            "signal": "i_driveFromTPUtoCPU"
+          }
+        ],
+        "endpoints": [
+          {
+            "owner": "Decoder",
+            "signal": "o_driveFromFetchtoDecoder"
+          }
+        ],
+        "steps": [
+          {
+            "order": 1,
+            "node_kind": "interface",
+            "node_name": "TPU_to_fetch",
+            "role": "上游输入"
+          },
+          {
+            "order": 2,
+            "node_kind": "component",
+            "node_name": "cMutexMerge_3_df_fetch",
+            "role": "合流"
+          },
+          {
+            "order": 3,
+            "node_kind": "module",
+            "node_name": "Fetch_Logic",
+            "role": "路径控制与数据组织"
+          },
+          {
+            "order": 4,
+            "node_kind": "component",
+            "node_name": "cSelSplit_2_fetch",
+            "role": "分流"
+          }
+        ],
+        "branch_points": [
+          {
+            "node": "cSelSplit_2_fetch",
+            "reason": "选择条件决定最终下游。"
+          }
+        ],
+        "join_points": [],
+        "completion_return_path": [
+          "Decoder free -> Fetch_top free -> upstream free"
+        ],
+        "blocking_points": [
+          {
+            "node": "cSelSplit_2_fetch",
+            "reason": "被选下游未完成时，上游无法结束当前事务。"
+          }
+        ],
+        "covered_channels": [
+          "channel:Fetch_top:fetch_to_decoder"
+        ]
+      }
+    ],
+    "reading_paths": [
+      {
+        "id": "reading:cpu_top:default",
+        "kind": "reading_path",
+        "title": "cpu_top 推荐阅读路径",
+        "summary": "帮助新读者按从整体到局部的顺序理解 cpu_top。",
+        "top_module": "cpu_top",
+        "tags": [
+          "planner",
+          "documentation"
+        ],
+        "source_refs": [
+          {
+            "artifact_kind": "project_index",
+            "artifact_name": "cpu_top",
+            "json_ref": "project_index.json",
+            "evidence_paths": [
+              "top_modules",
+              "artifacts.modules"
+            ]
+          }
+        ],
+        "warnings": [],
+        "confidence": "medium",
+        "audience": "newcomer",
+        "goals": [
+          "先建立顶层模块关系",
+          "再理解关键事务路径",
+          "最后理解关键结构子协议"
+        ],
+        "ordered_sections": [
+          {
+            "section_id": "overview",
+            "title": "整体概览",
+            "covers": [
+              "system:cpu_top"
+            ]
+          },
+          {
+            "section_id": "fetch_path",
+            "title": "Fetch 路径",
+            "covers": [
+              "module:Fetch_top",
+              "flow:Fetch_top:main_fetch_path",
+              "channel:Fetch_top:fetch_to_decoder"
+            ]
+          },
+          {
+            "section_id": "contracts",
+            "title": "关键结构子协议",
+            "covers": [
+              "contract:cSelSplit_2_fetch"
+            ]
+          }
+        ],
+        "must_cover": [
+          "所有一级子模块",
+          "所有关键 family",
+          "至少一条主 event/data/completion 路径"
+        ],
+        "defer_sections": [
+          "external dependency 内部实现"
+        ],
+        "risk_reminders": [
+          "若 unresolved dependency 存在，文档必须明确证据边界。"
+        ]
+      }
+    ]
+  },
+  "indexes": {
+    "by_id": {
+      "system:cpu_top": "objects.system_views[0]",
+      "module:Fetch_top": "objects.module_cards[0]",
+      "channel:Fetch_top:fetch_to_decoder": "objects.channel_cards[0]",
+      "contract:cSelSplit_2_fetch": "objects.component_contracts[0]",
+      "flow:Fetch_top:main_fetch_path": "objects.flow_paths[0]",
+      "reading:cpu_top:default": "objects.reading_paths[0]"
+    },
+    "by_module": {
+      "cpu_top": [
+        "system:cpu_top",
+        "reading:cpu_top:default"
+      ],
+      "Fetch_top": [
+        "module:Fetch_top",
+        "channel:Fetch_top:fetch_to_decoder",
+        "flow:Fetch_top:main_fetch_path",
+        "contract:cSelSplit_2_fetch"
+      ]
+    },
+    "by_family": {
+      "SelSplit": [
+        "contract:cSelSplit_2_fetch"
+      ]
+    },
+    "by_tag": {
+      "overview": [
+        "system:cpu_top"
+      ],
+      "fetch": [
+        "module:Fetch_top",
+        "channel:Fetch_top:fetch_to_decoder",
+        "flow:Fetch_top:main_fetch_path"
+      ]
+    }
+  },
+  "warnings": [
+    "This file is an explanatory example for schema review, not a generated ground-truth artifact."
+  ]
+}

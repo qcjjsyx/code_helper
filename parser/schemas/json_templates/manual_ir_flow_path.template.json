@@ -1,0 +1,60 @@
+{
+  "id": "flow:<scope_module>:<path_name>",
+  "kind": "flow_path",
+  "title": "<path_title>",
+  "summary": "<path_summary>",
+  "top_module": "<top_module_name>",
+  "tags": [],
+  "source_refs": [
+    {
+      "artifact_kind": "module",
+      "artifact_name": "<scope_module>",
+      "json_ref": "modules/<scope_module>.json",
+      "evidence_paths": []
+    }
+  ],
+  "warnings": [],
+  "confidence": "medium",
+  "scope_module": "<scope_module>",
+  "path_type": "mixed",
+  "startpoints": [
+    {
+      "owner": "<start_owner>",
+      "signal": "<start_signal>"
+    }
+  ],
+  "endpoints": [
+    {
+      "owner": "<end_owner>",
+      "signal": "<end_signal>"
+    }
+  ],
+  "steps": [
+    {
+      "order": 1,
+      "node_kind": "module",
+      "node_name": "<node_name>",
+      "role": "<node_role>"
+    }
+  ],
+  "branch_points": [
+    {
+      "node": "<node_name>",
+      "reason": "<branch_reason>"
+    }
+  ],
+  "join_points": [
+    {
+      "node": "<node_name>",
+      "reason": "<join_reason>"
+    }
+  ],
+  "completion_return_path": [],
+  "blocking_points": [
+    {
+      "node": "<node_name>",
+      "reason": "<blocking_reason>"
+    }
+  ],
+  "covered_channels": []
+}

@@ -1,0 +1,47 @@
+{
+  "id": "system:<top_module_name>",
+  "kind": "system_view",
+  "title": "<top_module_name> system view",
+  "summary": "<high_level_system_summary>",
+  "top_module": "<top_module_name>",
+  "tags": [],
+  "source_refs": [
+    {
+      "artifact_kind": "project_index",
+      "artifact_name": "<top_module_name>",
+      "json_ref": "project_index.json",
+      "evidence_paths": []
+    }
+  ],
+  "warnings": [],
+  "confidence": "medium",
+  "system_role": "cpu_core",
+  "boundary_interfaces": [
+    {
+      "name": "<interface_name>",
+      "direction": "bidirectional",
+      "channels": []
+    }
+  ],
+  "primary_modules": [
+    {
+      "module": "<module_name>",
+      "role": "<document_role>"
+    }
+  ],
+  "primary_components": [
+    {
+      "component": "<component_name>",
+      "family": "<family_name>",
+      "role": "<component_role>"
+    }
+  ],
+  "families_used": [],
+  "external_dependencies": [
+    {
+      "name": "<dependency_name>",
+      "status": "interface_only"
+    }
+  ],
+  "global_risks": []
+}
