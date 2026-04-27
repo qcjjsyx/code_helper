@@ -1,0 +1,427 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "spi_m",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/SPI/SPI1/spi_m.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "sclk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst_n",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "M_en",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DR_w",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DFF",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "data_in",
+        "direction": "input",
+        "width_text": "[15:0]"
+      },
+      {
+        "name": "LSBFIRST",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rx",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DR_r",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "CRC_next",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rxonly",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "TXCRC",
+        "direction": "input",
+        "width_text": "[15:0]"
+      },
+      {
+        "name": "CPHA",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "data_out",
+        "direction": "output",
+        "width_text": "[15:0]"
+      },
+      {
+        "name": "TXE",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "OVR",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "busy",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "RXNE",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "enable",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "crc_en",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "tx",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst_n",
+      "reset_active_low": true
+    }
+  },
+  "local_signals": [
+    {
+      "name": "tx_cnt",
+      "kind": "reg",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "crc_cnt",
+      "kind": "reg",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "rx_cnt",
+      "kind": "reg",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "data_shift_tx",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "data_shift_rx",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "tx_done",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "crc_done",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "rx_done",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "cnt_buf_tx",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "cnt_buf_crc",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "cnt_buf_rx",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "state",
+      "kind": "reg",
+      "width_text": "[1:0]"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "data_in"
+      ],
+      "payload_outputs": [
+        "data_out"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "CPHA",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CRC_next",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DFF",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DR_r",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DR_w",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "LSBFIRST",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "M_en",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OVR",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RXNE",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TXCRC",
+        "kind": "port_input",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "TXE",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "busy",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "cnt_buf_crc",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "cnt_buf_rx",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "cnt_buf_tx",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "crc_cnt",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "crc_done",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "crc_en",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "data_in",
+        "kind": "port_input",
+        "width_text": "[15:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "data_out",
+        "kind": "port_output",
+        "width_text": "[15:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "data_shift_rx",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "data_shift_tx",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "enable",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rst_n",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rx",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rx_cnt",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rx_done",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rxonly",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "state",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "tx",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "tx_cnt",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "tx_done",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

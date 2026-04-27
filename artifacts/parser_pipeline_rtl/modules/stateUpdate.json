@@ -1,0 +1,1298 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "stateUpdate",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/Lsu/stateUpdate.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_driveFromUpdateSplitter_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_fromUpdateSplitterData_7",
+        "direction": "input",
+        "width_text": "[6:0]"
+      },
+      {
+        "name": "i_freeFromStateUpdateSelector_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeToUpdateSplitter_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_driveToStateUpdateSelector_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_stateValid_12",
+        "direction": "output",
+        "width_text": "[11:0]"
+      },
+      {
+        "name": "o_misaligned_1",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_driveToLoadAndStoreSelector_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadAndStoreSelectorToFifo1_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_isLoad_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_isStore_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lsuType_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_memAddrLtb_3",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "w_loadFifoToLoadAndStoreSelector_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadAndStoreSelectorToLoadFifo_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_storeFifoToLoadAndStoreSelector_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadAndStoreSelectorToStoreFifo_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadFifoOver_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadFifoDrive_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadFifoData_7",
+      "kind": "wire",
+      "width_text": "[6:0]"
+    },
+    {
+      "name": "w_loadOrStoreMutexMergeToLoadFifo_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_storeFifoOver_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_storeFifoDrive_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_storeFifoData_7",
+      "kind": "wire",
+      "width_text": "[6:0]"
+    },
+    {
+      "name": "w_loadOrStoreMutexMergeToStoreFifo_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_over_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_misaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "idle",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "lbValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "lhwValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "lwValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "lhwmValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "lwmValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "swValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "shwValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ldwValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ldwmValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "sdwValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "LoadIdleValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "StoreIdleValid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_nextState_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "r_nextStoreState_4",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "r_nextLoadState_4",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_stateValid_12",
+      "kind": "wire",
+      "width_text": "[11:0]"
+    },
+    {
+      "name": "r_state_4",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_stateUpdateFire",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "r_misaligned_1",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_stateValid_12",
+      "kind": "reg",
+      "width_text": "[11:0]"
+    },
+    {
+      "name": "w_stateUpdateFireDelay",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "Fifo1",
+      "module_type": "cFifo1_7b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_7b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "i_driveFromUpdateSplitter_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_loadAndStoreSelectorToFifo1_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "o_freeToUpdateSplitter_1",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveToLoadAndStoreSelector_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_7",
+          "signal": "i_fromUpdateSplitterData_7",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data_7",
+          "signal": "{w_isLoad_1,w_isStore_1,w_lsuType_2,w_memAddrLtb_3}",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "loadAndStoreSelector",
+      "module_type": "cSelector2_2b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cSelector2_2b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_driveToLoadAndStoreSelector_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext0",
+          "signal": "w_loadFifoToLoadAndStoreSelector_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext1",
+          "signal": "w_storeFifoToLoadAndStoreSelector_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data_2",
+          "signal": "{w_isStore_1,w_isLoad_1}",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data0_2",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data1_2",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_loadAndStoreSelectorToFifo1_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_driveNext0",
+          "signal": "w_loadAndStoreSelectorToLoadFifo_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_driveNext1",
+          "signal": "w_loadAndStoreSelectorToStoreFifo_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "SelSplit"
+    },
+    {
+      "instance_name": "loadFifo",
+      "module_type": "cFifo1_7b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_7b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_loadAndStoreSelectorToLoadFifo_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_loadOrStoreMutexMergeToLoadFifo_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_loadFifoToLoadAndStoreSelector_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_loadFifoDrive_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_7",
+          "signal": "7'b0",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data_7",
+          "signal": "w_loadFifoData_7",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "storeFifo",
+      "module_type": "cFifo1_7b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_7b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_loadAndStoreSelectorToStoreFifo_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_loadOrStoreMutexMergeToStoreFifo_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_storeFifoToLoadAndStoreSelector_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_storeFifoDrive_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_7",
+          "signal": "7'b0",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data_7",
+          "signal": "w_storeFifoData_7",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "loadOrStoreMutexMerge",
+      "module_type": "cMutexMerge2_8b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cMutexMerge2_8b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive0",
+          "signal": "w_storeFifoDrive_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data0_8",
+          "signal": "8'b0",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free0",
+          "signal": "w_loadOrStoreMutexMergeToStoreFifo_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drive1",
+          "signal": "w_loadFifoDrive_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data1_8",
+          "signal": "8'b0",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free1",
+          "signal": "w_loadOrStoreMutexMergeToLoadFifo_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeFromStateUpdateSelector_1",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_driveToStateUpdateSelector_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data_8",
+          "signal": "w_over_8",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "MutexMerge"
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [
+        "i_driveFromUpdateSplitter_1"
+      ],
+      "event_outputs": [
+        "o_driveToStateUpdateSelector_1"
+      ],
+      "payload_inputs": [
+        "i_fromUpdateSplitterData_7"
+      ],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [
+        "o_stateValid_12"
+      ],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [
+      "o_stateValid_12"
+    ],
+    "backpressure_signals": [
+      "i_freeFromStateUpdateSelector_1"
+    ]
+  },
+  "direct_children": {
+    "modules": [],
+    "components": [
+      "cFifo1_7b_lsu",
+      "cMutexMerge2_8b_lsu",
+      "cSelector2_2b_lsu"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "7'b0",
+        "kind": "implicit_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "8'b0",
+        "kind": "implicit_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "LoadIdleValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "StoreIdleValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "i_driveFromUpdateSplitter_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_freeFromStateUpdateSelector_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_fromUpdateSplitterData_7",
+        "kind": "port_input",
+        "width_text": "[6:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "idle",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "lbValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "ldwValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "ldwmValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "lhwValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "lhwmValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "lwValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "lwmValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "o_driveToStateUpdateSelector_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_freeToUpdateSplitter_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_misaligned_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_stateValid_12",
+        "kind": "port_output",
+        "width_text": "[11:0]",
+        "role": "condition"
+      },
+      {
+        "name": "r_misaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_nextLoadState_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_nextStoreState_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_stateValid_12",
+        "kind": "local_signal",
+        "width_text": "[11:0]",
+        "role": "condition"
+      },
+      {
+        "name": "r_state_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "sdwValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "shwValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "swValid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "w_driveToLoadAndStoreSelector_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_isLoad_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_isStore_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadAndStoreSelectorToFifo1_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadAndStoreSelectorToLoadFifo_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadAndStoreSelectorToStoreFifo_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadFifoData_7",
+        "kind": "local_signal",
+        "width_text": "[6:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_loadFifoDrive_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_loadFifoOver_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadFifoToLoadAndStoreSelector_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadOrStoreMutexMergeToLoadFifo_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadOrStoreMutexMergeToStoreFifo_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lsuType_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_memAddrLtb_3",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_misaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_nextState_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_over_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_stateUpdateFire",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_stateUpdateFireDelay",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_stateValid_12",
+        "kind": "local_signal",
+        "width_text": "[11:0]",
+        "role": "condition"
+      },
+      {
+        "name": "w_storeFifoData_7",
+        "kind": "local_signal",
+        "width_text": "[6:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_storeFifoDrive_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_storeFifoOver_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_storeFifoToLoadAndStoreSelector_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "{w_isLoad_1,w_isStore_1,w_lsuType_2,w_memAddrLtb_3}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{w_isStore_1,w_isLoad_1}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "i_driveFromUpdateSplitter_1",
+        "instance_name": "Fifo1",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadAndStoreSelectorToFifo1_1",
+        "instance_name": "Fifo1",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "Fifo1",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeToUpdateSplitter_1",
+        "instance_name": "Fifo1",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveToLoadAndStoreSelector_1",
+        "instance_name": "Fifo1",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_fromUpdateSplitterData_7",
+        "instance_name": "Fifo1",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "i_data_7",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{w_isLoad_1,w_isStore_1,w_lsuType_2,w_memAddrLtb_3}",
+        "instance_name": "Fifo1",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "o_data_7",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveToLoadAndStoreSelector_1",
+        "instance_name": "loadAndStoreSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadFifoToLoadAndStoreSelector_1",
+        "instance_name": "loadAndStoreSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "i_freeNext0",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_storeFifoToLoadAndStoreSelector_1",
+        "instance_name": "loadAndStoreSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "i_freeNext1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{w_isStore_1,w_isLoad_1}",
+        "instance_name": "loadAndStoreSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "i_data_2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "loadAndStoreSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadAndStoreSelectorToFifo1_1",
+        "instance_name": "loadAndStoreSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_loadAndStoreSelectorToLoadFifo_1",
+        "instance_name": "loadAndStoreSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "o_driveNext0",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_loadAndStoreSelectorToStoreFifo_1",
+        "instance_name": "loadAndStoreSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "o_driveNext1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_loadAndStoreSelectorToLoadFifo_1",
+        "instance_name": "loadFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadOrStoreMutexMergeToLoadFifo_1",
+        "instance_name": "loadFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "loadFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadFifoToLoadAndStoreSelector_1",
+        "instance_name": "loadFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_loadFifoDrive_1",
+        "instance_name": "loadFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "7'b0",
+        "instance_name": "loadFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "i_data_7",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadFifoData_7",
+        "instance_name": "loadFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "o_data_7",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_loadAndStoreSelectorToStoreFifo_1",
+        "instance_name": "storeFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadOrStoreMutexMergeToStoreFifo_1",
+        "instance_name": "storeFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "storeFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_storeFifoToLoadAndStoreSelector_1",
+        "instance_name": "storeFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_storeFifoDrive_1",
+        "instance_name": "storeFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "7'b0",
+        "instance_name": "storeFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "i_data_7",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_storeFifoData_7",
+        "instance_name": "storeFifo",
+        "module_type": "cFifo1_7b_lsu",
+        "port": "o_data_7",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_storeFifoDrive_1",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "i_drive0",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "8'b0",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "i_data0_8",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadOrStoreMutexMergeToStoreFifo_1",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "o_free0",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_loadFifoDrive_1",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "i_drive1",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "8'b0",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "i_data1_8",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadOrStoreMutexMergeToLoadFifo_1",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "o_free1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromStateUpdateSelector_1",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveToStateUpdateSelector_1",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_over_8",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "o_data_8",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "loadOrStoreMutexMerge",
+        "module_type": "cMutexMerge2_8b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [
+      "cFifo1_7b_lsu",
+      "cMutexMerge2_8b_lsu",
+      "cSelector2_2b_lsu"
+    ],
+    "families_used": [
+      "Fifo1",
+      "MutexMerge",
+      "SelSplit"
+    ]
+  },
+  "warnings": []
+}

@@ -1,0 +1,130 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "ROM",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/memory/ROM.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_addr",
+        "direction": "input",
+        "width_text": "[11:0]"
+      },
+      {
+        "name": "o_data",
+        "direction": "output",
+        "width_text": "[63:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "addr_t",
+      "kind": "wire",
+      "width_text": "[8:0]"
+    },
+    {
+      "name": "addr",
+      "kind": "wire",
+      "width_text": "[9:0]"
+    },
+    {
+      "name": "rom_mem",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [
+        "o_data"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "addr",
+        "kind": "local_signal",
+        "width_text": "[9:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "addr_t",
+        "kind": "local_signal",
+        "width_text": "[8:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_addr",
+        "kind": "port_input",
+        "width_text": "[11:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_data",
+        "kind": "port_output",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "rom_mem",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

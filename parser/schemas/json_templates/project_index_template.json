@@ -1,0 +1,67 @@
+{
+  "schema": "parser_pipeline_project_index",
+  "schema_version": "1.0",
+  "repo_root": "<absolute_repo_root>",
+  "generated_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "input_roots": [
+    "<rtl_project_dir_relative_to_repo>"
+  ],
+  "top_modules": [
+    {
+      "name": "<top_module_name>",
+      "file": "<rtl_file_relative_to_repo>",
+      "json_ref": "modules/<top_module_name>.json"
+    }
+  ],
+  "artifacts": {
+    "modules": [
+      {
+        "name": "<module_name>",
+        "file": "<rtl_file_relative_to_repo>",
+        "json_ref": "modules/<module_name>.json"
+      }
+    ],
+    "components": [
+      {
+        "name": "<component_module_name>",
+        "family": "<component_family>",
+        "file": "<rtl_file_relative_to_repo>",
+        "json_ref": "components/<component_module_name>.json"
+      }
+    ]
+  },
+  "hierarchies": {
+    "<top_module_name>": {
+      "module": "<top_module_name>",
+      "file": "<rtl_file_relative_to_repo>",
+      "children": [
+        {
+          "instance_name": "<instance_name>",
+          "target": "<child_module_name>",
+          "artifact_kind": "module",
+          "file": "<rtl_file_relative_to_repo>",
+          "children": []
+        },
+        {
+          "instance_name": "<component_instance_name>",
+          "target": "<component_module_name>",
+          "artifact_kind": "derived_component",
+          "file": "<rtl_file_relative_to_repo>",
+          "family": "<component_family>"
+        },
+        {
+          "instance_name": "<ignored_external_instance_name>",
+          "target": "<ignored_external_module_type>",
+          "artifact_kind": "external_dependency",
+          "ignored_unresolved": true
+        }
+      ]
+    }
+  },
+  "stats": {
+    "module_count": 0,
+    "component_count": 0,
+    "unresolved_instance_count": 0,
+    "warning_count": 0
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "subtr4b",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/IONetwork_9.24/subtr4b.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "a",
+        "direction": "input",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "b",
+        "direction": "input",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "differ",
+        "direction": "output",
+        "width_text": "[3:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_pSub_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_borrow_5",
+      "kind": "wire",
+      "width_text": "[4:1]"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "a",
+        "kind": "port_input",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "b",
+        "kind": "port_input",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "differ",
+        "kind": "port_output",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_borrow_5",
+        "kind": "local_signal",
+        "width_text": "[4:1]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_pSub_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

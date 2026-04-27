@@ -1,0 +1,254 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "multiLoadDataUpate",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/Lsu/multiLoadDataUpate.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_fromDataRout_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_fromDataRoutData_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "i_address_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_registerList_16",
+        "direction": "input",
+        "width_text": "[15:0]"
+      },
+      {
+        "name": "o_dHi_4",
+        "direction": "output",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "o_dLo_4",
+        "direction": "output",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "o_wbackData_64",
+        "direction": "output",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_wbackWen_2",
+        "direction": "output",
+        "width_text": "[1:0]"
+      },
+      {
+        "name": "o_endFlag_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_nextRegisterList_16",
+        "direction": "output",
+        "width_text": "[15:0]"
+      },
+      {
+        "name": "o_nextAddress_32",
+        "direction": "output",
+        "width_text": "[31:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "r_count_2",
+      "kind": "reg",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "r_registerList_16",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "r_j_4",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "r_k_4",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "r_nextAddress_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "num",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "i_fromDataRoutData_64",
+        "i_fromDataRout_1"
+      ],
+      "payload_outputs": [
+        "o_wbackData_64"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_address_32",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_fromDataRoutData_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_fromDataRout_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_registerList_16",
+        "kind": "port_input",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "num",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_dHi_4",
+        "kind": "port_output",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_dLo_4",
+        "kind": "port_output",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_endFlag_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_nextAddress_32",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_nextRegisterList_16",
+        "kind": "port_output",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_wbackData_64",
+        "kind": "port_output",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_wbackWen_2",
+        "kind": "port_output",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_count_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_j_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_k_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_nextAddress_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_registerList_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

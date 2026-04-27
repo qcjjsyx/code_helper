@@ -1,0 +1,647 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "gpio_slot",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/IONet/GPIO/gpio_slot.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst_finish",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "io_pin_i",
+        "direction": "input",
+        "width_text": "[16-1:0]"
+      },
+      {
+        "name": "gpio_ctrl_o",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "gpio_data_o",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_driveFrmMesh",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeToMesh",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_driveNextToMesh",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeNextFrmMesh",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "data_to",
+        "direction": "output",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "data_from",
+        "direction": "input",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "irq",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "we",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "addr_i",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "data_i",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "data_o",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_data_to",
+      "kind": "wire",
+      "width_text": "[50:0]"
+    },
+    {
+      "name": "XY",
+      "kind": "reg",
+      "width_text": "[9:0]"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "slot",
+      "module_type": "perip_slot",
+      "artifact_kind": "module",
+      "target_ref": "../modules/perip_slot.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "rst_finish",
+          "signal": "rst_finish",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_driveFrmMesh",
+          "signal": "i_driveFrmMesh",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeToMesh",
+          "signal": "o_freeToMesh",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNextToMesh",
+          "signal": "o_driveNextToMesh",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNextFrmMesh",
+          "signal": "i_freeNextFrmMesh",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "data_to",
+          "signal": "w_data_to",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "data_from",
+          "signal": "data_from",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "we",
+          "signal": "we",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "addr_i",
+          "signal": "addr_i",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "data_i",
+          "signal": "data_i",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "data_o",
+          "signal": "data_o",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        }
+      ]
+    },
+    {
+      "instance_name": "gpio_module",
+      "module_type": "gpio_module",
+      "artifact_kind": "module",
+      "target_ref": "../modules/gpio_module.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst_finish",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "we_i",
+          "signal": "we",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "addr_i",
+          "signal": "addr_i",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "data_i",
+          "signal": "data_i",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "data_o",
+          "signal": "data_o",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "gpio_ctrl_o",
+          "signal": "gpio_ctrl_o",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "gpio_data_o",
+          "signal": "gpio_data_o",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "io_pin_i",
+          "signal": "io_pin_i",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "irq",
+          "signal": "irq",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [
+        "i_driveFrmMesh"
+      ],
+      "event_outputs": [
+        "o_driveNextToMesh"
+      ],
+      "payload_inputs": [
+        "data_from"
+      ],
+      "payload_outputs": [
+        "data_to",
+        "gpio_data_o"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": [
+      "i_freeNextFrmMesh"
+    ]
+  },
+  "direct_children": {
+    "modules": [
+      "gpio_module",
+      "perip_slot"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "XY",
+        "kind": "local_signal",
+        "width_text": "[9:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "addr_i",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "data_from",
+        "kind": "port_input",
+        "width_text": "[50:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "data_i",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "data_o",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "data_to",
+        "kind": "port_output",
+        "width_text": "[50:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "gpio_ctrl_o",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "gpio_data_o",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_driveFrmMesh",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_freeNextFrmMesh",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "io_pin_i",
+        "kind": "port_input",
+        "width_text": "[16-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "irq",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_driveNextToMesh",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_freeToMesh",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "rst_finish",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_data_to",
+        "kind": "local_signal",
+        "width_text": "[50:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "we",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "clk",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_finish",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "rst_finish",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFrmMesh",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "i_driveFrmMesh",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeToMesh",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "o_freeToMesh",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNextToMesh",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "o_driveNextToMesh",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNextFrmMesh",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "i_freeNextFrmMesh",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_data_to",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "data_to",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "data_from",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "data_from",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "we",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "we",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "addr_i",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "addr_i",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "data_i",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "data_i",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "data_o",
+        "instance_name": "slot",
+        "module_type": "perip_slot",
+        "port": "data_o",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_finish",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "we",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "we_i",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "addr_i",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "addr_i",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "data_i",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "data_i",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "data_o",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "data_o",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "gpio_ctrl_o",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "gpio_ctrl_o",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "gpio_data_o",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "gpio_data_o",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "io_pin_i",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "io_pin_i",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "irq",
+        "instance_name": "gpio_module",
+        "module_type": "gpio_module",
+        "port": "irq",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "fire2SyncPluse",
+      "gpio_module",
+      "perip_slot"
+    ],
+    "reachable_components": [
+      "cFifo1"
+    ],
+    "families_used": [
+      "Fifo1"
+    ]
+  },
+  "warnings": []
+}

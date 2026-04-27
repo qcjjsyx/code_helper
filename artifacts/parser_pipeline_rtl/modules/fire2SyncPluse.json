@@ -1,0 +1,150 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "fire2SyncPluse",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/GPIO/fire2SyncPluse.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "fire",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst_finish",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rise",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "pluse",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "pluse_level",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "pluse_level_t",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "pluse_level_tt",
+      "kind": "reg",
+      "width_text": "1"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "fire",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "pluse",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "pluse_level",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "pluse_level_t",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "pluse_level_tt",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rise",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "rst_finish",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

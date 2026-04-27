@@ -290,6 +290,45 @@
       "notes": [
         "The number of input ports can be parameterized or hard-coded, and can be determined based on port resolution."
       ]
+    },
+
+    {
+      "family": "eventSource",
+      "kind": "base_component_template",
+      "params": {
+        "EXTRA_PARAMS": {}
+      },
+      "interface": {
+        "trigger": {
+          "switch_port": null
+        },
+        "event_output": {
+          "fire_port": null
+        },
+        "reset": {
+          "reset_port": "rst",
+          "reset_active_low": false
+        }
+      },
+
+      "contract": {
+        "invariants": [
+          "This family produces an event/fire output from local trigger or condition inputs.",
+          "It is a source-side component and does not require an upstream drive/free handshake by default."
+        ],
+        "event_generation": {
+          "policy": "implementation_defined",
+          "details": "The exact pulse timing and trigger condition are defined by the concrete RTL implementation."
+        },
+        "release_rule": {
+          "policy": "none",
+          "details": "No downstream free/ack completion semantics are assumed unless explicitly annotated."
+        }
+      },
+      "notes": [
+        "Observed implementations may use switch/reset logic and delay cells to form a fire pulse.",
+        "Technology-cell and delay-chain details should remain implementation details, not family-level protocol assumptions."
+      ]
     }
   ]
 }

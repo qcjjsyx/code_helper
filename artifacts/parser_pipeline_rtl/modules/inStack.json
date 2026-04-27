@@ -1,0 +1,1136 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "inStack",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/int/inStack.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "i_inOutDriToDataSpli_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeFromRGRF_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeFromRPSR_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_driveFromRGRF_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_driveFromRPSR_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_grfData_192",
+        "direction": "input",
+        "width_text": "[191:0]"
+      },
+      {
+        "name": "i_psrData_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_DRSeleDriToinStackSele_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeFromDR_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_SP_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_freeFromSPDec",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_pc_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_freeFrominStackSele_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_w_inStackDriToDR_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_SP_32",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_driveFromSPDec",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_data_96",
+        "direction": "output",
+        "width_text": "[95:0]"
+      },
+      {
+        "name": "o_freeFromInStack",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeToRGRF_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeToRPSR_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_driveToRGRF_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_driveToRPSR_1",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_dataMerDriveToInMer_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFromInMer_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_stackData_224",
+      "kind": "wire",
+      "width_text": "[223:0]"
+    },
+    {
+      "name": "w_inData0_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_inData1_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_inData2_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_inData3_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_inData0Addr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_inData1Addr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_inData2Addr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_inData3Addr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_freeFormDR_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_inStackDri_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_inStackFree_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_inStackDriToDR_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_inNumPose_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_inStackSeleToMe_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "r_inNum_2",
+      "kind": "reg",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_inNum_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_freeFrominStackSele_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_DRSeleDriToinStackSele_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "r_SP_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "dataSpli",
+      "module_type": "cSplitter2_1b_Nodata",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cSplitter2_1b_Nodata.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "i_inOutDriToDataSpli_1",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_free",
+          "signal": "o_freeFromInStack",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext0",
+          "signal": "o_driveToRGRF_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext0",
+          "signal": "i_freeFromRGRF_1",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext1",
+          "signal": "o_driveToRPSR_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext1",
+          "signal": "i_freeFromRPSR_1",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "SelSplit"
+    },
+    {
+      "instance_name": "dataMerge",
+      "module_type": "cWaitMerge2_224b_int",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cWaitMerge2_224b_int.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive0",
+          "signal": "i_driveFromRGRF_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data0_192",
+          "signal": "i_grfData_192",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_free0",
+          "signal": "o_freeToRGRF_1",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_drive1",
+          "signal": "i_driveFromRPSR_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data1_32",
+          "signal": "i_psrData_32",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_free1",
+          "signal": "o_freeToRPSR_1",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_dataMerDriveToInMer_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data_224",
+          "signal": "w_stackData_224",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_freeFromInMer_1",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "WaitMerge"
+    },
+    {
+      "instance_name": "inStackMerge",
+      "module_type": "cMutexMerge2_1b",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cMutexMerge2_1b.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive0",
+          "signal": "w_dataMerDriveToInMer_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data0_1",
+          "signal": "",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free0",
+          "signal": "w_freeFromInMer_1",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_drive1",
+          "signal": "w_inStackDri_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data1_1",
+          "signal": "",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free1",
+          "signal": "w_inStackFree_1",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeFromDR_1",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_inStackDriToDR_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data_1",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "MutexMerge"
+    },
+    {
+      "instance_name": "inStackSele",
+      "module_type": "cSelector2_1b",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cSelector2_1b.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "i_DRSeleDriToinStackSele_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data_1",
+          "signal": "w_inNum_2 == 2'b11",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free",
+          "signal": "o_freeFrominStackSele_1",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext0",
+          "signal": "w_inStackSeleToMe_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext0",
+          "signal": "i_freeFromSPDec",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_data0_1",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_driveNext1",
+          "signal": "w_inStackDri_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext1",
+          "signal": "w_inStackFree_1",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_data1_1",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "SelSplit"
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [
+        "i_driveFromRGRF_1",
+        "i_driveFromRPSR_1"
+      ],
+      "event_outputs": [
+        "o_driveFromSPDec",
+        "o_driveToRGRF_1",
+        "o_driveToRPSR_1"
+      ],
+      "payload_inputs": [
+        "i_grfData_192",
+        "i_inOutDriToDataSpli_1",
+        "i_psrData_32"
+      ],
+      "payload_outputs": [
+        "o_data_96"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": [
+      "i_freeFromDR_1",
+      "i_freeFromRGRF_1",
+      "i_freeFromRPSR_1",
+      "i_freeFromSPDec"
+    ]
+  },
+  "direct_children": {
+    "modules": [],
+    "components": [
+      "cMutexMerge2_1b",
+      "cSelector2_1b",
+      "cSplitter2_1b_Nodata",
+      "cWaitMerge2_224b_int"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_DRSeleDriToinStackSele_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_SP_32",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_driveFromRGRF_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFromRPSR_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_freeFromDR_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromRGRF_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromRPSR_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeFromSPDec",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_grfData_192",
+        "kind": "port_input",
+        "width_text": "[191:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_inOutDriToDataSpli_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_pc_32",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_psrData_32",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_SP_32",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_data_96",
+        "kind": "port_output",
+        "width_text": "[95:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_driveFromSPDec",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveToRGRF_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveToRPSR_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_freeFromInStack",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeFrominStackSele_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeToRGRF_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeToRPSR_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_w_inStackDriToDR_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_SP_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_inNum_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "w_DRSeleDriToinStackSele_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_dataMerDriveToInMer_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_freeFormDR_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFromInMer_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFrominStackSele_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_inData0Addr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_inData0_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_inData1Addr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_inData1_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_inData2Addr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_inData2_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_inData3Addr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_inData3_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_inNumPose_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inNum_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inNum_2 == 2'b11",
+        "kind": "implicit_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_inStackDriToDR_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inStackDri_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inStackFree_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_inStackSeleToMe_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_stackData_224",
+        "kind": "local_signal",
+        "width_text": "[223:0]",
+        "role": "payload_data"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "i_inOutDriToDataSpli_1",
+        "instance_name": "dataSpli",
+        "module_type": "cSplitter2_1b_Nodata",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFromInStack",
+        "instance_name": "dataSpli",
+        "module_type": "cSplitter2_1b_Nodata",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveToRGRF_1",
+        "instance_name": "dataSpli",
+        "module_type": "cSplitter2_1b_Nodata",
+        "port": "o_driveNext0",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromRGRF_1",
+        "instance_name": "dataSpli",
+        "module_type": "cSplitter2_1b_Nodata",
+        "port": "i_freeNext0",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveToRPSR_1",
+        "instance_name": "dataSpli",
+        "module_type": "cSplitter2_1b_Nodata",
+        "port": "o_driveNext1",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromRPSR_1",
+        "instance_name": "dataSpli",
+        "module_type": "cSplitter2_1b_Nodata",
+        "port": "i_freeNext1",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "dataSpli",
+        "module_type": "cSplitter2_1b_Nodata",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFromRGRF_1",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "i_drive0",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_grfData_192",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "i_data0_192",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeToRGRF_1",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "o_free0",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_driveFromRPSR_1",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "i_drive1",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_psrData_32",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "i_data1_32",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeToRPSR_1",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "o_free1",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_dataMerDriveToInMer_1",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_stackData_224",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "o_data_224",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFromInMer_1",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "dataMerge",
+        "module_type": "cWaitMerge2_224b_int",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dataMerDriveToInMer_1",
+        "instance_name": "inStackMerge",
+        "module_type": "cMutexMerge2_1b",
+        "port": "i_drive0",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFromInMer_1",
+        "instance_name": "inStackMerge",
+        "module_type": "cMutexMerge2_1b",
+        "port": "o_free0",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_inStackDri_1",
+        "instance_name": "inStackMerge",
+        "module_type": "cMutexMerge2_1b",
+        "port": "i_drive1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_inStackFree_1",
+        "instance_name": "inStackMerge",
+        "module_type": "cMutexMerge2_1b",
+        "port": "o_free1",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromDR_1",
+        "instance_name": "inStackMerge",
+        "module_type": "cMutexMerge2_1b",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_inStackDriToDR_1",
+        "instance_name": "inStackMerge",
+        "module_type": "cMutexMerge2_1b",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "inStackMerge",
+        "module_type": "cMutexMerge2_1b",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_DRSeleDriToinStackSele_1",
+        "instance_name": "inStackSele",
+        "module_type": "cSelector2_1b",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_inNum_2 == 2'b11",
+        "instance_name": "inStackSele",
+        "module_type": "cSelector2_1b",
+        "port": "i_data_1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeFrominStackSele_1",
+        "instance_name": "inStackSele",
+        "module_type": "cSelector2_1b",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_inStackSeleToMe_1",
+        "instance_name": "inStackSele",
+        "module_type": "cSelector2_1b",
+        "port": "o_driveNext0",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFromSPDec",
+        "instance_name": "inStackSele",
+        "module_type": "cSelector2_1b",
+        "port": "i_freeNext0",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_inStackDri_1",
+        "instance_name": "inStackSele",
+        "module_type": "cSelector2_1b",
+        "port": "o_driveNext1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_inStackFree_1",
+        "instance_name": "inStackSele",
+        "module_type": "cSelector2_1b",
+        "port": "i_freeNext1",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "inStackSele",
+        "module_type": "cSelector2_1b",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [
+      "cMutexMerge2_1b",
+      "cSelector2_1b",
+      "cSplitter2_1b_Nodata",
+      "cWaitMerge2_224b_int"
+    ],
+    "families_used": [
+      "MutexMerge",
+      "SelSplit",
+      "WaitMerge"
+    ]
+  },
+  "warnings": []
+}

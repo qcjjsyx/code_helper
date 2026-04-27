@@ -1,0 +1,488 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "m3s003fb",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/IIC/m3s003fb.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "CLOCK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RESETN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "VAL",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ADDRESS",
+        "direction": "input",
+        "width_text": "[2:0]"
+      },
+      {
+        "name": "RD",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WDATA",
+        "direction": "input",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "Data",
+        "direction": "input",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "Status",
+        "direction": "input",
+        "width_text": "[4:0]"
+      },
+      {
+        "name": "SetIFLG",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ClrSTA",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "MASTER",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "SLAA",
+        "direction": "output",
+        "width_text": "[6:0]"
+      },
+      {
+        "name": "XSLA",
+        "direction": "output",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "WrData",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "ENAB",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "GCENAB",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "STA",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "STP",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "IFLG",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "AAK",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "RDATA",
+        "direction": "output",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "INTR",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "CCRFS",
+        "direction": "output",
+        "width_text": "[6:0]"
+      },
+      {
+        "name": "IRST",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "CCRH",
+        "direction": "output",
+        "width_text": "[6:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "CCRFS",
+      "kind": "reg",
+      "width_text": "[6:0]"
+    },
+    {
+      "name": "CCRH",
+      "kind": "reg",
+      "width_text": "[6:0]"
+    },
+    {
+      "name": "SLAA",
+      "kind": "reg",
+      "width_text": "[6:0]"
+    },
+    {
+      "name": "XSLA",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "XDA",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "RDATA",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "GCENAB",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "INTR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IRST",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IEN",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "ENAB",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "STA",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "STP",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IFLG",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "AAK",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "SLAA_WR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "WrData",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "CNTR_WR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "XSLA_WR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "CCRFS_WR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "CCRH_WR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "SRST",
+      "kind": "reg",
+      "width_text": "1"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "Data",
+        "WDATA"
+      ],
+      "payload_outputs": [
+        "RDATA",
+        "WrData"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "AAK",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADDRESS",
+        "kind": "port_input",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "CCRFS",
+        "kind": "port_output",
+        "width_text": "[6:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "CCRFS_WR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CCRH",
+        "kind": "port_output",
+        "width_text": "[6:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "CCRH_WR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CLOCK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CNTR_WR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ClrSTA",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "Data",
+        "kind": "port_input",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "ENAB",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "GCENAB",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IEN",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IFLG",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "INTR",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IRST",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "MASTER",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RD",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RDATA",
+        "kind": "port_output",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "RESETN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SLAA",
+        "kind": "port_output",
+        "width_text": "[6:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "SLAA_WR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SRST",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "STA",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "STP",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SetIFLG",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "Status",
+        "kind": "port_input",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "VAL",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDATA",
+        "kind": "port_input",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "WrData",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "XDA",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "XSLA",
+        "kind": "port_output",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "XSLA_WR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

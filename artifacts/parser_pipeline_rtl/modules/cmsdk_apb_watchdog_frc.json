@@ -1,0 +1,636 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "cmsdk_apb_watchdog_frc",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/Watchdog/cmsdk_apb_watchdog_frc.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "PCLK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PRESETn",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PENABLE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PADDR",
+        "direction": "input",
+        "width_text": "[4:2]"
+      },
+      {
+        "name": "PWRITE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PWDATA",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "frc_sel",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "wdog_lock",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WDOGCLK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WDOGCLKEN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WDOGRESn",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WDOGINT",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "WDOGRES",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "frc_data",
+        "direction": "output",
+        "width_text": "[31:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "wdog_ctrl_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_control",
+      "kind": "reg",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "load_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "load_en_reg",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_load",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "load_tog_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "load_req_tog_p",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "load_req_tog_w",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "load_req_w",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "count_stop",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "count_stop_reg",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "nxt_count_low",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "nxt_count_high",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "nxt_carry_0",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "nxt_carry_1",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "nxt_carry_mux",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "reg_carry",
+      "kind": "reg",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "carry_msb",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "count_mux1",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "count_mux2",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "reg_count",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "count_read",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "high_count",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "wdog_int_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_int_en_reg",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_int_en_rise",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_res_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "i_wdog_res",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "nxt_wdog_res",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "int_clr_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "int_clr_tog_p",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "int_clr_tog_w",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "int_clr_pulse",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "int_clr_w",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "int_clr_reg_w",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "nxt_wdog_ris",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_ris",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "read_wdog_ris",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_mis",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "PWDATA"
+      ],
+      "payload_outputs": [
+        "frc_data"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "PADDR",
+        "kind": "port_input",
+        "width_text": "[4:2]",
+        "role": "unknown"
+      },
+      {
+        "name": "PCLK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PENABLE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PRESETn",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PWDATA",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "PWRITE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGCLK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGCLKEN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGINT",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGRES",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGRESn",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "carry_msb",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "count_mux1",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "count_mux2",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "count_read",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "count_stop",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "count_stop_reg",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "frc_data",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "frc_sel",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "high_count",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_wdog_res",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "int_clr_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "int_clr_pulse",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "int_clr_reg_w",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "int_clr_tog_p",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "int_clr_tog_w",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "int_clr_w",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "load_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "load_en_reg",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "load_req_tog_p",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "load_req_tog_w",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "load_req_w",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "load_tog_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "nxt_carry_0",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "nxt_carry_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "nxt_carry_mux",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "nxt_count_high",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "nxt_count_low",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "nxt_wdog_res",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "nxt_wdog_ris",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "read_wdog_ris",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "reg_carry",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "reg_count",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_control",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_ctrl_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_int_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_int_en_reg",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_int_en_rise",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_load",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_lock",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_mis",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_res_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_ris",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

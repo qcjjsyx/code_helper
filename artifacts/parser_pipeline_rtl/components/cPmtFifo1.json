@@ -1,0 +1,106 @@
+{
+  "schema": "parser_pipeline_component",
+  "schema_version": "1.0",
+  "name": "cPmtFifo1",
+  "artifact_kind": "derived_component",
+  "family": "PmtFifo1",
+  "file": "test_data/rtl/Control/base/cPmtFifo1.v",
+  "template_source": "parser/schemas/json_templates/family_level.json",
+  "interface": {
+    "params": {},
+    "ports": [
+      {
+        "name": "i_drive",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeNext",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "pmt",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_free",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_driveNext",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_fire_1",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "role_mapping": {
+    "upstream": {
+      "ports": [
+        "i_drive",
+        "o_free"
+      ]
+    },
+    "downstream": {
+      "ports": [
+        "o_driveNext",
+        "i_freeNext"
+      ]
+    },
+    "payload": {
+      "ports": []
+    },
+    "fire": {
+      "ports": [
+        "o_fire_1"
+      ]
+    },
+    "condition": {
+      "ports": [
+        "pmt"
+      ]
+    }
+  },
+  "contract": {
+    "invariants": [
+      "Permit-off stalls progression: when permit is disabled, the stage pauses forwarding (no downstream advance).",
+      "Otherwise identical to Fifo1 invariants (including non-reentrancy and free-driven completion)."
+    ],
+    "permit_semantics": {
+      "behavior_when_disabled": "stall",
+      "notes": [
+        "Stall means it pauses progression/forwarding; do not interpret as protocol change unless explicitly implemented."
+      ]
+    }
+  },
+  "flow_semantics": {
+    "event_behavior": "Permit-off stalls progression: when permit is disabled, the stage pauses forwarding (no downstream advance).",
+    "data_behavior": "This family primarily communicates through event handshakes.",
+    "completion_behavior": "Otherwise identical to Fifo1 invariants (including non-reentrancy and free-driven completion)."
+  },
+  "implementation_summary": {
+    "internal_dependencies": [
+      "pmtRelay",
+      "receiver",
+      "sender"
+    ],
+    "stops_at_family_level": true
+  },
+  "warnings": []
+}

@@ -1,0 +1,1384 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "m16550s",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/IONet/UART/m16550s.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "CLOCK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RESETN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ADDRESS",
+        "direction": "input",
+        "width_text": "[2:0]"
+      },
+      {
+        "name": "WDATA",
+        "direction": "input",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "RD",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "VAL",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RCLK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RCLK_BAUD",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "BRGE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "NDCD",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "NRI",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "NDSR",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "NCTS",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "SIN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RDATA",
+        "direction": "output",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "IRQ",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "ACK",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "NDVL",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "NOUT2",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "NOUT1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "NRTS",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "NDTR",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "SOUT",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "BAUD",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "TXRDY",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "RXRDY",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "RDATA",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "IRQ",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ACK",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "NDVL",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "NOUT2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "NOUT1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "NRTS",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "NDTR",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "SOUT",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "BAUD",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TXRDY",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RXRDY",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TXD",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "THRe",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "PEN",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "WLS0",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "WLS1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "STB",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "EPS",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "SP",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "SB",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RxData",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "TxFIFO",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "RxFIFO",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "RxBuff",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "DataIn",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "DR",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "FE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "OE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "PE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "BI",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ADD0",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ADD5",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ADD1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ADD2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ADD4",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ADD6",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ADD0B",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ADD1B",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "WrCyc",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RdCyc",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "IER",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "IIR",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "DIV",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "TxClkEnab",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RxClkEnab",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "LOOP1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RTS",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DTR",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TSRE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DDCD",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TERI",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DDSR",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DCTS",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "BRKTD",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TIP_A",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "TOP_A",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "RIP_A",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "ROP_A",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "OP_ED",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "TEmpt",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TFull",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "FIFOE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "FRE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "PTE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "FBRK",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ERF",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RTO",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "FOE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "FERF",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RFull",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "REmpt",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RRST",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DMA",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RTL",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RTM",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "LoadTxBuff",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CharEn",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RHold1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RxAboveTrig",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "NTRD",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "NTWR",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "NRWR",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "NRRD",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "Delta_TRST",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RI",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "OUT2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "OUT1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DSR",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DCD",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CTS",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "U1",
+      "module_type": "m3s001fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s001fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U2",
+      "module_type": "m3s002fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s002fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U3",
+      "module_type": "m3s003fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s003fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U4",
+      "module_type": "m3s004fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s004fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U5",
+      "module_type": "m3s005fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s005fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U6",
+      "module_type": "m3s006fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s006fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U7",
+      "module_type": "m3s007fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s007fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U8",
+      "module_type": "m3s008fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s008fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U9",
+      "module_type": "m3s009fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s009fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U10",
+      "module_type": "m3s010fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s010fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    },
+    {
+      "instance_name": "U11",
+      "module_type": "m3s011fd",
+      "artifact_kind": "module",
+      "target_ref": "../modules/m3s011fd.json",
+      "parameter_overrides": {},
+      "connections": []
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "WDATA"
+      ],
+      "payload_outputs": [
+        "RDATA"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [
+      "m3s001fd",
+      "m3s002fd",
+      "m3s003fd",
+      "m3s004fd",
+      "m3s005fd",
+      "m3s006fd",
+      "m3s007fd",
+      "m3s008fd",
+      "m3s009fd",
+      "m3s010fd",
+      "m3s011fd"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "ACK",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD0",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD0B",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD1B",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD4",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD5",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD6",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADDRESS",
+        "kind": "port_input",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "BAUD",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BI",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BRGE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BRKTD",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CLOCK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CTS",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CharEn",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DCD",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DCTS",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DDCD",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DDSR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DIV",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "DMA",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DSR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DTR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DataIn",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "Delta_TRST",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "EPS",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ERF",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FBRK",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FERF",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FIFOE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FOE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FRE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IER",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "IIR",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "IRQ",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "LOOP1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "LoadTxBuff",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NCTS",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NDCD",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NDSR",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NDTR",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NDVL",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NOUT1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NOUT2",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NRI",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NRRD",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NRTS",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NRWR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NTRD",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NTWR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OP_ED",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "OUT1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OUT2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PEN",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PTE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RCLK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RCLK_BAUD",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RD",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RDATA",
+        "kind": "port_output",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "RESETN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "REmpt",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RFull",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RHold1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RI",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RIP_A",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "ROP_A",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RRST",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RTL",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RTM",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RTO",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RTS",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RXRDY",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RdCyc",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RxAboveTrig",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RxBuff",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RxClkEnab",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RxData",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "RxFIFO",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "SB",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SIN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SOUT",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SP",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "STB",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TERI",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TEmpt",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TFull",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "THRe",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TIP_A",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "TOP_A",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "TSRE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TXD",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TXRDY",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TxClkEnab",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TxFIFO",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "VAL",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDATA",
+        "kind": "port_input",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "WLS0",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WLS1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WrCyc",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "m3s001fd",
+      "m3s002fd",
+      "m3s003fd",
+      "m3s004fd",
+      "m3s005fd",
+      "m3s006fd",
+      "m3s007fd",
+      "m3s008fd",
+      "m3s009fd",
+      "m3s010fd",
+      "m3s011fd",
+      "m3s012fd",
+      "m3s013fd",
+      "m3s014fd"
+    ],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

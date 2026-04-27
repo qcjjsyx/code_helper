@@ -1,0 +1,297 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "timer_module",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/Timer/timer_module.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "we_i",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "addr_i",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "data_i",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "data_o",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "int_sig_o",
+        "direction": "output",
+        "width_text": "[ 4:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "timer_ctrl",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "timer_count",
+      "kind": "reg",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "timer_value",
+      "kind": "reg",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "msip_value",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "wen",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ren",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "timer_en",
+      "kind": "wire",
+      "width_text": "[0]"
+    },
+    {
+      "name": "timer_int_en",
+      "kind": "wire",
+      "width_text": "[1]"
+    },
+    {
+      "name": "timer_expired",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "timer_stop",
+      "kind": "wire",
+      "width_text": "[3]"
+    },
+    {
+      "name": "write_reg_ctrl_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_value_L_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_value_H_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_msip_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "int_sig_r",
+      "kind": "reg",
+      "width_text": "1"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "data_i"
+      ],
+      "payload_outputs": [
+        "data_o"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "addr_i",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "data_i",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "data_o",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "int_sig_o",
+        "kind": "port_output",
+        "width_text": "[ 4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "int_sig_r",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "msip_value",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "ren",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "timer_count",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "timer_ctrl",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "timer_en",
+        "kind": "local_signal",
+        "width_text": "[0]",
+        "role": "unknown"
+      },
+      {
+        "name": "timer_expired",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "timer_int_en",
+        "kind": "local_signal",
+        "width_text": "[1]",
+        "role": "unknown"
+      },
+      {
+        "name": "timer_stop",
+        "kind": "local_signal",
+        "width_text": "[3]",
+        "role": "unknown"
+      },
+      {
+        "name": "timer_value",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "we_i",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wen",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_ctrl_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_msip_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_value_H_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_value_L_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

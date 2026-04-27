@@ -1,0 +1,380 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "gpio_module",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/GPIO/gpio_module.v",
+  "interface": {
+    "params": [
+      {
+        "name": "GPIO_NUM",
+        "default_text": "16"
+      }
+    ],
+    "ports": [
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "we_i",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "addr_i",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "data_i",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "data_o",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "gpio_ctrl_o",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "gpio_data_o",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "io_pin_i",
+        "direction": "input",
+        "width_text": "[GPIO_NUM-1:0]"
+      },
+      {
+        "name": "irq",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "gpio_ctrl",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "gpio_data",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "int_enable",
+      "kind": "reg",
+      "width_text": "[GPIO_NUM-1:0]"
+    },
+    {
+      "name": "rising_edge_en",
+      "kind": "reg",
+      "width_text": "[GPIO_NUM-1:0]"
+    },
+    {
+      "name": "falling_edge_en",
+      "kind": "reg",
+      "width_text": "[GPIO_NUM-1:0]"
+    },
+    {
+      "name": "int_status",
+      "kind": "reg",
+      "width_text": "[GPIO_NUM-1:0]"
+    },
+    {
+      "name": "high_level_en",
+      "kind": "reg",
+      "width_text": "[GPIO_NUM-1:0]"
+    },
+    {
+      "name": "low_level_en",
+      "kind": "reg",
+      "width_text": "[GPIO_NUM-1:0]"
+    },
+    {
+      "name": "io_pin_sync1",
+      "kind": "reg",
+      "width_text": "[GPIO_NUM-1:0]"
+    },
+    {
+      "name": "io_pin_sync2",
+      "kind": "reg",
+      "width_text": "[GPIO_NUM-1:0]"
+    },
+    {
+      "name": "io_pin_prev",
+      "kind": "reg",
+      "width_text": "[GPIO_NUM-1:0]"
+    },
+    {
+      "name": "write_reg_ctrl_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_data_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_int_enable_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_rising_edge_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_falling_edge_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_int_status_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_high_level_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "write_reg_low_level_en",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "data_i"
+      ],
+      "payload_outputs": [
+        "data_o",
+        "gpio_data_o"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "addr_i",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "data_i",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "data_o",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "falling_edge_en",
+        "kind": "local_signal",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "gpio_ctrl",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "gpio_ctrl_o",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "gpio_data",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "gpio_data_o",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "high_level_en",
+        "kind": "local_signal",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "int_enable",
+        "kind": "local_signal",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "int_status",
+        "kind": "local_signal",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "io_pin_i",
+        "kind": "port_input",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "io_pin_prev",
+        "kind": "local_signal",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "io_pin_sync1",
+        "kind": "local_signal",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "io_pin_sync2",
+        "kind": "local_signal",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "irq",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "low_level_en",
+        "kind": "local_signal",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rising_edge_en",
+        "kind": "local_signal",
+        "width_text": "[GPIO_NUM-1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "we_i",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_ctrl_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_data_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "write_reg_falling_edge_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_high_level_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_int_enable_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_int_status_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_low_level_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "write_reg_rising_edge_en",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

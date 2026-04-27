@@ -1,0 +1,941 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "m3s002fd",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/UART/m3s002fd.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "CLOCK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RESETN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RxClkEnab",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RdCyc",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ADD0",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ADD5",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DA4",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DA3",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DA2",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DA1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PEN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WLS0",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WLS1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "STB",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "EPS",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "SP",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "SIN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "LOOP1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "BRKTD",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RxFIFO",
+        "direction": "input",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "FOE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "FPE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "FFE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "FBI",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "FERF",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "FIFOE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "REmpt",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RRST",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RxData",
+        "direction": "output",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "RxBuff",
+        "direction": "output",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "CharEn",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "DR",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "FE",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "OE",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "PE",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "BI",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "ERF",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "RTO",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "FRE",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "PTE",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "FBRK",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "RxData",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "RxBuff",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "RxReg",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "StepC",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "RxState",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "RXS",
+      "kind": "reg",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "TOC",
+      "kind": "reg",
+      "width_text": "[5:0]"
+    },
+    {
+      "name": "DIN",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "PTY",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "FRE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "DP",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "RTO",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "DR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "FE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "OE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "PE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "BI",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "ERF",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "SDIN",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "RdLtch",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "RdSync",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "RdPulse",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "DRTog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "DRRdTog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "OETog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "OERdTog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "PETog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "PERdTog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "FETog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "FERdTog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "BITog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "BIRdTog",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IDLE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "Step",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "BRK",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "FBRK",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "PTE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "CharEn",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IDR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IFE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IOE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IPE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IBI",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "NoBit6",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "NoBit7",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "NoBit8",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "IpFilter",
+      "kind": "reg",
+      "width_text": "1"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [
+        "RxData"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "ADD0",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD5",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BI",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BIRdTog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BITog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BRK",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BRKTD",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CLOCK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CharEn",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DA1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DA2",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DA3",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DA4",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DIN",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DP",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DR",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DRRdTog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DRTog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "EPS",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ERF",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FBI",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FBRK",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FE",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FERF",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FERdTog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FETog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FFE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FIFOE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FOE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FPE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FRE",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IBI",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IDLE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IDR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IFE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IOE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IPE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IpFilter",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "LOOP1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NoBit6",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NoBit7",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NoBit8",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OE",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OERdTog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OETog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PE",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PEN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PERdTog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PETog",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PTE",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PTY",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RESETN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "REmpt",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RRST",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RTO",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RXS",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RdCyc",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RdLtch",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RdPulse",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RdSync",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RxBuff",
+        "kind": "port_output",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RxClkEnab",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RxData",
+        "kind": "port_output",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "RxFIFO",
+        "kind": "port_input",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RxReg",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RxState",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "SDIN",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SIN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SP",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "STB",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "Step",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "StepC",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "TOC",
+        "kind": "local_signal",
+        "width_text": "[5:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "WLS0",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WLS1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

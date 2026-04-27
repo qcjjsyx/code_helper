@@ -1,0 +1,23 @@
+{
+  "schema": "parser_pipeline_build_report",
+  "schema_version": "1.0",
+  "generated_at": "YYYY-MM-DDTHH:MM:SSZ",
+  "output_dir": "<absolute_output_dir>",
+  "issues": [
+    {
+      "level": "warning",
+      "message": "unresolved instance target: <module_type>",
+      "file": "<rtl_file_relative_to_repo>",
+      "module": "<enclosing_module_name>"
+    }
+  ],
+  "module_names": [
+    "<module_name>"
+  ],
+  "component_names": [
+    "<component_module_name>"
+  ],
+  "families_used": [
+    "<component_family>"
+  ]
+}

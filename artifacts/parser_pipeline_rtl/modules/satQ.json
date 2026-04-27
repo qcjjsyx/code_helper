@@ -1,0 +1,183 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "satQ",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/Execute/satQ.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "i_oprand1_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_oprand2_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_satQSymbolFlag_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_saQResult_32",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "sat",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_saturated1_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_maxOprand1_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_sat1_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_satuarted2_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_maxOprand2_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_sat2_1",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_oprand1_32",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_oprand2_32",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_satQSymbolFlag_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_saQResult_32",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "sat",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_maxOprand1_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_maxOprand2_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sat1_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sat2_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_satuarted2_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_saturated1_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

@@ -1,0 +1,1607 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "instSplit",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/IF/instSplit.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_drvFICache",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_free2ICache",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeFMerge",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_drv2Merge",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "w_intExcpBranchValid",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_basePC_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_inst_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_inst0_33",
+        "direction": "output",
+        "width_text": "[32:0]"
+      },
+      {
+        "name": "o_inst1_33",
+        "direction": "output",
+        "width_text": "[32:0]"
+      },
+      {
+        "name": "o_inst2_33",
+        "direction": "output",
+        "width_text": "[32:0]"
+      },
+      {
+        "name": "o_inst3_33",
+        "direction": "output",
+        "width_text": "[32:0]"
+      },
+      {
+        "name": "o_inst0PC_32",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_inst1PC_32",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_inst2PC_32",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_inst3PC_32",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_instCount",
+        "direction": "output",
+        "width_text": "[2:0]"
+      },
+      {
+        "name": "o_normNextPc_32",
+        "direction": "output",
+        "width_text": "[31:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "r_inst0_33",
+      "kind": "reg",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "r_inst1_33",
+      "kind": "reg",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "r_inst2_33",
+      "kind": "reg",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "r_inst3_33",
+      "kind": "reg",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "r_inst0PC_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_inst1PC_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_inst2PC_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_inst3PC_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_normNextPc_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_instCont_3",
+      "kind": "reg",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "r_preState",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_remaining_16",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_start",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_state",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_part1_16",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_part2_16",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_part3_16",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_part4_16",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "r_empty16",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "r_16Mode",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_32Mode",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "w_part1Mode",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_part2Mode",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_part3Mode",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_part4Mode",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_PC_Loclast",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_PC_Loc2",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_PC_Loc4",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_PC_Loc6",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_PC_Loc8",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_inst16_p1",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "w_inst16_p2",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "w_inst16_p3",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "w_inst16_p4",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "w_inst32_p0",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "w_inst32_p1",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "w_inst32_p2",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "w_inst32_p3",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "w_fetchFire0_3",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "w_drvFICache",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drvFICache_t",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drvFICache_t1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2Merge",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_3",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_4",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_5",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_6",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_7",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_8",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_9",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_10",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_11",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_12",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_13",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_14",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fetchFire0_3_15",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "fetchFifo",
+      "module_type": "cFifo3_fetch",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo3_fetch.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_drvFICache",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free",
+          "signal": "o_free2ICache",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeFMerge",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_drv2Merge",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_fire_3",
+          "signal": "w_fetchFire0_3",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "buf0",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3[1]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_1",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf1",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_1",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_2",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf2",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_2",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_3",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf3",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_3",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_4",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf4",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_4",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_5",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf5",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_5",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_6",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf6",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_6",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_7",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf7",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_7",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_8",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf8",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_8",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_9",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf9",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_9",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_10",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf10",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_10",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_11",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf11",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_11",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_12",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf12",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_12",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_13",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf13",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_13",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_14",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf14",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_fetchFire0_3_14",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_fetchFire0_3_15",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [
+        "w_intExcpBranchValid"
+      ],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [
+      "w_intExcpBranchValid"
+    ],
+    "backpressure_signals": [
+      "i_freeFMerge"
+    ]
+  },
+  "direct_children": {
+    "modules": [],
+    "components": [
+      "cFifo3_fetch"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_basePC_32",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_drvFICache",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_freeFMerge",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_inst_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_drv2Merge",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_free2ICache",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_inst0PC_32",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_inst0_33",
+        "kind": "port_output",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_inst1PC_32",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_inst1_33",
+        "kind": "port_output",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_inst2PC_32",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_inst2_33",
+        "kind": "port_output",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_inst3PC_32",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_inst3_33",
+        "kind": "port_output",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_instCount",
+        "kind": "port_output",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_normNextPc_32",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_16Mode",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_32Mode",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_empty16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_inst0PC_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_inst0_33",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_inst1PC_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_inst1_33",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_inst2PC_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_inst2_33",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_inst3PC_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_inst3_33",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_instCont_3",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_normNextPc_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_preState",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_remaining_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "w_PC_Loc2",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_PC_Loc4",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_PC_Loc6",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_PC_Loc8",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_PC_Loclast",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2Merge",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drvFICache",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drvFICache_t",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drvFICache_t1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3[1]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_10",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_11",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_12",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_13",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_14",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_15",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_3",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_4",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_5",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_6",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_7",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_8",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fetchFire0_3_9",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst16_p1",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst16_p2",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst16_p3",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst16_p4",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst32_p0",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst32_p1",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst32_p2",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_inst32_p3",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_intExcpBranchValid",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "w_part1Mode",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_part1_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_part2Mode",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_part2_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_part3Mode",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_part3_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_part4Mode",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_part4_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_start",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_state",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "w_drvFICache",
+        "instance_name": "fetchFifo",
+        "module_type": "cFifo3_fetch",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_free2ICache",
+        "instance_name": "fetchFifo",
+        "module_type": "cFifo3_fetch",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFMerge",
+        "instance_name": "fetchFifo",
+        "module_type": "cFifo3_fetch",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_drv2Merge",
+        "instance_name": "fetchFifo",
+        "module_type": "cFifo3_fetch",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_fetchFire0_3",
+        "instance_name": "fetchFifo",
+        "module_type": "cFifo3_fetch",
+        "port": "o_fire_3",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "fetchFifo",
+        "module_type": "cFifo3_fetch",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_fetchFire0_3[1]",
+        "instance_name": "buf0",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_1",
+        "instance_name": "buf0",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_1",
+        "instance_name": "buf1",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_2",
+        "instance_name": "buf1",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_2",
+        "instance_name": "buf2",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_3",
+        "instance_name": "buf2",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_3",
+        "instance_name": "buf3",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_4",
+        "instance_name": "buf3",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_4",
+        "instance_name": "buf4",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_5",
+        "instance_name": "buf4",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_5",
+        "instance_name": "buf5",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_6",
+        "instance_name": "buf5",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_6",
+        "instance_name": "buf6",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_7",
+        "instance_name": "buf6",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_7",
+        "instance_name": "buf7",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_8",
+        "instance_name": "buf7",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_8",
+        "instance_name": "buf8",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_9",
+        "instance_name": "buf8",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_9",
+        "instance_name": "buf9",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_10",
+        "instance_name": "buf9",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_10",
+        "instance_name": "buf10",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_11",
+        "instance_name": "buf10",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_11",
+        "instance_name": "buf11",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_12",
+        "instance_name": "buf11",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_12",
+        "instance_name": "buf12",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_13",
+        "instance_name": "buf12",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_13",
+        "instance_name": "buf13",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_14",
+        "instance_name": "buf13",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_14",
+        "instance_name": "buf14",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fetchFire0_3_15",
+        "instance_name": "buf14",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [
+      "cFifo3_fetch"
+    ],
+    "families_used": [
+      "Fifo1"
+    ]
+  },
+  "warnings": []
+}

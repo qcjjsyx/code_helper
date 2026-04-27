@@ -1,0 +1,603 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "cmsdk_apb_watchdog",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/IONet/Watchdog/cmsdk_apb_watchdog.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "PCLK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PRESETn",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PENABLE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PSEL",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PADDR",
+        "direction": "input",
+        "width_text": "[11:2]"
+      },
+      {
+        "name": "PWRITE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PWDATA",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "WDOGCLK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WDOGCLKEN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WDOGRESn",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ECOREVNUM",
+        "direction": "input",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "PRDATA",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "WDOGINT",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "WDOGRES",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "frc_sel",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "frc_data",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "wdog_pdata",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "prdata_next",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "i_prdata",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "prdata_next_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_itcr_wr_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_itcr",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_itop_wr_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_itop",
+      "kind": "reg",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "wdog_lock_wr_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_lock_wr_val",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdog_lock",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "i_wdogint",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "i_wdogres",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "u_apb_watchdog_frc",
+      "module_type": "cmsdk_apb_watchdog_frc",
+      "artifact_kind": "module",
+      "target_ref": "../modules/cmsdk_apb_watchdog_frc.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "PCLK",
+          "signal": "PCLK",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PRESETn",
+          "signal": "PRESETn",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PADDR",
+          "signal": "PADDR[4:2]",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PWRITE",
+          "signal": "PWRITE",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PWDATA",
+          "signal": "PWDATA",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "PENABLE",
+          "signal": "PENABLE",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "frc_sel",
+          "signal": "frc_sel",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "wdog_lock",
+          "signal": "wdog_lock",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "WDOGCLK",
+          "signal": "WDOGCLK",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "WDOGCLKEN",
+          "signal": "WDOGCLKEN",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "WDOGRESn",
+          "signal": "WDOGRESn",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "WDOGINT",
+          "signal": "i_wdogint",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "WDOGRES",
+          "signal": "i_wdogres",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "frc_data",
+          "signal": "frc_data",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "PWDATA"
+      ],
+      "payload_outputs": [
+        "PRDATA"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [
+      "cmsdk_apb_watchdog_frc"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "ECOREVNUM",
+        "kind": "port_input",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "PADDR",
+        "kind": "port_input",
+        "width_text": "[11:2]",
+        "role": "unknown"
+      },
+      {
+        "name": "PADDR[4:2]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "PCLK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PENABLE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PRDATA",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "PRESETn",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PSEL",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PWDATA",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "PWRITE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGCLK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGCLKEN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGINT",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGRES",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDOGRESn",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "frc_data",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "frc_sel",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_prdata",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_wdogint",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_wdogres",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "prdata_next",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "prdata_next_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "wdog_itcr",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_itcr_wr_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_itop",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_itop_wr_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_lock",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_lock_wr_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_lock_wr_val",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdog_pdata",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "PCLK",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "PCLK",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PRESETn",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "PRESETn",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PADDR[4:2]",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "PADDR",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PWRITE",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "PWRITE",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PWDATA",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "PWDATA",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PENABLE",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "PENABLE",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "frc_sel",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "frc_sel",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "wdog_lock",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "wdog_lock",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "WDOGCLK",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "WDOGCLK",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "WDOGCLKEN",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "WDOGCLKEN",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "WDOGRESn",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "WDOGRESn",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_wdogint",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "WDOGINT",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_wdogres",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "WDOGRES",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "frc_data",
+        "instance_name": "u_apb_watchdog_frc",
+        "module_type": "cmsdk_apb_watchdog_frc",
+        "port": "frc_data",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "cmsdk_apb_watchdog_frc"
+    ],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

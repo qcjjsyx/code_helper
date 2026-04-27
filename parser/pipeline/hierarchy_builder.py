@@ -7,13 +7,16 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Set
 
+from .boundary_policy import BoundaryDecision, decide_boundary, infer_component_family
 from .cc_header_reader import read_cc_header
-from .classifier import classify_artifact
-from .family_inference import infer_family
-from .family_json_builder import build_component_json, load_family_templates
+from .family_json_builder import build_component_json, load_family_templates, missing_family_template
 from .flow_inference import build_flow_graph, collect_family_usage, infer_signal_role
-from .module_index import build_module_index
+from .module_index import build_module_index, resolve_explicit_verilog_files
 from .module_parser import parse_verilog_file
+
+
+RTL_FILELIST_NAME = "read_rtl_list.tcl"
+TOP_FILELIST_NAME = "rtl_top_list.tcl"
 
 
 @dataclass
@@ -29,8 +32,37 @@ class BuildContext:
     issues: List[Dict[str, Any]] = field(default_factory=list)
 
 
-def build_project(repo_root: Path, inputs: List[str], tops: List[str], output_dir: Path) -> Dict[str, Any]:
-    top_paths = {_resolve_path(repo_root, item) for item in tops}
+def build_project(repo_root: Path, input_root: str | Path, output_dir: Path) -> Dict[str, Any]:
+    input_root_path = _resolve_path(repo_root, str(input_root))
+    if not input_root_path.is_dir():
+        raise NotADirectoryError(f"parser --inputs must be an RTL project directory: {input_root_path}")
+
+    read_rtl_list = input_root_path / RTL_FILELIST_NAME
+    rtl_top_list = input_root_path / TOP_FILELIST_NAME
+    missing = [path for path in (read_rtl_list, rtl_top_list) if not path.is_file()]
+    if missing:
+        missing_text = ", ".join(str(path) for path in missing)
+        raise FileNotFoundError(
+            f"parser input directory must contain {RTL_FILELIST_NAME} and {TOP_FILELIST_NAME}; missing: {missing_text}"
+        )
+
+    return build_project_from_filelists(
+        repo_root,
+        inputs=[str(read_rtl_list)],
+        tops=[str(rtl_top_list)],
+        output_dir=output_dir,
+        input_roots=[_relative_path(repo_root, input_root_path)],
+    )
+
+
+def build_project_from_filelists(
+    repo_root: Path,
+    inputs: List[str],
+    tops: List[str],
+    output_dir: Path,
+    input_roots: List[str] | None = None,
+) -> Dict[str, Any]:
+    top_paths = resolve_explicit_verilog_files(repo_root, tops)
     module_index = build_module_index(repo_root, inputs, top_paths)
     top_module_names = set()
     for top_path in top_paths:
@@ -47,8 +79,7 @@ def build_project(repo_root: Path, inputs: List[str], tops: List[str], output_di
     )
 
     top_entries = []
-    for top_path in tops:
-        resolved_top_path = _resolve_path(repo_root, top_path)
+    for resolved_top_path in sorted(top_paths):
         top_parse = parse_verilog_file(resolved_top_path)
         top_name = top_parse["name"]
         if not top_name:
@@ -62,7 +93,7 @@ def build_project(repo_root: Path, inputs: List[str], tops: List[str], output_di
             }
         )
 
-    project_index = _build_project_index(context, inputs, top_entries)
+    project_index = _build_project_index(context, input_roots or inputs, top_entries)
     build_report = _build_report(context, output_dir)
     return {
         "modules": context.module_jsons,
@@ -79,15 +110,14 @@ def _build_module_artifact(context: BuildContext, module_name: str) -> Dict[str,
     file_path = context.module_index[module_name]
     parse_result = _parse_with_cache(context, module_name, file_path)
     cc_header = read_cc_header(file_path)
-    artifact_info = classify_artifact(
+    artifact_info = _decide_module_boundary(
+        context,
         module_name,
-        str(file_path),
-        context.module_index,
-        context.top_module_names,
+        file_path,
         cc_header=cc_header,
     )
 
-    if artifact_info["artifact_kind"] == "derived_component":
+    if artifact_info.kind == "component_leaf":
         component_json = _build_component_artifact(context, module_name)
         return component_json
 
@@ -100,14 +130,15 @@ def _build_module_artifact(context: BuildContext, module_name: str) -> Dict[str,
         target_module = instance["module_type"]
         target_path = context.module_index.get(target_module)
         target_header = read_cc_header(target_path) if target_path else {}
-        target_info = classify_artifact(
+        target_info = _decide_module_boundary(
+            context,
             target_module,
-            str(target_path or target_module),
-            context.module_index,
-            context.top_module_names,
+            target_path,
             cc_header=target_header,
         )
-        target_kind = "module" if target_info["artifact_kind"] == "top_module" else target_info["artifact_kind"]
+        if target_info.kind == "skip_helper":
+            continue
+        target_kind = target_info.artifact_kind
         target_parse = _parse_with_cache(context, target_module, target_path) if target_path else None
         connections = _enrich_connections(instance["connections"], target_parse)
         target_ref = _target_ref(target_kind, target_module)
@@ -120,8 +151,8 @@ def _build_module_artifact(context: BuildContext, module_name: str) -> Dict[str,
             "parameter_overrides": instance["parameter_overrides"],
             "connections": connections,
         }
-        if target_info.get("family"):
-            enriched_instance["family"] = target_info["family"]
+        if target_info.family:
+            enriched_instance["family"] = target_info.family
         enriched_instances.append(enriched_instance)
 
         child_node = {
@@ -132,23 +163,27 @@ def _build_module_artifact(context: BuildContext, module_name: str) -> Dict[str,
         if target_path:
             child_node["file"] = _relative_path(context.repo_root, target_path)
 
-        if target_kind == "module":
+        if target_info.kind == "module":
             child_artifact = _build_module_artifact(context, target_module)
             child_node["children"] = context.hierarchy_nodes[target_module]["children"]
             direct_modules.append(target_module)
-        elif target_kind == "derived_component":
+        elif target_info.kind == "component_leaf":
             _build_component_artifact(context, target_module)
             direct_components.append(target_module)
-            child_node["family"] = target_info["family"]
+            child_node["family"] = target_info.family
         else:
-            context.issues.append(
-                {
-                    "level": "warning",
-                    "message": f"unresolved instance target: {target_module}",
-                    "file": _relative_path(context.repo_root, file_path),
-                    "module": module_name,
-                }
-            )
+            if target_info.kind == "ignored_external":
+                enriched_instance["ignored_unresolved"] = True
+                child_node["ignored_unresolved"] = True
+            else:
+                context.issues.append(
+                    {
+                        "level": "warning",
+                        "message": f"unresolved instance target: {target_module}",
+                        "file": _relative_path(context.repo_root, file_path),
+                        "module": module_name,
+                    }
+                )
         hierarchy_children.append(child_node)
 
     module_role = "submodule"
@@ -179,6 +214,7 @@ def _build_module_artifact(context: BuildContext, module_name: str) -> Dict[str,
         },
         "local_signals": parse_result.get("local_signals", []),
         "instances": enriched_instances,
+        "interface_summary": _build_interface_summary(parse_result.get("ports", [])),
         "direct_children": {
             "modules": sorted(set(direct_modules)),
             "components": sorted(set(direct_components)),
@@ -205,9 +241,9 @@ def _build_component_artifact(context: BuildContext, module_name: str) -> Dict[s
     file_path = context.module_index[module_name]
     parse_result = _parse_with_cache(context, module_name, file_path)
     cc_header = read_cc_header(file_path)
-    family_info = infer_family(module_name=module_name, file_path=str(file_path), cc_header=cc_header)
+    family_info = infer_component_family(module_name=module_name, file_path=str(file_path), cc_header=cc_header)
     family = family_info["family"]
-    template = context.family_templates[family]
+    template = context.family_templates.get(family) or missing_family_template(family)
     component_json = build_component_json(parse_result, family, file_path, template, cc_header)
     component_json["file"] = _relative_path(context.repo_root, file_path)
     context.component_jsons[module_name] = component_json
@@ -222,6 +258,22 @@ def _parse_with_cache(context: BuildContext, module_name: str, file_path: Path |
     parsed = parse_verilog_file(file_path)
     context.parsed_modules[module_name] = parsed
     return parsed
+
+
+def _decide_module_boundary(
+    context: BuildContext,
+    module_name: str,
+    file_path: Path | None,
+    *,
+    cc_header: Dict[str, Any],
+) -> BoundaryDecision:
+    return decide_boundary(
+        module_name,
+        module_index=context.module_index,
+        top_module_names=context.top_module_names,
+        file_path=file_path,
+        cc_header=cc_header,
+    )
 
 
 def _enrich_connections(connections: List[Dict[str, Any]], target_parse: Dict[str, Any] | None) -> List[Dict[str, Any]]:
@@ -277,6 +329,42 @@ def _compute_transitive_summary(context: BuildContext, module_name: str) -> Dict
     }
 
 
+def _build_interface_summary(ports: List[Dict[str, Any]]) -> Dict[str, Any]:
+    signal_groups: Dict[str, List[str]] = {
+        "event_inputs": [],
+        "event_outputs": [],
+        "payload_inputs": [],
+        "payload_outputs": [],
+        "condition_inputs": [],
+        "condition_outputs": [],
+        "reset_inputs": [],
+        "reset_outputs": [],
+    }
+    control_signals: List[str] = []
+    backpressure_signals: List[str] = []
+
+    for port in ports:
+        port_name = port.get("name", "")
+        port_direction = port.get("direction", "")
+        signal_role = infer_signal_role(port_name)
+        group_key = _interface_signal_group_key(signal_role, port_direction)
+        if group_key is not None and port_name:
+            signal_groups[group_key].append(port_name)
+        if signal_role == "condition" and port_name:
+            control_signals.append(port_name)
+        if signal_role == "event_free" and port_direction == "input" and port_name:
+            backpressure_signals.append(port_name)
+
+    return {
+        "signal_groups": {
+            key: sorted(set(values))
+            for key, values in signal_groups.items()
+        },
+        "control_signals": sorted(set(control_signals)),
+        "backpressure_signals": sorted(set(backpressure_signals)),
+    }
+
+
 def _build_project_index(context: BuildContext, inputs: List[str], top_entries: List[Dict[str, Any]]) -> Dict[str, Any]:
     all_instances = [
         instance
@@ -309,7 +397,9 @@ def _build_project_index(context: BuildContext, inputs: List[str], top_entries: 
     warning_count += sum(len(payload.get("warnings", [])) for payload in context.component_jsons.values())
     warning_count += len(context.issues)
     unresolved_instance_count = sum(
-        1 for instance in all_instances if instance.get("artifact_kind") == "external_dependency"
+        1
+        for instance in all_instances
+        if instance.get("artifact_kind") == "external_dependency" and not instance.get("ignored_unresolved")
     )
 
     return {
@@ -331,6 +421,18 @@ def _build_project_index(context: BuildContext, inputs: List[str], top_entries: 
             "warning_count": warning_count,
         },
     }
+
+
+def _interface_signal_group_key(signal_role: str, port_direction: str) -> str | None:
+    if port_direction not in {"input", "output"}:
+        return None
+    suffix = "inputs" if port_direction == "input" else "outputs"
+    return {
+        "event_drive": f"event_{suffix}",
+        "payload_data": f"payload_{suffix}",
+        "condition": f"condition_{suffix}",
+        "reset": f"reset_{suffix}",
+    }.get(signal_role)
 
 
 def _build_report(context: BuildContext, output_dir: Path) -> Dict[str, Any]:

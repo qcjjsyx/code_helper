@@ -1,0 +1,3007 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "socmem",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/memory/socmem.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_driveFrmIf",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeToIf",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_driveNextToIf",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeNextFrmIf",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_iwen_8",
+        "direction": "input",
+        "width_text": "[ 7:0]"
+      },
+      {
+        "name": "i_iaddress_33",
+        "direction": "input",
+        "width_text": "[32:0]"
+      },
+      {
+        "name": "i_idataW_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_idataR_65",
+        "direction": "output",
+        "width_text": "[64:0]"
+      },
+      {
+        "name": "i_driveFrmLsu",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeToLsu",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_driveNextToLsu",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeNextFrmLsu",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_dwen_8",
+        "direction": "input",
+        "width_text": "[ 7:0]"
+      },
+      {
+        "name": "i_daddress_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_ddataW_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_ddataR_64",
+        "direction": "output",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "init_sig",
+        "direction": "input",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "fire1Up",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "fire0Up",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "itrigbufFire",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "dtrigbufFire",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "icacheTrig",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "dcacheTrig",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "o_idataR_t_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "o_ddataR_t_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "o_ddataR_tStack_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_fireLsu",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_fireIf",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_dcacheTrigBuf_2",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_icacheTrigBuf_2",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_dcache",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_stack",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "r_iwen_8",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "r_idataW_64",
+      "kind": "reg",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "r_iaddress_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_dwen_8",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "r_ddataW_64",
+      "kind": "reg",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "r_daddress_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "routeSelect",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_itemp",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_dtemp",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_stack",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_fireIf_delay",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fire_tap",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_icache_tap",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fireLSU_delay",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fireLSU_tap",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_dcache_tap",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "r_iaddrcarry",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveNextToIf",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "w_driveFrmIfDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_itemp",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_idataROM_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_driveNextToLsu",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_dtemp",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_dwen_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_stemp",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_swen_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "icachemux",
+      "module_type": "CKMUX2M4HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "S",
+          "signal": "init_sig",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "A",
+          "signal": "w_icache_tap",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "B",
+          "signal": "clk",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[0]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "buf0",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[0]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[1]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf1",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[1]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[2]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf2",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[2]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[3]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf3",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[3]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[4]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf4",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[4]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[5]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf5",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[5]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[6]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf6",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[6]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[7]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf7",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[7]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[8]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf8",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[8]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[9]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf9",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[9]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[10]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf10",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[10]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[11]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf11",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[11]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[12]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf12",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[12]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[13]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf13",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[13]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[14]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf14",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[14]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_icacheTrigBuf_2[15]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf15",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_icacheTrigBuf_2[15]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "icacheTrig",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "icacheTap",
+      "module_type": "contTap",
+      "artifact_kind": "module",
+      "target_ref": "../modules/contTap.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "trig",
+          "signal": "w_fire_tap",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "req",
+          "signal": "w_icache_tap",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "dcachemux",
+      "module_type": "CKMUX2M4HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "S",
+          "signal": "init_sig",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "A",
+          "signal": "w_dcache_tap",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "B",
+          "signal": "clk",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[0]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "buf16",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[0]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[1]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf17",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[1]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[2]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf18",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[2]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[3]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf19",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[3]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[4]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf20",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[4]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[5]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf21",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[5]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[6]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf22",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[6]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[7]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf23",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[7]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[8]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf24",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[8]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[9]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf25",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[9]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[10]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf26",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[10]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[11]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf27",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[11]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[12]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf28",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[12]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[13]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf29",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[13]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[14]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf30",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[14]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "w_dcacheTrigBuf_2[15]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "buf31",
+      "module_type": "BUFM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "w_dcacheTrigBuf_2[15]",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "dcacheTrig",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ],
+      "ignored_unresolved": true
+    },
+    {
+      "instance_name": "dcacheTap",
+      "module_type": "contTap",
+      "artifact_kind": "module",
+      "target_ref": "../modules/contTap.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "trig",
+          "signal": "w_fireLSU_tap",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "req",
+          "signal": "w_dcache_tap",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ]
+    },
+    {
+      "instance_name": "cFifo2_If",
+      "module_type": "cFifo2_socmem",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo2_socmem.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_driveFrmIfDelay_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_fire_2",
+          "signal": "w_fireIf",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveNextToIf[0]",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNextFrmIf",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "ICache",
+      "module_type": "sram_128k",
+      "artifact_kind": "module",
+      "target_ref": "../modules/sram_128k.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_addr_14",
+          "signal": "w_itemp[16:3]",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data_64",
+          "signal": "i_idataW_64",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_sramTrig",
+          "signal": "icacheTrig",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_WEB_8",
+          "signal": "i_iwen_8",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data_64",
+          "signal": "o_idataR_t_64",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ]
+    },
+    {
+      "instance_name": "ROM",
+      "module_type": "ROM",
+      "artifact_kind": "module",
+      "target_ref": "../modules/ROM.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "w_fireIf[1]",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "i_addr",
+          "signal": "r_iaddress_32[11:0]",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data",
+          "signal": "w_idataROM_64",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ]
+    },
+    {
+      "instance_name": "cFifo2_Lsu",
+      "module_type": "cFifo2_socmem",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo2_socmem.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "i_driveFrmLsu",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_fire_2",
+          "signal": "w_fireLsu",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveNextToLsu[0]",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNextFrmLsu",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "DCache",
+      "module_type": "sram_128k",
+      "artifact_kind": "module",
+      "target_ref": "../modules/sram_128k.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_addr_14",
+          "signal": "w_dtemp[16:3]",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data_64",
+          "signal": "i_ddataW_64",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_sramTrig",
+          "signal": "dcacheTrig",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_WEB_8",
+          "signal": "w_dwen_8",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data_64",
+          "signal": "o_ddataR_t_64",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ]
+    },
+    {
+      "instance_name": "stack",
+      "module_type": "sram_8k",
+      "artifact_kind": "module",
+      "target_ref": "../modules/sram_8k.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_addr_10",
+          "signal": "w_stemp[12:3]",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data_64",
+          "signal": "i_ddataW_64",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_sramTrig",
+          "signal": "dcacheTrig",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_WEB_8",
+          "signal": "w_swen_8",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data_64",
+          "signal": "o_ddataR_tStack_64",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [
+        "i_driveFrmIf",
+        "i_driveFrmLsu"
+      ],
+      "event_outputs": [
+        "o_driveNextToIf",
+        "o_driveNextToLsu"
+      ],
+      "payload_inputs": [
+        "i_ddataW_64",
+        "i_idataW_64"
+      ],
+      "payload_outputs": [
+        "o_ddataR_64",
+        "o_idataR_65"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": [
+      "i_freeNextFrmIf",
+      "i_freeNextFrmLsu"
+    ]
+  },
+  "direct_children": {
+    "modules": [
+      "ROM",
+      "contTap",
+      "sram_128k",
+      "sram_8k"
+    ],
+    "components": [
+      "cFifo2_socmem"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "dcacheTrig",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "dtrigbufFire",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "fire0Up",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "fire1Up",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_daddress_32",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_ddataW_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_driveFrmIf",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFrmLsu",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_dwen_8",
+        "kind": "port_input",
+        "width_text": "[ 7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_freeNextFrmIf",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeNextFrmLsu",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_iaddress_33",
+        "kind": "port_input",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_idataW_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_iwen_8",
+        "kind": "port_input",
+        "width_text": "[ 7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "icacheTrig",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "init_sig",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "itrigbufFire",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_ddataR_64",
+        "kind": "port_output",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_ddataR_tStack_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_ddataR_t_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_driveNextToIf",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveNextToLsu",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_freeToIf",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeToLsu",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_idataR_65",
+        "kind": "port_output",
+        "width_text": "[64:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_idataR_t_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_daddress_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_ddataW_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_dtemp",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_dwen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_iaddrcarry",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_iaddress_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_iaddress_32[11:0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "r_idataW_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_itemp",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_iwen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_stack",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "routeSelect",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "w_dcache",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[10]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[11]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[12]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[13]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[14]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[15]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[1]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[2]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[3]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[4]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[5]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[6]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[7]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[8]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcacheTrigBuf_2[9]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dcache_tap",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_driveFrmIfDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextToIf",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextToIf[0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextToLsu",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveNextToLsu[0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "w_dtemp",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_dtemp[16:3]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_dwen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fireIf",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fireIf[1]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_fireIf_delay",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fireLSU_delay",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fireLSU_tap",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fireLsu",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire_tap",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[10]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[11]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[12]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[13]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[14]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[15]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[1]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[2]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[3]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[4]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[5]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[6]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[7]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[8]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icacheTrigBuf_2[9]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_icache_tap",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_idataROM_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_itemp",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_itemp[16:3]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_stack",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_stemp",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_stemp[12:3]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_swen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "init_sig",
+        "instance_name": "icachemux",
+        "module_type": "CKMUX2M4HM",
+        "port": "S",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icache_tap",
+        "instance_name": "icachemux",
+        "module_type": "CKMUX2M4HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "icachemux",
+        "module_type": "CKMUX2M4HM",
+        "port": "B",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[0]",
+        "instance_name": "icachemux",
+        "module_type": "CKMUX2M4HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[0]",
+        "instance_name": "buf0",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[1]",
+        "instance_name": "buf0",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[1]",
+        "instance_name": "buf1",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[2]",
+        "instance_name": "buf1",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[2]",
+        "instance_name": "buf2",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[3]",
+        "instance_name": "buf2",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[3]",
+        "instance_name": "buf3",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[4]",
+        "instance_name": "buf3",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[4]",
+        "instance_name": "buf4",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[5]",
+        "instance_name": "buf4",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[5]",
+        "instance_name": "buf5",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[6]",
+        "instance_name": "buf5",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[6]",
+        "instance_name": "buf6",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[7]",
+        "instance_name": "buf6",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[7]",
+        "instance_name": "buf7",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[8]",
+        "instance_name": "buf7",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[8]",
+        "instance_name": "buf8",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[9]",
+        "instance_name": "buf8",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[9]",
+        "instance_name": "buf9",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[10]",
+        "instance_name": "buf9",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[10]",
+        "instance_name": "buf10",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[11]",
+        "instance_name": "buf10",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[11]",
+        "instance_name": "buf11",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[12]",
+        "instance_name": "buf11",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[12]",
+        "instance_name": "buf12",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[13]",
+        "instance_name": "buf12",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[13]",
+        "instance_name": "buf13",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[14]",
+        "instance_name": "buf13",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[14]",
+        "instance_name": "buf14",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[15]",
+        "instance_name": "buf14",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_icacheTrigBuf_2[15]",
+        "instance_name": "buf15",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "icacheTrig",
+        "instance_name": "buf15",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fire_tap",
+        "instance_name": "icacheTap",
+        "module_type": "contTap",
+        "port": "trig",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_icache_tap",
+        "instance_name": "icacheTap",
+        "module_type": "contTap",
+        "port": "req",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "icacheTap",
+        "module_type": "contTap",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "init_sig",
+        "instance_name": "dcachemux",
+        "module_type": "CKMUX2M4HM",
+        "port": "S",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcache_tap",
+        "instance_name": "dcachemux",
+        "module_type": "CKMUX2M4HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "dcachemux",
+        "module_type": "CKMUX2M4HM",
+        "port": "B",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[0]",
+        "instance_name": "dcachemux",
+        "module_type": "CKMUX2M4HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[0]",
+        "instance_name": "buf16",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[1]",
+        "instance_name": "buf16",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[1]",
+        "instance_name": "buf17",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[2]",
+        "instance_name": "buf17",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[2]",
+        "instance_name": "buf18",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[3]",
+        "instance_name": "buf18",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[3]",
+        "instance_name": "buf19",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[4]",
+        "instance_name": "buf19",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[4]",
+        "instance_name": "buf20",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[5]",
+        "instance_name": "buf20",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[5]",
+        "instance_name": "buf21",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[6]",
+        "instance_name": "buf21",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[6]",
+        "instance_name": "buf22",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[7]",
+        "instance_name": "buf22",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[7]",
+        "instance_name": "buf23",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[8]",
+        "instance_name": "buf23",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[8]",
+        "instance_name": "buf24",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[9]",
+        "instance_name": "buf24",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[9]",
+        "instance_name": "buf25",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[10]",
+        "instance_name": "buf25",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[10]",
+        "instance_name": "buf26",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[11]",
+        "instance_name": "buf26",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[11]",
+        "instance_name": "buf27",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[12]",
+        "instance_name": "buf27",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[12]",
+        "instance_name": "buf28",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[13]",
+        "instance_name": "buf28",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[13]",
+        "instance_name": "buf29",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[14]",
+        "instance_name": "buf29",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[14]",
+        "instance_name": "buf30",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[15]",
+        "instance_name": "buf30",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_dcacheTrigBuf_2[15]",
+        "instance_name": "buf31",
+        "module_type": "BUFM2HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "dcacheTrig",
+        "instance_name": "buf31",
+        "module_type": "BUFM2HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "w_fireLSU_tap",
+        "instance_name": "dcacheTap",
+        "module_type": "contTap",
+        "port": "trig",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dcache_tap",
+        "instance_name": "dcacheTap",
+        "module_type": "contTap",
+        "port": "req",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "dcacheTap",
+        "module_type": "contTap",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFrmIfDelay_1",
+        "instance_name": "cFifo2_If",
+        "module_type": "cFifo2_socmem",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_fireIf",
+        "instance_name": "cFifo2_If",
+        "module_type": "cFifo2_socmem",
+        "port": "o_fire_2",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cFifo2_If",
+        "module_type": "cFifo2_socmem",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextToIf[0]",
+        "instance_name": "cFifo2_If",
+        "module_type": "cFifo2_socmem",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNextFrmIf",
+        "instance_name": "cFifo2_If",
+        "module_type": "cFifo2_socmem",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_itemp[16:3]",
+        "instance_name": "ICache",
+        "module_type": "sram_128k",
+        "port": "i_addr_14",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_idataW_64",
+        "instance_name": "ICache",
+        "module_type": "sram_128k",
+        "port": "i_data_64",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "icacheTrig",
+        "instance_name": "ICache",
+        "module_type": "sram_128k",
+        "port": "i_sramTrig",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_iwen_8",
+        "instance_name": "ICache",
+        "module_type": "sram_128k",
+        "port": "i_WEB_8",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_idataR_t_64",
+        "instance_name": "ICache",
+        "module_type": "sram_128k",
+        "port": "o_data_64",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_fireIf[1]",
+        "instance_name": "ROM",
+        "module_type": "ROM",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "ROM",
+        "module_type": "ROM",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "r_iaddress_32[11:0]",
+        "instance_name": "ROM",
+        "module_type": "ROM",
+        "port": "i_addr",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_idataROM_64",
+        "instance_name": "ROM",
+        "module_type": "ROM",
+        "port": "o_data",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_driveFrmLsu",
+        "instance_name": "cFifo2_Lsu",
+        "module_type": "cFifo2_socmem",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_fireLsu",
+        "instance_name": "cFifo2_Lsu",
+        "module_type": "cFifo2_socmem",
+        "port": "o_fire_2",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cFifo2_Lsu",
+        "module_type": "cFifo2_socmem",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveNextToLsu[0]",
+        "instance_name": "cFifo2_Lsu",
+        "module_type": "cFifo2_socmem",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNextFrmLsu",
+        "instance_name": "cFifo2_Lsu",
+        "module_type": "cFifo2_socmem",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dtemp[16:3]",
+        "instance_name": "DCache",
+        "module_type": "sram_128k",
+        "port": "i_addr_14",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_ddataW_64",
+        "instance_name": "DCache",
+        "module_type": "sram_128k",
+        "port": "i_data_64",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "dcacheTrig",
+        "instance_name": "DCache",
+        "module_type": "sram_128k",
+        "port": "i_sramTrig",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_dwen_8",
+        "instance_name": "DCache",
+        "module_type": "sram_128k",
+        "port": "i_WEB_8",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_ddataR_t_64",
+        "instance_name": "DCache",
+        "module_type": "sram_128k",
+        "port": "o_data_64",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_stemp[12:3]",
+        "instance_name": "stack",
+        "module_type": "sram_8k",
+        "port": "i_addr_10",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_ddataW_64",
+        "instance_name": "stack",
+        "module_type": "sram_8k",
+        "port": "i_data_64",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "dcacheTrig",
+        "instance_name": "stack",
+        "module_type": "sram_8k",
+        "port": "i_sramTrig",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_swen_8",
+        "instance_name": "stack",
+        "module_type": "sram_8k",
+        "port": "i_WEB_8",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_ddataR_tStack_64",
+        "instance_name": "stack",
+        "module_type": "sram_8k",
+        "port": "o_data_64",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "ROM",
+      "contTap",
+      "sram_128k",
+      "sram_8k"
+    ],
+    "reachable_components": [
+      "cFifo2_socmem"
+    ],
+    "families_used": [
+      "Fifo1"
+    ]
+  },
+  "warnings": []
+}

@@ -1,0 +1,987 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "memory_slot",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/slot/memory_slot.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst_finish",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "UART_INIT_SEL",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "init_sig",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "init_rx",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "init_tx",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_driveFrmLsu",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeToLsu",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_dbus_we",
+        "direction": "input",
+        "width_text": "[ 7:0]"
+      },
+      {
+        "name": "i_dbus_addr",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_dbus_data",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_driveNextToLsu",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeNextFrmLsu",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_dbus_data",
+        "direction": "output",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "i_driveFrmIf",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeToIf",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_ibus_we",
+        "direction": "input",
+        "width_text": "[ 7:0]"
+      },
+      {
+        "name": "i_ibus_addr",
+        "direction": "input",
+        "width_text": "[32:0]"
+      },
+      {
+        "name": "i_ibus_data",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_driveNextToIf",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeNextFrmIf",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_ibus_data",
+        "direction": "output",
+        "width_text": "[64:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "init_sig_temp",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "init_sig_temp2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "memory_ibus_we",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "memory_ibus_addr_i",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "memory_ibus_data_i",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "memory_ibus_data_o",
+      "kind": "wire",
+      "width_text": "[64:0]"
+    },
+    {
+      "name": "memory_dbus_we",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "memory_dbus_addr_i",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "memory_dbus_data_i",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "memory_dbus_data_o",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "init_ibus_we",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "init_ibus_addr",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "init_ibus_data",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "init_dbus_we",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "init_dbus_addr",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "init_dbus_data",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "socmem",
+      "module_type": "socmem",
+      "artifact_kind": "module",
+      "target_ref": "../modules/socmem.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "clk",
+          "signal": "clk&UART_INIT_SEL",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "init_sig",
+          "signal": "init_sig_temp2",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_driveFrmIf",
+          "signal": "i_driveFrmIf",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeToIf",
+          "signal": "o_freeToIf",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNextToIf",
+          "signal": "o_driveNextToIf",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNextFrmIf",
+          "signal": "i_freeNextFrmIf",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_iwen_8",
+          "signal": "memory_ibus_we",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_iaddress_33",
+          "signal": "memory_ibus_addr_i",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_idataW_64",
+          "signal": "memory_ibus_data_i",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_idataR_65",
+          "signal": "memory_ibus_data_o",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_driveFrmLsu",
+          "signal": "i_driveFrmLsu",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_freeToLsu",
+          "signal": "o_freeToLsu",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNextToLsu",
+          "signal": "o_driveNextToLsu",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNextFrmLsu",
+          "signal": "i_freeNextFrmLsu",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_dwen_8",
+          "signal": "memory_dbus_we",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_daddress_32",
+          "signal": "memory_dbus_addr_i",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_ddataW_64",
+          "signal": "memory_dbus_data_i",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_ddataR_64",
+          "signal": "memory_dbus_data_o",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ]
+    },
+    {
+      "instance_name": "u_data_init",
+      "module_type": "data_init",
+      "artifact_kind": "module",
+      "target_ref": "../modules/data_init.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "init_sig",
+          "signal": "init_sig_temp",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "uart_rx",
+          "signal": "init_rx",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "uart_tx",
+          "signal": "init_tx",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "ibus_we",
+          "signal": "init_ibus_we",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "ibus_addr_o",
+          "signal": "init_ibus_addr",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "ibus_data_o",
+          "signal": "init_ibus_data",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "dbus_we",
+          "signal": "init_dbus_we",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "dbus_addr_o",
+          "signal": "init_dbus_addr",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "dbus_data_o",
+          "signal": "init_dbus_data",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [
+        "i_driveFrmIf",
+        "i_driveFrmLsu"
+      ],
+      "event_outputs": [
+        "o_driveNextToIf",
+        "o_driveNextToLsu"
+      ],
+      "payload_inputs": [
+        "i_dbus_data",
+        "i_ibus_data"
+      ],
+      "payload_outputs": [
+        "o_dbus_data",
+        "o_ibus_data"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": [
+      "i_freeNextFrmIf",
+      "i_freeNextFrmLsu"
+    ]
+  },
+  "direct_children": {
+    "modules": [
+      "data_init",
+      "socmem"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "UART_INIT_SEL",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "clk&UART_INIT_SEL",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "i_dbus_addr",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_dbus_data",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_dbus_we",
+        "kind": "port_input",
+        "width_text": "[ 7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_driveFrmIf",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveFrmLsu",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_freeNextFrmIf",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeNextFrmLsu",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_ibus_addr",
+        "kind": "port_input",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_ibus_data",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_ibus_we",
+        "kind": "port_input",
+        "width_text": "[ 7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "init_dbus_addr",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "init_dbus_data",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "init_dbus_we",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "init_ibus_addr",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "init_ibus_data",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "init_ibus_we",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "init_rx",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "init_sig",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "init_sig_temp",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "init_sig_temp2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "init_tx",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "memory_dbus_addr_i",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "memory_dbus_data_i",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "memory_dbus_data_o",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "memory_dbus_we",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "memory_ibus_addr_i",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "memory_ibus_data_i",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "memory_ibus_data_o",
+        "kind": "local_signal",
+        "width_text": "[64:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "memory_ibus_we",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_dbus_data",
+        "kind": "port_output",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_driveNextToIf",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveNextToLsu",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_freeToIf",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeToLsu",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_ibus_data",
+        "kind": "port_output",
+        "width_text": "[64:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "rst_finish",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "rst",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "clk&UART_INIT_SEL",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "init_sig_temp2",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "init_sig",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_driveFrmIf",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_driveFrmIf",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeToIf",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "o_freeToIf",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNextToIf",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "o_driveNextToIf",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNextFrmIf",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_freeNextFrmIf",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "memory_ibus_we",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_iwen_8",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "memory_ibus_addr_i",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_iaddress_33",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "memory_ibus_data_i",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_idataW_64",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "memory_ibus_data_o",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "o_idataR_65",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_driveFrmLsu",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_driveFrmLsu",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_freeToLsu",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "o_freeToLsu",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNextToLsu",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "o_driveNextToLsu",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNextFrmLsu",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_freeNextFrmLsu",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "memory_dbus_we",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_dwen_8",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "memory_dbus_addr_i",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_daddress_32",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "memory_dbus_data_i",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "i_ddataW_64",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "memory_dbus_data_o",
+        "instance_name": "socmem",
+        "module_type": "socmem",
+        "port": "o_ddataR_64",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "init_sig_temp",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "init_sig",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "init_rx",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "uart_rx",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "init_tx",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "uart_tx",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "init_ibus_we",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "ibus_we",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "init_ibus_addr",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "ibus_addr_o",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "init_ibus_data",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "ibus_data_o",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "init_dbus_we",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "dbus_we",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "init_dbus_addr",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "dbus_addr_o",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "init_dbus_data",
+        "instance_name": "u_data_init",
+        "module_type": "data_init",
+        "port": "dbus_data_o",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "ROM",
+      "contTap",
+      "data_init",
+      "socmem",
+      "sram_128k",
+      "sram_8k",
+      "uart_rx",
+      "uart_tx"
+    ],
+    "reachable_components": [
+      "cFifo2_socmem"
+    ],
+    "families_used": [
+      "Fifo1"
+    ]
+  },
+  "warnings": []
+}

@@ -1,0 +1,756 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "data_init",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/memory/data_init.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "uart_rx",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "uart_tx",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "init_sig",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "ibus_we",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "ibus_addr_o",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "ibus_data_o",
+        "direction": "output",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "dbus_we",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "dbus_addr_o",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "dbus_data_o",
+        "direction": "output",
+        "width_text": "[63:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "r_ibus_we",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_ibus_addr_o",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_ibus_data_o",
+      "kind": "reg",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "r_dbus_we",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_dbus_addr_o",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_dbus_data_o",
+      "kind": "reg",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "tx_data",
+      "kind": "reg",
+      "width_text": "[ 7:0]"
+    },
+    {
+      "name": "tx_data_valid",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "tx_data_ready",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "rx_data",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "rx_data_valid",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "c_state",
+      "kind": "reg",
+      "width_text": "[17:0]"
+    },
+    {
+      "name": "n_state",
+      "kind": "reg",
+      "width_text": "[17:0]"
+    },
+    {
+      "name": "d_finish",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_finish",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "data",
+      "kind": "reg",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "count",
+      "kind": "reg",
+      "width_text": "[ 7:0]"
+    },
+    {
+      "name": "addr_i",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "addr_d",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "cnt_s",
+      "kind": "reg",
+      "width_text": "[ 9:0]"
+    },
+    {
+      "name": "addr_s",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "valid",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "number",
+      "kind": "reg",
+      "width_text": "[ 5:0]"
+    },
+    {
+      "name": "first",
+      "kind": "reg",
+      "width_text": "[ 15:0]"
+    },
+    {
+      "name": "size",
+      "kind": "reg",
+      "width_text": "[ 9:0]"
+    },
+    {
+      "name": "crc_data",
+      "kind": "reg",
+      "width_text": "[ 7:0]"
+    },
+    {
+      "name": "rec_bytes_index",
+      "kind": "reg",
+      "width_text": "[ 7:0]"
+    },
+    {
+      "name": "need_to_rec_bytes",
+      "kind": "reg",
+      "width_text": "[ 7:0]"
+    },
+    {
+      "name": "crc_result",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "crc_bit_index",
+      "kind": "reg",
+      "width_text": "[ 3:0]"
+    },
+    {
+      "name": "crc_byte_index",
+      "kind": "reg",
+      "width_text": "[ 7:0]"
+    },
+    {
+      "name": "r_crc_16",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "r_init_1",
+      "kind": "reg",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "uart_rx_inst",
+      "module_type": "uart_rx",
+      "artifact_kind": "module",
+      "target_ref": "../modules/uart_rx.json",
+      "parameter_overrides": {
+        "CLK_FRE": "25",
+        "BAUD_RATE": "115200"
+      },
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "rx_data",
+          "signal": "rx_data",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "rx_data_valid",
+          "signal": "rx_data_valid",
+          "port_direction": "output",
+          "signal_role": "condition"
+        },
+        {
+          "port": "rx_data_ready",
+          "signal": "1'b1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rx_pin",
+          "signal": "uart_rx",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "uart_tx_inst",
+      "module_type": "uart_tx",
+      "artifact_kind": "module",
+      "target_ref": "../modules/uart_tx.json",
+      "parameter_overrides": {
+        "CLK_FRE": "25",
+        "BAUD_RATE": "115200"
+      },
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "tx_data",
+          "signal": "tx_data",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "tx_data_valid",
+          "signal": "tx_data_valid",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "tx_data_ready",
+          "signal": "tx_data_ready",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "tx_pin",
+          "signal": "uart_tx",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [
+        "dbus_data_o",
+        "ibus_data_o"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [
+      "uart_rx",
+      "uart_tx"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "1'b1",
+        "kind": "implicit_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "addr_d",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "addr_i",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "addr_s",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "c_state",
+        "kind": "local_signal",
+        "width_text": "[17:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "cnt_s",
+        "kind": "local_signal",
+        "width_text": "[ 9:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "count",
+        "kind": "local_signal",
+        "width_text": "[ 7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "crc_bit_index",
+        "kind": "local_signal",
+        "width_text": "[ 3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "crc_byte_index",
+        "kind": "local_signal",
+        "width_text": "[ 7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "crc_data",
+        "kind": "local_signal",
+        "width_text": "[ 7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "crc_result",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "d_finish",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "data",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "dbus_addr_o",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "dbus_data_o",
+        "kind": "port_output",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "dbus_we",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "first",
+        "kind": "local_signal",
+        "width_text": "[ 15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "ibus_addr_o",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "ibus_data_o",
+        "kind": "port_output",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "ibus_we",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "init_sig",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "n_state",
+        "kind": "local_signal",
+        "width_text": "[17:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "need_to_rec_bytes",
+        "kind": "local_signal",
+        "width_text": "[ 7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "number",
+        "kind": "local_signal",
+        "width_text": "[ 5:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_crc_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_dbus_addr_o",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_dbus_data_o",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_dbus_we",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_ibus_addr_o",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_ibus_data_o",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_ibus_we",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_init_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rec_bytes_index",
+        "kind": "local_signal",
+        "width_text": "[ 7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "rx_data",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "rx_data_valid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "size",
+        "kind": "local_signal",
+        "width_text": "[ 9:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "tx_data",
+        "kind": "local_signal",
+        "width_text": "[ 7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "tx_data_ready",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "tx_data_valid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "uart_rx",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "uart_tx",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "valid",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "w_finish",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "clk",
+        "instance_name": "uart_rx_inst",
+        "module_type": "uart_rx",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "uart_rx_inst",
+        "module_type": "uart_rx",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rx_data",
+        "instance_name": "uart_rx_inst",
+        "module_type": "uart_rx",
+        "port": "rx_data",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rx_data_valid",
+        "instance_name": "uart_rx_inst",
+        "module_type": "uart_rx",
+        "port": "rx_data_valid",
+        "port_direction": "output",
+        "signal_role": "condition",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "1'b1",
+        "instance_name": "uart_rx_inst",
+        "module_type": "uart_rx",
+        "port": "rx_data_ready",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "uart_rx",
+        "instance_name": "uart_rx_inst",
+        "module_type": "uart_rx",
+        "port": "rx_pin",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "uart_tx_inst",
+        "module_type": "uart_tx",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "uart_tx_inst",
+        "module_type": "uart_tx",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "tx_data",
+        "instance_name": "uart_tx_inst",
+        "module_type": "uart_tx",
+        "port": "tx_data",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "tx_data_valid",
+        "instance_name": "uart_tx_inst",
+        "module_type": "uart_tx",
+        "port": "tx_data_valid",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "tx_data_ready",
+        "instance_name": "uart_tx_inst",
+        "module_type": "uart_tx",
+        "port": "tx_data_ready",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "uart_tx",
+        "instance_name": "uart_tx_inst",
+        "module_type": "uart_tx",
+        "port": "tx_pin",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "uart_rx",
+      "uart_tx"
+    ],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

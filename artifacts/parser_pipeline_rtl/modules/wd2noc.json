@@ -1,0 +1,1508 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "wd2noc",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/IONet/Watchdog/wd2noc.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "i_drive",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_msg",
+        "direction": "input",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "Noc_RES",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst_finish",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_free",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "wd_clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_free",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_drive",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_msg",
+        "direction": "output",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "o_RES",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_INT",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "pclk",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "penable",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "psel",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "paddr",
+      "kind": "reg",
+      "width_text": "[11:2]"
+    },
+    {
+      "name": "pwrite",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "pwdata",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "wdogclken",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "wdogresn",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "ecorevnum",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "prdata",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "wdogint",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "wdogres",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "fire",
+      "kind": "wire",
+      "width_text": "[6:0]"
+    },
+    {
+      "name": "fifo_end",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "o_driveNext",
+      "kind": "wire",
+      "width_text": "[5:0]"
+    },
+    {
+      "name": "i_freeNext",
+      "kind": "wire",
+      "width_text": "[5:0]"
+    },
+    {
+      "name": "counter",
+      "kind": "reg",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "i_msg_reg",
+      "kind": "reg",
+      "width_text": "[50:0]"
+    },
+    {
+      "name": "o_msg_reg",
+      "kind": "reg",
+      "width_text": "[50:0]"
+    },
+    {
+      "name": "o_res_sync1",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "o_res_sync2",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "pluse",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "pluse_level",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "pluse_level_1",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "pluse_level_11",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "rise",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "fifo0",
+      "module_type": "cFifo1_pwm",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_pwm.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "Noc_RES",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drive",
+          "signal": "rise",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free",
+          "signal": "o_free",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_driveNext[0]",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNext[0]",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire_1",
+          "signal": "fire[0]",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "fifo1",
+      "module_type": "cFifo1_pwm",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_pwm.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "Noc_RES",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drive",
+          "signal": "o_driveNext[0]",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "i_freeNext[0]",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_driveNext[1]",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNext[1]",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire_1",
+          "signal": "fire[1]",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "fifo2",
+      "module_type": "cFifo1_pwm",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_pwm.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "Noc_RES",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drive",
+          "signal": "o_driveNext[1]",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "i_freeNext[1]",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_driveNext[2]",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNext[2]",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire_1",
+          "signal": "fire[2]",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "fifo3",
+      "module_type": "cFifo1_pwm",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_pwm.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "Noc_RES",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drive",
+          "signal": "o_driveNext[2]",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "i_freeNext[2]",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_driveNext[3]",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNext[3]",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire_1",
+          "signal": "fire[3]",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "fifo4",
+      "module_type": "cFifo1_pwm",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_pwm.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "Noc_RES",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drive",
+          "signal": "o_driveNext[3]",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "i_freeNext[3]",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_driveNext[4]",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNext[4]",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire_1",
+          "signal": "fire[4]",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "fifo5",
+      "module_type": "cFifo1_pwm",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_pwm.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "Noc_RES",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drive",
+          "signal": "o_driveNext[4]",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "i_freeNext[4]",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_driveNext[5]",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNext[5]",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire_1",
+          "signal": "fire[5]",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "fifo6",
+      "module_type": "cFifo1_pwm",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1_pwm.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "rst",
+          "signal": "Noc_RES",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drive",
+          "signal": "o_driveNext[5]",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_free",
+          "signal": "i_freeNext[5]",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_drive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_free",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_fire_1",
+          "signal": "fire[6]",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "utt_wd",
+      "module_type": "cmsdk_apb_watchdog",
+      "artifact_kind": "module",
+      "target_ref": "../modules/cmsdk_apb_watchdog.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "PCLK",
+          "signal": "pclk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PRESETn",
+          "signal": "rst_finish",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PENABLE",
+          "signal": "penable",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PSEL",
+          "signal": "psel",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PADDR",
+          "signal": "paddr",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PWRITE",
+          "signal": "pwrite",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PWDATA",
+          "signal": "pwdata",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "WDOGCLK",
+          "signal": "wd_clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "WDOGCLKEN",
+          "signal": "wdogclken",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "WDOGRESn",
+          "signal": "wdogresn",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "ECOREVNUM",
+          "signal": "ecorevnum",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PRDATA",
+          "signal": "prdata",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "WDOGINT",
+          "signal": "wdogint",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "WDOGRES",
+          "signal": "wdogres",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [
+        "i_drive"
+      ],
+      "event_outputs": [
+        "o_drive"
+      ],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": [
+      "i_free"
+    ]
+  },
+  "direct_children": {
+    "modules": [
+      "cmsdk_apb_watchdog"
+    ],
+    "components": [
+      "cFifo1_pwm"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "Noc_RES",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "counter",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "ecorevnum",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "fifo_end",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "fire",
+        "kind": "local_signal",
+        "width_text": "[6:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "fire[0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "fire[1]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "fire[2]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "fire[3]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "fire[4]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "fire[5]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "fire[6]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "i_drive",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_free",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeNext",
+        "kind": "local_signal",
+        "width_text": "[5:0]",
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeNext[0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeNext[1]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeNext[2]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeNext[3]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeNext[4]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_freeNext[5]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_free"
+      },
+      {
+        "name": "i_msg",
+        "kind": "port_input",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_msg_reg",
+        "kind": "local_signal",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_INT",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_RES",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_drive",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveNext",
+        "kind": "local_signal",
+        "width_text": "[5:0]",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveNext[0]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveNext[1]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveNext[2]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveNext[3]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveNext[4]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_driveNext[5]",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "o_free",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_msg",
+        "kind": "port_output",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_msg_reg",
+        "kind": "local_signal",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_res_sync1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_res_sync2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "paddr",
+        "kind": "local_signal",
+        "width_text": "[11:2]",
+        "role": "unknown"
+      },
+      {
+        "name": "pclk",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "penable",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "pluse",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "pluse_level",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "pluse_level_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "pluse_level_11",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "prdata",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "psel",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "pwdata",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "pwrite",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rise",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rst_finish",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wd_clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdogclken",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdogint",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdogres",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "wdogresn",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "Noc_RES",
+        "instance_name": "fifo0",
+        "module_type": "cFifo1_pwm",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rise",
+        "instance_name": "fifo0",
+        "module_type": "cFifo1_pwm",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_free",
+        "instance_name": "fifo0",
+        "module_type": "cFifo1_pwm",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNext[0]",
+        "instance_name": "fifo0",
+        "module_type": "cFifo1_pwm",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNext[0]",
+        "instance_name": "fifo0",
+        "module_type": "cFifo1_pwm",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "fire[0]",
+        "instance_name": "fifo0",
+        "module_type": "cFifo1_pwm",
+        "port": "o_fire_1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "Noc_RES",
+        "instance_name": "fifo1",
+        "module_type": "cFifo1_pwm",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveNext[0]",
+        "instance_name": "fifo1",
+        "module_type": "cFifo1_pwm",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeNext[0]",
+        "instance_name": "fifo1",
+        "module_type": "cFifo1_pwm",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNext[1]",
+        "instance_name": "fifo1",
+        "module_type": "cFifo1_pwm",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNext[1]",
+        "instance_name": "fifo1",
+        "module_type": "cFifo1_pwm",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "fire[1]",
+        "instance_name": "fifo1",
+        "module_type": "cFifo1_pwm",
+        "port": "o_fire_1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "Noc_RES",
+        "instance_name": "fifo2",
+        "module_type": "cFifo1_pwm",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveNext[1]",
+        "instance_name": "fifo2",
+        "module_type": "cFifo1_pwm",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeNext[1]",
+        "instance_name": "fifo2",
+        "module_type": "cFifo1_pwm",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNext[2]",
+        "instance_name": "fifo2",
+        "module_type": "cFifo1_pwm",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNext[2]",
+        "instance_name": "fifo2",
+        "module_type": "cFifo1_pwm",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "fire[2]",
+        "instance_name": "fifo2",
+        "module_type": "cFifo1_pwm",
+        "port": "o_fire_1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "Noc_RES",
+        "instance_name": "fifo3",
+        "module_type": "cFifo1_pwm",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveNext[2]",
+        "instance_name": "fifo3",
+        "module_type": "cFifo1_pwm",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeNext[2]",
+        "instance_name": "fifo3",
+        "module_type": "cFifo1_pwm",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNext[3]",
+        "instance_name": "fifo3",
+        "module_type": "cFifo1_pwm",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNext[3]",
+        "instance_name": "fifo3",
+        "module_type": "cFifo1_pwm",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "fire[3]",
+        "instance_name": "fifo3",
+        "module_type": "cFifo1_pwm",
+        "port": "o_fire_1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "Noc_RES",
+        "instance_name": "fifo4",
+        "module_type": "cFifo1_pwm",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveNext[3]",
+        "instance_name": "fifo4",
+        "module_type": "cFifo1_pwm",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeNext[3]",
+        "instance_name": "fifo4",
+        "module_type": "cFifo1_pwm",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNext[4]",
+        "instance_name": "fifo4",
+        "module_type": "cFifo1_pwm",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNext[4]",
+        "instance_name": "fifo4",
+        "module_type": "cFifo1_pwm",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "fire[4]",
+        "instance_name": "fifo4",
+        "module_type": "cFifo1_pwm",
+        "port": "o_fire_1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "Noc_RES",
+        "instance_name": "fifo5",
+        "module_type": "cFifo1_pwm",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveNext[4]",
+        "instance_name": "fifo5",
+        "module_type": "cFifo1_pwm",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeNext[4]",
+        "instance_name": "fifo5",
+        "module_type": "cFifo1_pwm",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNext[5]",
+        "instance_name": "fifo5",
+        "module_type": "cFifo1_pwm",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeNext[5]",
+        "instance_name": "fifo5",
+        "module_type": "cFifo1_pwm",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "fire[5]",
+        "instance_name": "fifo5",
+        "module_type": "cFifo1_pwm",
+        "port": "o_fire_1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "Noc_RES",
+        "instance_name": "fifo6",
+        "module_type": "cFifo1_pwm",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_driveNext[5]",
+        "instance_name": "fifo6",
+        "module_type": "cFifo1_pwm",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeNext[5]",
+        "instance_name": "fifo6",
+        "module_type": "cFifo1_pwm",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_drive",
+        "instance_name": "fifo6",
+        "module_type": "cFifo1_pwm",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_free",
+        "instance_name": "fifo6",
+        "module_type": "cFifo1_pwm",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "fire[6]",
+        "instance_name": "fifo6",
+        "module_type": "cFifo1_pwm",
+        "port": "o_fire_1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "pclk",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "PCLK",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_finish",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "PRESETn",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "penable",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "PENABLE",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "psel",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "PSEL",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "paddr",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "PADDR",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "pwrite",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "PWRITE",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "pwdata",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "PWDATA",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "wd_clk",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "WDOGCLK",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "wdogclken",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "WDOGCLKEN",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "wdogresn",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "WDOGRESn",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "ecorevnum",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "ECOREVNUM",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "prdata",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "PRDATA",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "wdogint",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "WDOGINT",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "wdogres",
+        "instance_name": "utt_wd",
+        "module_type": "cmsdk_apb_watchdog",
+        "port": "WDOGRES",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "cmsdk_apb_watchdog",
+      "cmsdk_apb_watchdog_frc"
+    ],
+    "reachable_components": [
+      "cFifo1_pwm"
+    ],
+    "families_used": [
+      "Fifo1"
+    ]
+  },
+  "warnings": []
+}

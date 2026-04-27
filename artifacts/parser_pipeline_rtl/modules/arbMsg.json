@@ -1,0 +1,464 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "arbMsg",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/IONet/IONetwork_9.24/arbMsg.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_driveWest",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeWest",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_westMsg_51",
+        "direction": "input",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "i_driveEast",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeEast",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_eastMsg_51",
+        "direction": "input",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "i_driveNorth",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeNorth",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_northMsg_51",
+        "direction": "input",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "i_driveSouth",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeSouth",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_southMsg_51",
+        "direction": "input",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "i_driveLocal",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_freeLocal",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_localMsg_51",
+        "direction": "input",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "o_driveNext",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeNext",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_msg_51",
+        "direction": "output",
+        "width_text": "[50:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [],
+  "instances": [
+    {
+      "instance_name": "arbMerge",
+      "module_type": "cArbMerge5_51b",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cArbMerge5_51b.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive_5",
+          "signal": "{i_driveLocal,i_driveSouth,i_driveNorth,i_driveEast,i_driveWest}",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data0",
+          "signal": "i_westMsg_51",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data1",
+          "signal": "i_eastMsg_51",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data2",
+          "signal": "i_northMsg_51",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data3",
+          "signal": "i_southMsg_51",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data4",
+          "signal": "i_localMsg_51",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeNext",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free_5",
+          "signal": "{o_freeLocal,o_freeSouth,o_freeNorth,o_freeEast,o_freeWest}",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_driveNext",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data",
+          "signal": "o_msg_51",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "ArbMerge"
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [
+        "i_driveEast",
+        "i_driveLocal",
+        "i_driveNorth",
+        "i_driveSouth",
+        "i_driveWest"
+      ],
+      "event_outputs": [
+        "o_driveNext"
+      ],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": [
+      "i_freeNext"
+    ]
+  },
+  "direct_children": {
+    "modules": [],
+    "components": [
+      "cArbMerge5_51b"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_driveEast",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveLocal",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveNorth",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveSouth",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_driveWest",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_eastMsg_51",
+        "kind": "port_input",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_freeNext",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_localMsg_51",
+        "kind": "port_input",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_northMsg_51",
+        "kind": "port_input",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_southMsg_51",
+        "kind": "port_input",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_westMsg_51",
+        "kind": "port_input",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_driveNext",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_freeEast",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeLocal",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeNorth",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeSouth",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_freeWest",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_msg_51",
+        "kind": "port_output",
+        "width_text": "[50:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "{i_driveLocal,i_driveSouth,i_driveNorth,i_driveEast,i_driveWest}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_drive"
+      },
+      {
+        "name": "{o_freeLocal,o_freeSouth,o_freeNorth,o_freeEast,o_freeWest}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "event_free"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "{i_driveLocal,i_driveSouth,i_driveNorth,i_driveEast,i_driveWest}",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "i_drive_5",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_westMsg_51",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "i_data0",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_eastMsg_51",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "i_data1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_northMsg_51",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "i_data2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_southMsg_51",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "i_data3",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_localMsg_51",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "i_data4",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_freeNext",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{o_freeLocal,o_freeSouth,o_freeNorth,o_freeEast,o_freeWest}",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "o_free_5",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_driveNext",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_msg_51",
+        "instance_name": "arbMerge",
+        "module_type": "cArbMerge5_51b",
+        "port": "o_data",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [
+      "cArbMerge5_51b"
+    ],
+    "families_used": [
+      "ArbMerge"
+    ]
+  },
+  "warnings": []
+}

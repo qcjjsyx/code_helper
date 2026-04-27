@@ -1,0 +1,205 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "contTap",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/Control/base/contTap.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "trig",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "req",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "reqNeg",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "inv6",
+      "module_type": "INVM0HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "A",
+          "signal": "req",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "Z",
+          "signal": "reqNeg",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "ffState",
+      "module_type": "DFQRM2HM",
+      "artifact_kind": "external_dependency",
+      "target_ref": null,
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "D",
+          "signal": "reqNeg",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CK",
+          "signal": "trig",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RB",
+          "signal": "rst",
+          "port_direction": "unknown",
+          "signal_role": "reset"
+        },
+        {
+          "port": "Q",
+          "signal": "req",
+          "port_direction": "unknown",
+          "signal_role": "unknown"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "req",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "reqNeg",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "trig",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "req",
+        "instance_name": "inv6",
+        "module_type": "INVM0HM",
+        "port": "A",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "reqNeg",
+        "instance_name": "inv6",
+        "module_type": "INVM0HM",
+        "port": "Z",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "reqNeg",
+        "instance_name": "ffState",
+        "module_type": "DFQRM2HM",
+        "port": "D",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "trig",
+        "instance_name": "ffState",
+        "module_type": "DFQRM2HM",
+        "port": "CK",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "ffState",
+        "module_type": "DFQRM2HM",
+        "port": "RB",
+        "port_direction": "unknown",
+        "signal_role": "reset",
+        "edge_kind": "bidirectional"
+      },
+      {
+        "signal": "req",
+        "instance_name": "ffState",
+        "module_type": "DFQRM2HM",
+        "port": "Q",
+        "port_direction": "unknown",
+        "signal_role": "unknown",
+        "edge_kind": "bidirectional"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

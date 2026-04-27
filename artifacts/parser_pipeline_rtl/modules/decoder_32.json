@@ -1,0 +1,2888 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "decoder_32",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/Decode/decoder_32.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "i_drive",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_data_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_free",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_drive",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_data_187",
+        "direction": "output",
+        "width_text": "[186:0]"
+      },
+      {
+        "name": "o_excNum_4",
+        "direction": "output",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "i_free",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_blImm9_9",
+        "direction": "output",
+        "width_text": "[8:0]"
+      },
+      {
+        "name": "o_nzcvWen_4",
+        "direction": "output",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_int_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_pc_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_int1_16",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_int2_16",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_isImm_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_xt_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_op_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_op_7",
+      "kind": "wire",
+      "width_text": "[6:0]"
+    },
+    {
+      "name": "w_rn_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_rm_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_rd_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_rdLo_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_S_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_addType_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_imm_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_imm_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_imm_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_imm_12",
+      "kind": "wire",
+      "width_text": "[11:0]"
+    },
+    {
+      "name": "w_LoadAndStoreImm_12",
+      "kind": "wire",
+      "width_text": "[11:0]"
+    },
+    {
+      "name": "w_imm_16",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_immToLaunch_16",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_shift_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_shift_3",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "w_satOrLsbit_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_widthm1_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_op1_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_op2_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_op3_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_funct_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_isShitf_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_isPC_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_isXt_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_isMultiLS_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_dataProConstantShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_dataProModifImm12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_LSreg_list_16",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_regControlShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_adcMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_addMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_andMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_bicMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_cmnMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_cmpMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_eorMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_movMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mvnMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ornMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_orrMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rsbMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_sbcMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_subMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_teqMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_tstMI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_aluWritePC_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_add_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_alignAndAdd_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_shiftAdd_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mulAdd_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_onlyMul_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_onlyDiv_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_onlyAnd_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_onlyEor_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_onlyOr_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_shiftAnd_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_shiftEor_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_shiftOr_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_onlyShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_shiftSatQ_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_hsbAdd_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_onlyRev_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_addPI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_subPI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_adrAddPI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_adrSubP12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_dataProPlainImm12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_movtPI16_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_movPI16_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_movePlainImm16_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_bfc_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_bfi_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_sbfx_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ssatLSL_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ssatASR_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ubfx_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_usatLSL_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_usatASR_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_bitdieldAndSaturate_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_bitdield_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_saturate_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_adcRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_addRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_addAluPC_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_andRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_bicRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_cmnRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_cmpRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_eorRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mvnRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ornRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_orrRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rsbRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_sbcRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_subRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_teqRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_tstRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_shiftImm5_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_dataProceConsShiftImm_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_movRConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_movAluWritePC_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lslI5ConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lsrI5ConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_asrI5ConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rorI5ConsShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rrx_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lslRContShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lsrRContShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_asrRContShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rorRShift_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_sxtb_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_uxtb_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_sxth_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_uxth_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_otherThereReg_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_clz_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rbit_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rev_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rev16_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_revsh_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mulAndSum32_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mla_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mls_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mul_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mul64_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_div64_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_smull_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_sdiv_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_umull_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_udiv_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_smlal_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_umlal_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_isLS_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadStoreI12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadStoreI8_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadStoreR_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadStoreI_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadAndStoreSingle_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadStoreWidth_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_load_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_store_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_U_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_P_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_W_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_SU_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_SP_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_SW_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_RU_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_RP_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_RW_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldrdStrdI8_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldrexStrexI8_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldrStrExb_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldrStrExh_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_tbb_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_tbh_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadStoreDouble_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldrStrEx_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_DP_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_DU_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_DW_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldmdb_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_stmdb_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_stmia_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_push_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldmia_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_pop_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_cB_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ucB_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_bl_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mrs_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_msr_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_return_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_B_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_cond_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_isSportInt",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_I1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_I2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_blImm9_9",
+      "kind": "wire",
+      "width_text": "[8:0]"
+    },
+    {
+      "name": "w_imm2_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_imm5_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_imm8_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_imm12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_imm16_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_imm3_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_imm7_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_imm11_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_immZero_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_immSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_immDecode_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_immThumb_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_immExtType_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_immType_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_thumbExpandRor_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rnNot_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rmNot_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_immNot_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_opNot_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rnOp1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rmOp1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rmOp2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rnOp3",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_immOp3",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_writeRd_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_wen_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_rd11to8_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rt15to12_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_sRs_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_sRd_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_add5_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_add64_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_addCarry_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_addC0_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_addC1_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_addC_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_shiftC_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_revType_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_satSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mulDivSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_mulDivType_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_xtSize_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_xtSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rorType_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_rrxType_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ror_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lslType_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lsrType_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_asrType_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_insType_16",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "w_cbz_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_cbnz_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_bx_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_blx_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_pushPopReg_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_grfFlag_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_DecoderDataToLaunch_187",
+      "kind": "wire",
+      "width_text": "[186:0]"
+    },
+    {
+      "name": "w_notUpdateV_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_notUpdatCandV_1",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [
+        "i_drive"
+      ],
+      "event_outputs": [
+        "o_drive"
+      ],
+      "payload_inputs": [
+        "i_data_64"
+      ],
+      "payload_outputs": [
+        "o_data_187"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": [
+      "i_free"
+    ]
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_data_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_drive",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "i_free",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_blImm9_9",
+        "kind": "port_output",
+        "width_text": "[8:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_data_187",
+        "kind": "port_output",
+        "width_text": "[186:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_drive",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_excNum_4",
+        "kind": "port_output",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_free",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_nzcvWen_4",
+        "kind": "port_output",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "w_B_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_DP_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_DU_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_DW_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_DecoderDataToLaunch_187",
+        "kind": "local_signal",
+        "width_text": "[186:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_I1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_I2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_LSreg_list_16",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_LoadAndStoreImm_12",
+        "kind": "local_signal",
+        "width_text": "[11:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_P_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_RP_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_RU_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_RW_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_SP_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_SU_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_SW_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_S_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_U_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_W_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adcMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adcRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_add5_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_add64_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addAluPC_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addC0_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addC1_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addC_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addCarry_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addPI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_addType_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_add_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adrAddPI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adrSubP12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_alignAndAdd_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_aluWritePC_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_andMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_andRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_asrI5ConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_asrRContShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_asrType_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bfc_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bfi_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bicMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bicRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bitdieldAndSaturate_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bitdield_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_blImm9_9",
+        "kind": "local_signal",
+        "width_text": "[8:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bl_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_blx_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_bx_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_cB_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_cbnz_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_cbz_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_clz_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_cmnMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_cmnRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_cmpMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_cmpRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_cond_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_dataProConstantShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataProModifImm12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataProPlainImm12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_dataProceConsShiftImm_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_div64_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_eorMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_eorRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_funct_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_grfFlag_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_hsbAdd_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm11_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm16_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm2_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm3_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm5_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm7_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm8_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_immDecode_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_immExtType_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_immNot_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_immOp3",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_immSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_immThumb_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_immToLaunch_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_immType_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_immZero_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm_12",
+        "kind": "local_signal",
+        "width_text": "[11:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_imm_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_insType_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_int1_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_int2_16",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_int_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_isImm_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_isLS_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_isMultiLS_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_isPC_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_isShitf_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_isSportInt",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_isXt_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldmdb_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldmia_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldrStrEx_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldrStrExb_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldrStrExh_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldrdStrdI8_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldrexStrexI8_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadAndStoreSingle_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadStoreDouble_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadStoreI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadStoreI8_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadStoreI_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadStoreR_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadStoreWidth_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_load_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lslI5ConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lslRContShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lslType_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lsrI5ConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lsrRContShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lsrType_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mla_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mls_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_movAluWritePC_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_movMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_movPI16_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_movRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_movePlainImm16_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_movtPI16_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mrs_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_msr_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mul64_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mulAdd_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mulAndSum32_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mulDivSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mulDivType_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mul_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mvnMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_mvnRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_notUpdatCandV_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_notUpdateV_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_onlyAnd_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_onlyDiv_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_onlyEor_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_onlyMul_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_onlyOr_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_onlyRev_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_onlyShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_op1_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_op2_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_op3_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_opNot_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_op_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_op_7",
+        "kind": "local_signal",
+        "width_text": "[6:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ornMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ornRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_orrMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_orrRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_otherThereReg_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_pc_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_pop_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_pushPopReg_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_push_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rbit_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rd11to8_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rdLo_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rd_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_regControlShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_return_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rev16_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_revType_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rev_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_revsh_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rmNot_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rmOp1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rmOp2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rm_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rnNot_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rnOp1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rnOp3",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rn_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rorI5ConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rorRShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rorType_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ror_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rrxType_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rrx_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rsbMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rsbRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rt15to12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sRd_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sRs_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_satOrLsbit_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_satSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_saturate_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sbcMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sbcRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sbfx_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sdiv_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shiftAdd_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shiftAnd_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shiftC_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shiftEor_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shiftImm5_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shiftOr_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shiftSatQ_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shift_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shift_3",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_smlal_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_smull_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ssatASR_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ssatLSL_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_stmdb_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_stmia_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_store_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_subMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_subPI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_subRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sxtb_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sxth_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_tbb_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_tbh_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_teqMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_teqRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_thumbExpandRor_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_tstMI12_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_tstRConsShift_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ubfx_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ucB_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_udiv_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_umlal_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_umull_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_usatASR_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_usatLSL_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_uxtb_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_uxth_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_wen_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_widthm1_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_writeRd_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_xtSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_xtSize_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_xt_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

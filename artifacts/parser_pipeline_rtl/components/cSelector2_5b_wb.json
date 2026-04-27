@@ -1,0 +1,128 @@
+{
+  "schema": "parser_pipeline_component",
+  "schema_version": "1.0",
+  "name": "cSelector2_5b_wb",
+  "artifact_kind": "derived_component",
+  "family": "SelSplit",
+  "file": "test_data/rtl/WB/cSelector2_5b_wb.v",
+  "template_source": "parser/schemas/json_templates/family_level.json",
+  "interface": {
+    "params": {},
+    "ports": [
+      {
+        "name": "i_drive",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_data_5",
+        "direction": "input",
+        "width_text": "[4:0]"
+      },
+      {
+        "name": "o_free",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_driveNext0",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeNext0",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_data0_4",
+        "direction": "output",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "o_driveNext1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_data1_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeNext1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "role_mapping": {
+    "upstream": {
+      "ports": [
+        "i_drive",
+        "o_free"
+      ]
+    },
+    "downstream": {
+      "ports": [
+        "o_driveNext0",
+        "o_driveNext1",
+        "i_freeNext0",
+        "i_freeNext1"
+      ]
+    },
+    "payload": {
+      "ports": [
+        "i_data_5",
+        "o_data0_4",
+        "o_data1_1"
+      ]
+    },
+    "fire": {
+      "ports": []
+    }
+  },
+  "contract": {
+    "invariants": [
+      "There is exactly one upstream event driver (i_drive role) and one upstream release (o_free role).",
+      "There are NUM_PORTS downstream channels; each channel has a drive-out o_drive[k] and a paired free-in i_free[k].",
+      "Selection condition determines which channel receives the event drive (o_drive[k]).",
+      "Upstream release o_free is derived from the paired i_free of the selected channel by default (unless explicitly overridden by implementation)."
+    ],
+    "event_routing": {
+      "selected_drive_only": true,
+      "drive_rule": "o_drive[k] asserts only for selected k when upstream drive occurs"
+    },
+    "release_rule": {
+      "policy": "selected_only",
+      "allowed_variants": [
+        "selected_only",
+        "custom_expr"
+      ],
+      "details": "Selected channel's i_free[k] triggers upstream o_free"
+    }
+  },
+  "flow_semantics": {
+    "event_behavior": "There is exactly one upstream event driver (i_drive role) and one upstream release (o_free role).",
+    "data_behavior": "Payload-related ports: i_data_5, o_data0_4, o_data1_1.",
+    "completion_behavior": "Selected channel's i_free[k] triggers upstream o_free"
+  },
+  "implementation_summary": {
+    "internal_dependencies": [
+      "receiver",
+      "relay",
+      "sender"
+    ],
+    "stops_at_family_level": true
+  },
+  "warnings": []
+}

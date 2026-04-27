@@ -1,0 +1,304 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "m3s007fd",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/UART/m3s007fd.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "CLOCK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "RESETN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "WrCyc",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ADD0",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ADD2",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "LoadTxBuff",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DI2",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DI0",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "FIFOE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "TOP_A",
+        "direction": "output",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "TIP_A",
+        "direction": "output",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "TEmpt",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "TFull",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "NVWR",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "NVRD",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "Delta_TRST",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "TOP_A",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "TIP_A",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "OP_A",
+      "kind": "reg",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "IP_A",
+      "kind": "reg",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "TOffset",
+      "kind": "reg",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "TRST",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "TEmpt",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "TFull",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "NVRD",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "NVWR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "Delta_TRST",
+      "kind": "reg",
+      "width_text": "1"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "ADD0",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ADD2",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CLOCK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DI0",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DI2",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "Delta_TRST",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FIFOE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IP_A",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "LoadTxBuff",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NVRD",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "NVWR",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OP_A",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RESETN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TEmpt",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TFull",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TIP_A",
+        "kind": "port_output",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "TOP_A",
+        "kind": "port_output",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "TOffset",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "TRST",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WrCyc",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

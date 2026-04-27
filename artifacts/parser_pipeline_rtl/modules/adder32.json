@@ -1,0 +1,148 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "adder32",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/Execute/adder32.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "oprand1",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "oprand2",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "carry_in",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "symbol",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "result",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "carry_out",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "overflow",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": null,
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "unsignedSum",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    },
+    {
+      "name": "signedSum",
+      "kind": "wire",
+      "width_text": "[32:0]"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "carry_in",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "carry_out",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "oprand1",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "oprand2",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "overflow",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "result",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "signedSum",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "symbol",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "unsignedSum",
+        "kind": "local_signal",
+        "width_text": "[32:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

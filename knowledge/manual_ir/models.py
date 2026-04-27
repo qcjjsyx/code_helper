@@ -16,14 +16,13 @@ ManualIRObjectKind = Literal[
     "flow_path",
     "reading_path",
 ]
-SystemRole = Literal["cpu_core", "cpu_with_cache", "subsystem", "unknown"]
-BoundaryDirection = Literal["ingress", "egress", "bidirectional"]
-ModuleRole = Literal["top", "submodule", "leaf"] ## leaf 就是 component
-DocumentRole = Literal[
-    "front_end",
-    "execute",
-    "memory",
-    "writeback",
+BoundaryDirection = Literal["ingress", "egress", "bidirectional"] ## 输入方向 输出方向 双向
+ModuleRole = Literal["top", "submodule", "component"] ## 最底层定义为结构子，英文写为component
+DocumentRole = Literal[           ### 前四个不是每个项目都会有的，所以进行了删除，后面几个是常见的角色类型，可以根据需要扩展
+    # "front_end",
+    # "execute",
+    # "memory",
+    # "writeback",
     "glue",
     "adapter",
     "splitter",
@@ -33,7 +32,7 @@ DocumentRole = Literal[
     "synchronizer",
     "unknown",
 ]
-ChannelType = Literal["event_only", "event_with_payload", "condition_gated"]
+ChannelType = Literal["event_only", "event_with_payload", "condition_gated"] 
 OwnerKind = Literal["module", "component", "external"]
 FlowPathType = Literal["event_path", "data_path", "completion_path", "mixed"]
 AudienceType = Literal["newcomer", "maintainer", "reviewer"]
@@ -67,9 +66,10 @@ class ManualIRObject:
 @dataclass(frozen=True)
 class GeneratedFrom:
     artifacts_root: str
-    project_index_ref: str = "project_index.json"
+    project_index_ref: str = ""
 
 
+### 便捷的接口定义，方便后续构建IR对象时使用，实际IR对象中会展开成更具体的字段
 @dataclass(frozen=True)
 class BoundaryInterface:
     name: str
@@ -96,9 +96,10 @@ class ExternalDependencyRef:
     status: DependencyStatus
 
 
+## 整个顶层系统视图，包含了系统边界接口、主要模块和组件、使用的组件族、外部依赖以及全局风险点等信息，是整个IR的核心对象之一
 @dataclass(frozen=True)
 class SystemView(ManualIRObject):
-    system_role: SystemRole = "unknown"
+    system_role: str = "user_defined"
     boundary_interfaces: List[BoundaryInterface] = field(default_factory=list)
     primary_modules: List[ModuleRoleRef] = field(default_factory=list)
     primary_components: List[ComponentRoleRef] = field(default_factory=list)
@@ -116,14 +117,14 @@ class KeyInterfaces:
 
 @dataclass(frozen=True)
 class KeyComponentRole:
-    component: str
-    role: str
+    component: str ## 这里应该是实例化后的组件名称，而不是组件族名称，以明确具体是哪个组件在扮演关键角色
+    role: str   ## todo: 这个role应该是指在模块内的角色，例如如果是sel，应该表明它要选择是什么
 
 
 @dataclass(frozen=True)
 class BackpressurePoint:
-    via: str
-    effect: str
+    via: str ## 这里应该是实例化后的组件名称，而不是组件族名称，以明确具体是哪个组件
+    effect: str 
 
 
 @dataclass(frozen=True)
@@ -256,7 +257,7 @@ class FlowDecisionPoint:
 
 @dataclass(frozen=True)
 class FlowBlockingPoint:
-    node: str
+    node: str ## 应该是实例化后的组件名称或者接口名称，以明确具体是哪个点存在阻塞风险
     reason: str
 
 

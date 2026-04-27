@@ -24,7 +24,16 @@ def test_build_manual_context_collects_reachable_modules_and_components(tmp_path
             "artifact_kind": "module",
             "file": "test_data/cpu/CPU/cpu_top.v",
             "module_role": "top",
-            "interface": {"ports": [{"name": "rst"}]},
+            "interface": {
+                "ports": [
+                    {"name": "rst", "direction": "input"},
+                    {"name": "switch", "direction": "input"},
+                    {"name": "i_driveFromTPUtoCPU", "direction": "input"},
+                    {"name": "o_freeFromCPUtoTPU", "direction": "output"},
+                    {"name": "o_driveFromCPUtoTS", "direction": "output"},
+                    {"name": "i_freeFromTStoCPU", "direction": "input"},
+                ]
+            },
             "direct_children": {"modules": ["Fetch_top"], "components": ["cFifo1_cpu"]},
             "transitive_summary": {"reachable_modules": ["Fetch_top"], "reachable_components": ["cFifo1_cpu"]},
             "flow_graph": {"signals": [], "edges": []},
@@ -37,7 +46,14 @@ def test_build_manual_context_collects_reachable_modules_and_components(tmp_path
             "artifact_kind": "module",
             "file": "test_data/cpu/Fetch/Fetch_top.v",
             "module_role": "submodule",
-            "interface": {"ports": [{"name": "i_drive"}]},
+            "interface": {
+                "ports": [
+                    {"name": "i_driveFromEXCPtoCPU", "direction": "input"},
+                    {"name": "o_freeFromCPUtoEXCP", "direction": "output"},
+                    {"name": "o_driveFromFetchtoDecoder", "direction": "output"},
+                    {"name": "i_freeFromDecodertoFetch", "direction": "input"},
+                ]
+            },
             "direct_children": {"modules": [], "components": ["cSelSplit_2_fetch"]},
             "transitive_summary": {"reachable_modules": [], "reachable_components": ["cSelSplit_2_fetch"]},
             "flow_graph": {"signals": [], "edges": [{"signal": "w_drive"}]},
@@ -76,3 +92,16 @@ def test_build_manual_context_collects_reachable_modules_and_components(tmp_path
     assert context.top_module == "cpu_top"
     assert [item["name"] for item in context.module_summaries] == ["cpu_top", "Fetch_top"]
     assert {item["name"] for item in context.component_summaries} == {"cFifo1_cpu", "cSelSplit_2_fetch"}
+    cpu_top_summary = context.module_summaries[0]
+    assert cpu_top_summary["document_role"] == "glue"
+    assert cpu_top_summary["key_interfaces"]["ingress_channels"] == ["i_driveFromTPUtoCPU"]
+    assert cpu_top_summary["key_interfaces"]["egress_channels"] == ["o_driveFromCPUtoTS"]
+    assert cpu_top_summary["key_interfaces"]["control_signals"] == ["switch"]
+
+    fetch_top_summary = context.module_summaries[1]
+    assert fetch_top_summary["backpressure_points"] == [
+        {
+            "via": "i_freeFromDecodertoFetch",
+            "effect": "i_freeFromDecodertoFetch 未返回释放时，对应下游握手无法完成。",
+        }
+    ]

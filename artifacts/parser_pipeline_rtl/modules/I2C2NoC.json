@@ -1,0 +1,1488 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "I2C2NoC",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/IONet/IIC/I2C2NoC.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "CLOCK",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst_finish",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_drvFNoc",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_free2Noc",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_dataFNoc_51",
+        "direction": "input",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "o_drv2Noc",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_freeFNoc",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_data2Noc_51",
+        "direction": "output",
+        "width_text": "[50:0]"
+      },
+      {
+        "name": "INTR",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "FSEN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "HSEN",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ISCL",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "ISDA",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "IFSDA",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "OSCL",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "OSDA",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "ENDRV",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "CKISO",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "DAISO",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "DAGND",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "ADDRESS",
+      "kind": "reg",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "RESETN",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RD",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "VAL",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "WDATA",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "RDATA",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_rdata",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_freeFfifo1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_writefire1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_writefire2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "r_mode0",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_middle_24",
+      "kind": "reg",
+      "width_text": "[23:0]"
+    },
+    {
+      "name": "r_last_10",
+      "kind": "reg",
+      "width_text": "[9:0]"
+    },
+    {
+      "name": "r_dataFNoc",
+      "kind": "reg",
+      "width_text": "[50:0]"
+    },
+    {
+      "name": "w_firefifo0",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "w_drv2fifo1_dalay1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2fifo1_dalay2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2fifo1_dalay3",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2fifo1_dalay4",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_modelfire",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fire0",
+      "kind": "wire",
+      "width_text": "[0]"
+    },
+    {
+      "name": "r_model",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "w_firefifo2",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "w_firefifo1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2fifo2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFfifo2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2fifo1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_modelfire2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2Noc",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay3",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay4",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay5",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay6",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay7",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay8",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay9",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_modelfire2_0",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay10",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay11",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay12",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay13",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay14",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay15",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay16",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay17",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2delay18",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2Noc1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2Noc2",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drv2Noc3",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_modelfire2_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_fire1",
+      "kind": "wire",
+      "width_text": "[0]"
+    },
+    {
+      "name": "w_fire",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "cfifo3_0",
+      "module_type": "cFifo3_I2C_1",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo3_I2C_1.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "i_drvFNoc",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_freeFfifo1",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_drv2delay1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_fire_3",
+          "signal": "w_firefifo0",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "cfifo1",
+      "module_type": "cFifo1",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo1.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_drv2fifo1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFfifo1",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_freeFfifo2",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_drv2delay16",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_fire_1",
+          "signal": "w_firefifo1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "cfifo2",
+      "module_type": "cFifo3_I2C",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cFifo3_I2C.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_drv2fifo2",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFfifo2",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_freeFNoc",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_drv2Noc1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_fire_3",
+          "signal": "w_firefifo2",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "U1",
+      "module_type": "mi2cv2",
+      "artifact_kind": "module",
+      "target_ref": "../modules/mi2cv2.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "FSEN",
+          "signal": "FSEN",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "HSEN",
+          "signal": "HSEN",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CLOCK",
+          "signal": "CLOCK",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RESETN",
+          "signal": "rst_finish",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "VAL",
+          "signal": "VAL",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "ADDRESS",
+          "signal": "ADDRESS",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RD",
+          "signal": "RD",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "WDATA",
+          "signal": "WDATA",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "ISCL",
+          "signal": "ISCL",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "ISDA",
+          "signal": "ISDA",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "IFSDA",
+          "signal": "IFSDA",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RDATA",
+          "signal": "w_rdata",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "INTR",
+          "signal": "INTR",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "OSCL",
+          "signal": "OSCL",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "OSDA",
+          "signal": "OSDA",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "ENDRV",
+          "signal": "ENDRV",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CKISO",
+          "signal": "CKISO",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DAISO",
+          "signal": "DAISO",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DAGND",
+          "signal": "DAGND",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "i_dataFNoc_51"
+      ],
+      "payload_outputs": [
+        "o_data2Noc_51"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": [
+      "i_freeFNoc"
+    ]
+  },
+  "direct_children": {
+    "modules": [
+      "mi2cv2"
+    ],
+    "components": [
+      "cFifo1",
+      "cFifo3_I2C",
+      "cFifo3_I2C_1"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "ADDRESS",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "CKISO",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CLOCK",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DAGND",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DAISO",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ENDRV",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "FSEN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "HSEN",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "IFSDA",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "INTR",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ISCL",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ISDA",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OSCL",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OSDA",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RD",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RDATA",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "RESETN",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "VAL",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "WDATA",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_dataFNoc_51",
+        "kind": "port_input",
+        "width_text": "[50:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_drvFNoc",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_freeFNoc",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_data2Noc_51",
+        "kind": "port_output",
+        "width_text": "[50:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_drv2Noc",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_free2Noc",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "r_dataFNoc",
+        "kind": "local_signal",
+        "width_text": "[50:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_last_10",
+        "kind": "local_signal",
+        "width_text": "[9:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_middle_24",
+        "kind": "local_signal",
+        "width_text": "[23:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_mode0",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_model",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "rst_finish",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2Noc",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2Noc1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2Noc2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2Noc3",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay10",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay11",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay12",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay13",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay14",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay15",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay16",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay17",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay18",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay3",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay4",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay5",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay6",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay7",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay8",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2delay9",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2fifo1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2fifo1_dalay1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2fifo1_dalay2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2fifo1_dalay3",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2fifo1_dalay4",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drv2fifo2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire0",
+        "kind": "local_signal",
+        "width_text": "[0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_fire1",
+        "kind": "local_signal",
+        "width_text": "[0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_firefifo0",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_firefifo1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_firefifo2",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_freeFfifo1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFfifo2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_modelfire",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_modelfire2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_modelfire2_0",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_modelfire2_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_rdata",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_writefire1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_writefire2",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "i_drvFNoc",
+        "instance_name": "cfifo3_0",
+        "module_type": "cFifo3_I2C_1",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFfifo1",
+        "instance_name": "cfifo3_0",
+        "module_type": "cFifo3_I2C_1",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_drv2delay1",
+        "instance_name": "cfifo3_0",
+        "module_type": "cFifo3_I2C_1",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_firefifo0",
+        "instance_name": "cfifo3_0",
+        "module_type": "cFifo3_I2C_1",
+        "port": "o_fire_3",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cfifo3_0",
+        "module_type": "cFifo3_I2C_1",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_drv2fifo1",
+        "instance_name": "cfifo1",
+        "module_type": "cFifo1",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFfifo1",
+        "instance_name": "cfifo1",
+        "module_type": "cFifo1",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFfifo2",
+        "instance_name": "cfifo1",
+        "module_type": "cFifo1",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_drv2delay16",
+        "instance_name": "cfifo1",
+        "module_type": "cFifo1",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_firefifo1",
+        "instance_name": "cfifo1",
+        "module_type": "cFifo1",
+        "port": "o_fire_1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cfifo1",
+        "module_type": "cFifo1",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_drv2fifo2",
+        "instance_name": "cfifo2",
+        "module_type": "cFifo3_I2C",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFfifo2",
+        "instance_name": "cfifo2",
+        "module_type": "cFifo3_I2C",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_freeFNoc",
+        "instance_name": "cfifo2",
+        "module_type": "cFifo3_I2C",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_drv2Noc1",
+        "instance_name": "cfifo2",
+        "module_type": "cFifo3_I2C",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_firefifo2",
+        "instance_name": "cfifo2",
+        "module_type": "cFifo3_I2C",
+        "port": "o_fire_3",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "cfifo2",
+        "module_type": "cFifo3_I2C",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "FSEN",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "FSEN",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "HSEN",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "HSEN",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CLOCK",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "CLOCK",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_finish",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "RESETN",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "VAL",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "VAL",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "ADDRESS",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "ADDRESS",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RD",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "RD",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "WDATA",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "WDATA",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "ISCL",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "ISCL",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "ISDA",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "ISDA",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "IFSDA",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "IFSDA",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_rdata",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "RDATA",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "INTR",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "INTR",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "OSCL",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "OSCL",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "OSDA",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "OSDA",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "ENDRV",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "ENDRV",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CKISO",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "CKISO",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "DAISO",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "DAISO",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "DAGND",
+        "instance_name": "U1",
+        "module_type": "mi2cv2",
+        "port": "DAGND",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "m3s001fb",
+      "m3s002fb",
+      "m3s003fb",
+      "m3s004fb",
+      "m3s005fb",
+      "mi2cv2"
+    ],
+    "reachable_components": [
+      "cFifo1",
+      "cFifo3_I2C",
+      "cFifo3_I2C_1"
+    ],
+    "families_used": [
+      "Fifo1"
+    ]
+  },
+  "warnings": []
+}

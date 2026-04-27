@@ -1,0 +1,116 @@
+{
+  "schema": "parser_pipeline_component",
+  "schema_version": "1.0",
+  "name": "cWaitMerge2_64b_exe",
+  "artifact_kind": "derived_component",
+  "family": "WaitMerge",
+  "file": "test_data/rtl/Execute/cWaitMerge2_64b_exe.v",
+  "template_source": "parser/schemas/json_templates/family_level.json",
+  "interface": {
+    "params": {},
+    "ports": [
+      {
+        "name": "i_drive0",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_data0_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_free0",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_drive1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_data1_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_free1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_driveNext",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_data_64",
+        "direction": "output",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "i_freeNext",
+        "direction": "input",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "role_mapping": {
+    "upstream": {
+      "ports": [
+        "i_drive0",
+        "i_drive1",
+        "o_free0",
+        "o_free1"
+      ]
+    },
+    "downstream": {
+      "ports": [
+        "o_driveNext",
+        "i_freeNext"
+      ]
+    },
+    "payload": {
+      "ports": [
+        "i_data0_32",
+        "i_data1_32",
+        "o_data_64"
+      ]
+    },
+    "fire": {
+      "ports": []
+    }
+  },
+  "contract": {
+    "invariants": [
+      "All-inputs join: output event triggers only when ALL inputs have arrived (all inputs to be ready).",
+      "upstream free follow output free_in together (broadcast completion back to all inputs)."
+    ],
+    "release_rule": {
+      "policy": "broadcast_from_output_free",
+      "details": "When output free arrives, free_out[k] are issued together for all k"
+    }
+  },
+  "flow_semantics": {
+    "event_behavior": "All-inputs join: output event triggers only when ALL inputs have arrived (all inputs to be ready).",
+    "data_behavior": "Payload-related ports: i_data0_32, i_data1_32, o_data_64.",
+    "completion_behavior": "When output free arrives, free_out[k] are issued together for all k"
+  },
+  "implementation_summary": {
+    "internal_dependencies": [
+      "contTap"
+    ],
+    "stops_at_family_level": true
+  },
+  "warnings": []
+}

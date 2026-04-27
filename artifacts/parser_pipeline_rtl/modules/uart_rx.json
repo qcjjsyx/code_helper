@@ -1,0 +1,222 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "uart_rx",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/memory/uart_rx.v",
+  "interface": {
+    "params": [
+      {
+        "name": "CLK_FRE",
+        "default_text": "25"
+      },
+      {
+        "name": "BAUD_RATE",
+        "default_text": "115200"
+      }
+    ],
+    "ports": [
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rx_data",
+        "direction": "output",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "rx_data_valid",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "rx_data_ready",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rx_pin",
+        "direction": "input",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "state",
+      "kind": "reg",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "next_state",
+      "kind": "reg",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "rx_d0",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "rx_d1",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "rx_negedge",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "rx_bits",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "cycle_cnt",
+      "kind": "reg",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "bit_cnt",
+      "kind": "reg",
+      "width_text": "[2:0]"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "rx_data_ready"
+      ],
+      "payload_outputs": [
+        "rx_data"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [
+        "rx_data_valid"
+      ],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [
+      "rx_data_valid"
+    ],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "bit_cnt",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "cycle_cnt",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "next_state",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "rx_bits",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rx_d0",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rx_d1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rx_data",
+        "kind": "port_output",
+        "width_text": "[7:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "rx_data_ready",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "rx_data_valid",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "condition"
+      },
+      {
+        "name": "rx_negedge",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rx_pin",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "state",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

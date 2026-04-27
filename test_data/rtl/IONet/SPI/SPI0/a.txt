@@ -1,0 +1,7 @@
+a.txt
+clk_div.v
+noc_generalSpi_slot.v
+noc_generalSpi.v
+SPI0
+SPI1
+spi_master.v

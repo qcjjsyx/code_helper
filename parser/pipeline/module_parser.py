@@ -58,6 +58,8 @@ def parse_verilog_file(path: Path) -> Dict[str, Any]:
     module_info = extract_module_header(cleaned)
     body = module_info["body"]
     ports = parse_ports(module_info["ports_text"])
+    if not ports:
+        ports = parse_body_port_declarations(body, module_info["ports_text"])
     instances = parse_instantiations(body)
     local_signals = parse_local_signals(body)
 
@@ -185,6 +187,24 @@ def parse_ports(ports_text: str) -> List[Dict[str, Any]]:
         ports.extend(_parse_port_segment(direction, flat[start:end]))
     return _dedupe_ports(ports)
 
+## 检测非ANSI的端口，处理那些在module body里声明的端口，或者在ANSI端口列表里声明了名字但没有声明方向的端口
+def parse_body_port_declarations(body: str, ports_text: str = "") -> List[Dict[str, Any]]:
+    declared_ports: List[Dict[str, Any]] = []
+    for match in re.finditer(r"\b(input|output|inout)\b\s*(.*?);", body, re.S):
+        direction = match.group(1)
+        declared_ports.extend(_parse_port_segment(direction, match.group(2)))
+
+    declared_ports = _dedupe_ports(declared_ports)
+    header_order = _parse_header_port_names(ports_text)
+    if not header_order:
+        return declared_ports
+
+    by_name = {port["name"]: port for port in declared_ports}
+    ordered = [by_name[name] for name in header_order if name in by_name]
+    ordered_names = {port["name"] for port in ordered}
+    ordered.extend(port for port in declared_ports if port["name"] not in ordered_names)
+    return ordered
+
 
 def parse_local_signals(body: str) -> List[Dict[str, Any]]:
     signals: List[Dict[str, Any]] = []
@@ -192,7 +212,7 @@ def parse_local_signals(body: str) -> List[Dict[str, Any]]:
         kind = match.group(1)
         segment = match.group(2).strip()
         width_match = re.search(r"\[[^\]]+\]", segment)
-        width_text = width_match.group(0).strip() if width_match else None
+        width_text = width_match.group(0).strip() if width_match else "1"
         if width_match:
             segment = segment.replace(width_match.group(0), " ")
         segment = re.sub(r"\b(signed|unsigned)\b", " ", segment)
@@ -351,7 +371,7 @@ def split_top_level(text: str) -> List[str]:
 
 def _parse_port_segment(direction: str, segment: str) -> List[Dict[str, Any]]:
     width_match = re.search(r"\[[^\]]+\]", segment)
-    width_text = width_match.group(0).strip() if width_match else None
+    width_text = width_match.group(0).strip() if width_match else "1"
     cleaned = segment
     if width_match:
         cleaned = cleaned.replace(width_match.group(0), " ")
@@ -371,6 +391,20 @@ def _parse_port_segment(direction: str, segment: str) -> List[Dict[str, Any]]:
             }
         )
     return ports
+
+
+def _parse_header_port_names(ports_text: str) -> List[str]:
+    names: List[str] = []
+    for item in split_top_level(ports_text):
+        cleaned = item.strip()
+        if not cleaned:
+            continue
+        cleaned = re.sub(r"\b(input|output|inout|wire|reg|logic|signed|unsigned|tri)\b", " ", cleaned)
+        cleaned = re.sub(r"\[[^\]]+\]", " ", cleaned)
+        match = re.search(r"([A-Za-z_]\w*)\s*$", cleaned)
+        if match:
+            names.append(match.group(1))
+    return names
 
 
 def _dedupe_ports(ports: List[Dict[str, Any]]) -> List[Dict[str, Any]]:

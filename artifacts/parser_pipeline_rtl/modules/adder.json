@@ -1,0 +1,645 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "adder",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/Execute/adder.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "i_oprand1_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "i_oprand2_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "i_adderType_2",
+        "direction": "input",
+        "width_text": "[1:0]"
+      },
+      {
+        "name": "i_carryInType_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_addSymbolFlag_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_adderResult_64",
+        "direction": "output",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_adderCarryOut_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_adderOverFlow_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_oprand1_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_oprand2_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_oprand1_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_oprand2_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_adder5Result_5",
+      "kind": "wire",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "w_adder5CarryOut_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_adder5OverFlow_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_adder32Result_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_adder32CarryOut_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_adder32OverFlow_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_adder64Result_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_adder64CarryOut_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_adder64OverFlow_1",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "adder5",
+      "module_type": "adder5",
+      "artifact_kind": "module",
+      "target_ref": "../modules/adder5.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "oprand1",
+          "signal": "w_oprand1_5",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "oprand2",
+          "signal": "w_oprand2_5",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "carry_in",
+          "signal": "i_carryInType_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "symbol",
+          "signal": "i_addSymbolFlag_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "result",
+          "signal": "w_adder5Result_5",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "carry_out",
+          "signal": "w_adder5CarryOut_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "overflow",
+          "signal": "w_adder5OverFlow_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "adder32",
+      "module_type": "adder32",
+      "artifact_kind": "module",
+      "target_ref": "../modules/adder32.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "oprand1",
+          "signal": "w_oprand1_32",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "oprand2",
+          "signal": "w_oprand2_32",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "symbol",
+          "signal": "i_addSymbolFlag_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "carry_in",
+          "signal": "i_carryInType_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "result",
+          "signal": "w_adder32Result_32",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "carry_out",
+          "signal": "w_adder32CarryOut_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "overflow",
+          "signal": "w_adder32OverFlow_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "adder64",
+      "module_type": "adder64",
+      "artifact_kind": "module",
+      "target_ref": "../modules/adder64.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "oprand1",
+          "signal": "i_oprand1_64",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "oprand2",
+          "signal": "i_oprand2_64",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "symbol",
+          "signal": "i_addSymbolFlag_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "carry_in",
+          "signal": "i_carryInType_1",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "result",
+          "signal": "w_adder64Result_64",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "carry_out",
+          "signal": "w_adder64CarryOut_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "overflow",
+          "signal": "w_adder64OverFlow_1",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [
+      "adder32",
+      "adder5",
+      "adder64"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_addSymbolFlag_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_adderType_2",
+        "kind": "port_input",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_carryInType_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_oprand1_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_oprand2_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_adderCarryOut_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_adderOverFlow_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_adderResult_64",
+        "kind": "port_output",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "w_adder32CarryOut_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adder32OverFlow_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adder32Result_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adder5CarryOut_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adder5OverFlow_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adder5Result_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adder64CarryOut_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adder64OverFlow_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_adder64Result_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_oprand1_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_oprand1_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_oprand2_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_oprand2_5",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "w_oprand1_5",
+        "instance_name": "adder5",
+        "module_type": "adder5",
+        "port": "oprand1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_oprand2_5",
+        "instance_name": "adder5",
+        "module_type": "adder5",
+        "port": "oprand2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_carryInType_1",
+        "instance_name": "adder5",
+        "module_type": "adder5",
+        "port": "carry_in",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_addSymbolFlag_1",
+        "instance_name": "adder5",
+        "module_type": "adder5",
+        "port": "symbol",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_adder5Result_5",
+        "instance_name": "adder5",
+        "module_type": "adder5",
+        "port": "result",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_adder5CarryOut_1",
+        "instance_name": "adder5",
+        "module_type": "adder5",
+        "port": "carry_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_adder5OverFlow_1",
+        "instance_name": "adder5",
+        "module_type": "adder5",
+        "port": "overflow",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_oprand1_32",
+        "instance_name": "adder32",
+        "module_type": "adder32",
+        "port": "oprand1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_oprand2_32",
+        "instance_name": "adder32",
+        "module_type": "adder32",
+        "port": "oprand2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_addSymbolFlag_1",
+        "instance_name": "adder32",
+        "module_type": "adder32",
+        "port": "symbol",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_carryInType_1",
+        "instance_name": "adder32",
+        "module_type": "adder32",
+        "port": "carry_in",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_adder32Result_32",
+        "instance_name": "adder32",
+        "module_type": "adder32",
+        "port": "result",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_adder32CarryOut_1",
+        "instance_name": "adder32",
+        "module_type": "adder32",
+        "port": "carry_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_adder32OverFlow_1",
+        "instance_name": "adder32",
+        "module_type": "adder32",
+        "port": "overflow",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "i_oprand1_64",
+        "instance_name": "adder64",
+        "module_type": "adder64",
+        "port": "oprand1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_oprand2_64",
+        "instance_name": "adder64",
+        "module_type": "adder64",
+        "port": "oprand2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_addSymbolFlag_1",
+        "instance_name": "adder64",
+        "module_type": "adder64",
+        "port": "symbol",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_carryInType_1",
+        "instance_name": "adder64",
+        "module_type": "adder64",
+        "port": "carry_in",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_adder64Result_64",
+        "instance_name": "adder64",
+        "module_type": "adder64",
+        "port": "result",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_adder64CarryOut_1",
+        "instance_name": "adder64",
+        "module_type": "adder64",
+        "port": "carry_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_adder64OverFlow_1",
+        "instance_name": "adder64",
+        "module_type": "adder64",
+        "port": "overflow",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "adder32",
+      "adder5",
+      "adder64"
+    ],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

@@ -1,0 +1,592 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "flash_state",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/IONet/SPI/SPI0/flash_state.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst_n",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_startRead",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_ctl",
+        "direction": "input",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "i_data2spi",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_dataFspi",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_w_en",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_readflag",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_busy",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_RXNE",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_TXE",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_finish",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "i_miso",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_sclk",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_cs_n",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_mosi",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst_n",
+      "reset_active_low": true
+    }
+  },
+  "local_signals": [
+    {
+      "name": "r_state",
+      "kind": "reg",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "r_start_spi",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_start_spi_buf",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_data2spi",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_cmd",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_sclk_cnt",
+      "kind": "wire",
+      "width_text": "[5:0]"
+    },
+    {
+      "name": "w_cnt_end",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_spi_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_spi_cs_n",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "r_spi_cs_n_buf",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "w_spi_cs_n_rise",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "u_spi_master",
+      "module_type": "spi_master_spi0",
+      "artifact_kind": "module",
+      "target_ref": "../modules/spi_master_spi0.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst_n",
+          "signal": "rst_n",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rx",
+          "signal": "i_miso",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "sclk_out",
+          "signal": "o_sclk",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "nss_out",
+          "signal": "w_spi_cs_n",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "tx",
+          "signal": "o_mosi",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "data_in",
+          "signal": "r_data2spi",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "data_out",
+          "signal": "o_dataFspi",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "RXNE",
+          "signal": "o_RXNE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TXE",
+          "signal": "o_TXE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "sclk_cnt_div",
+          "signal": "w_sclk_cnt",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DR_w",
+          "signal": "w_spi_en",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CR",
+          "signal": "i_ctl",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DR_r",
+          "signal": "i_readflag",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "w_en",
+          "signal": "i_w_en",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "i_data2spi"
+      ],
+      "payload_outputs": [
+        "o_dataFspi"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [
+      "spi_master_spi0"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_ctl",
+        "kind": "port_input",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_data2spi",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_miso",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_readflag",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_startRead",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_w_en",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_RXNE",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_TXE",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_busy",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_cs_n",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_dataFspi",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_finish",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_mosi",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "o_sclk",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_cmd",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_data2spi",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_spi_cs_n_buf",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_start_spi",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_start_spi_buf",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_state",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst_n",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_cnt_end",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sclk_cnt",
+        "kind": "local_signal",
+        "width_text": "[5:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_spi_cs_n",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_spi_cs_n_rise",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_spi_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "clk",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_n",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "rst_n",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_miso",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "rx",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_sclk",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "sclk_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_spi_cs_n",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "nss_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_mosi",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "tx",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "r_data2spi",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "data_in",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_dataFspi",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "data_out",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_RXNE",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "RXNE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_TXE",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "TXE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_sclk_cnt",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "sclk_cnt_div",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_spi_en",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "DR_w",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_ctl",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "CR",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_readflag",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "DR_r",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_w_en",
+        "instance_name": "u_spi_master",
+        "module_type": "spi_master_spi0",
+        "port": "w_en",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "clk_div_spi0",
+      "sclk_done_1",
+      "spi_master_spi0"
+    ],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

@@ -1,5 +1,6 @@
 """Manual-oriented intermediate representations."""
 
+from .builder import ManualIRBuildOptions, build_manual_ir
 from .models import (
     BackpressureBehavior,
     BackpressurePoint,
@@ -43,6 +44,7 @@ __all__ = [
     "ChannelConditioning",
     "ChannelEndpoint",
     "ChannelPayload",
+    "ManualIRBuildOptions",
     "ComponentContract",
     "ComponentRoleRef",
     "ExternalDependencyRef",
@@ -68,4 +70,5 @@ __all__ = [
     "SignalEndpoint",
     "SourceRef",
     "SystemView",
+    "build_manual_ir",
 ]

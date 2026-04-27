@@ -1,0 +1,132 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "<module_name>",
+  "artifact_kind": "module",
+  "module_role": "top|internal",
+  "file": "<rtl_file_relative_to_repo>",
+  "interface": {
+    "params": [
+      {
+        "name": "<parameter_name>",
+        "default_text": "<default_value_text_or_null>"
+      }
+    ],
+    "ports": [
+      {
+        "name": "<port_name>",
+        "direction": "input|output|inout",
+        "width_text": "1|<range_text>"
+      }
+    ],
+    "reset": {
+      "reset_port": "<reset_port_name_or_null>",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "<signal_name>",
+      "kind": "wire|reg|logic",
+      "width_text": "1|<range_text>"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "<instance_name>",
+      "module_type": "<target_module_type>",
+      "artifact_kind": "module|derived_component|external_dependency",
+      "target_ref": "../modules/<target_module_name>.json",
+      "family": "<component_family_or_null>",
+      "ignored_unresolved": false,
+      "parameter_overrides": {
+        "<parameter_name_or_positional_key>": "<value_text>"
+      },
+      "connections": [
+        {
+          "port": "<target_port_name>",
+          "signal": "<connected_signal_or_expression>",
+          "port_direction": "input|output|inout|unknown",
+          "signal_role": "event|payload_data|condition|reset|backpressure|unknown"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [
+        "<port_or_signal_name>"
+      ],
+      "event_outputs": [
+        "<port_or_signal_name>"
+      ],
+      "payload_inputs": [
+        "<port_or_signal_name>"
+      ],
+      "payload_outputs": [
+        "<port_or_signal_name>"
+      ],
+      "condition_inputs": [
+        "<port_or_signal_name>"
+      ],
+      "condition_outputs": [
+        "<port_or_signal_name>"
+      ],
+      "reset_inputs": [
+        "<port_or_signal_name>"
+      ],
+      "reset_outputs": [
+        "<port_or_signal_name>"
+      ]
+    },
+    "control_signals": [
+      "<signal_name>"
+    ],
+    "backpressure_signals": [
+      "<signal_name>"
+    ]
+  },
+  "direct_children": {
+    "modules": [
+      "<direct_child_module_name>"
+    ],
+    "components": [
+      "<direct_child_component_module_name>"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "<signal_name>",
+        "kind": "port_input|port_output|port_inout|local_signal|implicit_signal|expression",
+        "width_text": "1|<range_text_or_null_for_unknown_expression>",
+        "role": "event|payload_data|condition|reset|backpressure|unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "<signal_name>",
+        "instance_name": "<instance_name>",
+        "module_type": "<target_module_type>",
+        "port": "<target_port_name>",
+        "port_direction": "input|output|inout|unknown",
+        "signal_role": "event|payload_data|condition|reset|backpressure|unknown",
+        "edge_kind": "signal_to_instance|instance_to_signal|bidirectional"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "<reachable_module_name>"
+    ],
+    "reachable_components": [
+      "<reachable_component_module_name>"
+    ],
+    "families_used": [
+      "<component_family>"
+    ]
+  },
+  "warnings": [
+    "<warning_message>"
+  ]
+}

@@ -37,10 +37,8 @@
 
 ```bash
 python -m parser.pipeline build \
-  --repo . \
-  --inputs test_data/cpu \
-  --tops test_data/cpu/CPU/cpu_top.v test_data/cpu/CPUwithCache.v \
-  --output artifacts/parser_pipeline_result
+  --inputs test_data/rtl \
+  --output artifacts/parser_pipeline_rtl
 ```
 
 输出：
@@ -49,6 +47,116 @@ python -m parser.pipeline build \
 - `artifacts/parser_pipeline_result/modules/<module_name>.json`
 - `artifacts/parser_pipeline_result/components/<component_name>.json`
 - `artifacts/parser_pipeline_result/build_report.json`
+
+## Recent Progress
+
+这部分记录最近一轮对话中已经落地的 parser / manual_ir 相关改动，方便新对话快速接上下文。
+
+### 1. Parser Layer
+
+- 模块 JSON 新增了 `interface_summary`
+- 当前 `interface_summary` 只保留确定性接口事实：
+  - `signal_groups`
+  - `control_signals`
+  - `backpressure_signals`
+- 之前试做过 `peer_relations`，但因为过度依赖端口命名风格、跨项目不稳定，已经删除
+- 当前 parser 不再尝试从端口名推导模块级 `upstream/downstream peer`
+- 当前 parser CLI 使用当前工作目录作为 repo root，`--inputs` 表示 RTL 工程目录
+- `--inputs` 目录必须包含 `read_rtl_list.tcl` 和 `rtl_top_list.tcl`
+- parser build 保持只读，不会自动写入 `//@cc`；已有 `//@cc` 只作为可选事实来源
+- 解析边界策略集中在 `parser/pipeline/boundary_policy.py`
+- 当前 parser 会把以下结构子类型作为层级解析边界：
+  - `cArbMerge`
+  - `cFifo`
+  - `cMutexMerge`
+  - `cPmtFifo`
+  - `cNatSplit`
+  - `cWaitMerge`
+  - `cSelSplit`
+  - FIFO-like 变体，例如 `lsu_cFifo1_lsu`、`ldwmFifo_lsu`、`cLastFifo1`、`cMergeFifo1`
+  - 命中这些类型的实例会生成 component JSON，但不会继续向下展开为 module 层级
+
+### 2. Manual IR Layer
+
+- `ManualIR` 已经接入独立 builder：`knowledge/manual_ir/builder.py`
+- 当前重点对象仍然是：
+  - `SystemView`
+  - `ModuleCard`
+  - `ComponentContract`
+- `ModuleCard` 现在会稳定映射这些确定性事实：
+  - `document_role`
+  - `responsibilities`
+  - `key_interfaces.ingress_channels`
+  - `key_interfaces.egress_channels`
+  - `key_interfaces.control_signals`
+  - `key_component_roles`
+  - `backpressure_points`
+  - `risk_points`
+- `upstream_modules` / `downstream_modules` 字段暂时保留在数据模型里，但当前不再填充语义推断结果，默认保持为空
+- `knowledge/manual_ir/manual_context.py` 已切换为基于 `build_manual_ir()` 组装摘要，不再自己重复做 reachability walk
+
+### 3. Ignored Helper Units
+
+对于 parser pipeline 中的工程辅助单元，当前已经支持两类处理：
+
+- `delay<number>U` / `delay<number>Unit` 会被完全跳过，不进入模块 JSON 的 `instances`，不生成 artifact，也不进入层级树
+- 一部分 unresolved helper target 会被保留为 ignored unresolved，避免污染 `build_report.json`
+
+当前 unresolved helper 规则在 `parser/pipeline/boundary_policy.py` 中维护：
+
+- 精确匹配：
+  - `contTap`
+  - `freeSetDelay`
+  - `IUMB`
+  - `BUFM2HM`
+  - `SHKB110_1024X8X8CM8`
+  - `HKB110_4096X8X8CM8`
+
+注意：
+
+- `delay_free_cpu` 不会被 `delay<number>U` 规则忽略
+- `delay1U`、`delay4U`、`delay16U`、`delay1Unit` 这类延迟 helper 会直接被跳过
+- unresolved helper 实例仍然保留在模块 JSON 的 `instances` 中，并标记 `ignored_unresolved: true`
+- ignored unresolved helper 不会进入 `build_report["issues"]`
+- ignored unresolved helper 不会计入 `project_index["stats"]["unresolved_instance_count"]`
+
+后续如果还要新增应忽略的工程辅助单元，优先按下面两种方式维护：
+
+- 固定名字：加入 `IGNORED_UNRESOLVED_TARGET_EXACT`
+- 稳定命名模板：优先封装成明确 helper 函数，不要用宽松子串匹配
+
+### 4. Tcl File List Support
+
+为了支持更接近真实项目结构的 `test_data/rtl`，parser pipeline 现在要求 `--inputs` 指向包含标准 Tcl 清单的 RTL 工程目录：
+
+- `read_rtl_list.tcl` 用于构建 module index
+- `rtl_top_list.tcl` 用于解析 top modules
+
+示例：
+
+```bash
+python -m parser.pipeline build \
+  --inputs test_data/rtl \
+  --output artifacts/parser_pipeline_rtl
+```
+
+当前 Tcl 解析策略：
+
+- 支持一行一个文件名
+- 支持从行内提取 `.v` / `.sv` / `.vh` token
+- `.vh` 只用于容忍工程清单，不进入 module index
+- 文件名匹配要求“名字完全一致、大小写一致、后缀一致”
+- 如果出现多个“完全同名”的候选文件，当前仍会做一个最小路径优先选择，以避免真实工程直接跑坏
+
+### 5. Current Known Boundaries
+
+- 目前 parser 对真实 `rtl` 工程已经能通过 Tcl 清单完成 build，但仍会遇到一些真实外部依赖或库单元的 unresolved warning
+- 当前阶段不要把精力放在 planner / critic / RAG / 长期 memory 上
+- 下一阶段应继续优先推进：
+  - parser 的结构化事实补强
+  - manual_ir 的稳定映射
+  - 面向文档生成的核心中间层对象
+- 暂时不要重新引入依赖命名习惯的强语义推断，尤其是模块级上下游关系推断
 
 ## Documentation Agent
 

@@ -1,0 +1,225 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "clk_div",
+  "artifact_kind": "module",
+  "module_role": "leaf",
+  "file": "test_data/rtl/IONet/SPI/SPI1/clk_div.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst_n",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rx_only",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "M_en",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "enable",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "DFF",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "BR",
+        "direction": "input",
+        "width_text": "[2:0]"
+      },
+      {
+        "name": "nss_out",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "sclk_m",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "sclk_out",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst_n",
+      "reset_active_low": true
+    }
+  },
+  "local_signals": [
+    {
+      "name": "cnt",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "sclk_cnt",
+      "kind": "reg",
+      "width_text": "[4:0]"
+    },
+    {
+      "name": "state",
+      "kind": "reg",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "sclk_done",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "bit8_out",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "sclk_cnt_buf",
+      "kind": "reg",
+      "width_text": "1"
+    }
+  ],
+  "instances": [],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [],
+      "payload_outputs": [],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "BR",
+        "kind": "port_input",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "DFF",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "M_en",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "bit8_out",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "cnt",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "enable",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "nss_out",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rst_n",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rx_only",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_cnt",
+        "kind": "local_signal",
+        "width_text": "[4:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_cnt_buf",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_done",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_m",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_out",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "state",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      }
+    ],
+    "edges": []
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}

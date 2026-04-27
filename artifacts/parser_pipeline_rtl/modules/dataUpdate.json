@@ -1,0 +1,5148 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "dataUpdate",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/Lsu/dataUpate.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "rst",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_addrFromPeripheralFlag_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_lsuToDataUpdate_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_store_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_load_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_loadSign_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_memAddr_32",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "i_memData_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "i_dHi_4",
+        "direction": "input",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "i_dLo_4",
+        "direction": "input",
+        "width_text": "[3:0]"
+      },
+      {
+        "name": "i_storeData_64",
+        "direction": "input",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "i_lsuType_2",
+        "direction": "input",
+        "width_text": "[1:0]"
+      },
+      {
+        "name": "i_stateValid_12",
+        "direction": "input",
+        "width_text": "[11:0]"
+      },
+      {
+        "name": "i_misaligned_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_writebackFreeToDataUpate_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "i_dataRoutFreeToDataUpate_1",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "o_dataUpdateToLsu_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_dataUpdateDriveToWriteback_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_dataUpdateToWritebackData_74",
+        "direction": "output",
+        "width_text": "[73:0]"
+      },
+      {
+        "name": "o_dataUpdateDriveToMem_1",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "o_memAddr_32",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "o_memData_64",
+        "direction": "output",
+        "width_text": "[63:0]"
+      },
+      {
+        "name": "o_memWen_8",
+        "direction": "output",
+        "width_text": "[7:0]"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst",
+      "reset_active_low": false
+    }
+  },
+  "local_signals": [
+    {
+      "name": "w_freeFlIdle",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFlb",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFlhw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFldw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFlw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFlhwm",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFlwm",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFldwm",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lIdleDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lbDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lhwDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldwDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lwDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lhwmDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lwmDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldwmDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "r_memAddr_32",
+      "kind": "reg",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_addrFromPeripheralFlag_1",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "r_misaligned_1",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "w_memAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_addrFromPeripheralFlag_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_storeData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "r_storeData_64",
+      "kind": "reg",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_freeFsIdle",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFsw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFshw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_freeFsdw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_sIdleDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_swDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_shwDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_sdwDrive",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2lIdle",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFlIdle",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2lb",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFlb",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2lhw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFlhw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2ldw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFldw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2lw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFlw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2lhwm",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFlhwm",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2ldwm",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFldwm",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2lwm",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFlwm",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_memData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_misaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_stateValid_12",
+      "kind": "wire",
+      "width_text": "[11:0]"
+    },
+    {
+      "name": "w_free2sidle",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFsidle",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2sw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFsw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2shw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFshw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_free2sdw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveFsdw",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "r_sIdleMemDataTemp_64",
+      "kind": "reg",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "r_sIdleMemWenTemp_8",
+      "kind": "reg",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "r_sIdleMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_sIdleMemData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "r_sIdleMemWen_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_sIdleMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_sIdleMemData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_sIdleMemWen_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "r_swMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_swMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_swMemData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "r_swMemWen_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_swMemData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_swMemWen_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "r_shwMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_shwMemWen_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "r_shwMemData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_shwMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_shwMemData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "r_sdwMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_sdwMemWen_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "r_sdwMemData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_sdwMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_sdwMemData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_lbGrfData_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lhwGrfData_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_ldwGrfData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_lwGrfData_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "r_lsuType_2",
+      "kind": "reg",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_lsuType_2",
+      "kind": "wire",
+      "width_text": "[1:0]"
+    },
+    {
+      "name": "w_driveToLoadSelector_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadSelectorToDataUpdateSelector_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveToStoreSelector_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_storeSelectorToDataUpdateSelector_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadValid_8",
+      "kind": "wire",
+      "width_text": "[7:0]"
+    },
+    {
+      "name": "w_lIdleAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lIdleData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_lbAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lbData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_lhwAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lhwData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_ldwAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_ldwData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_lwAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lwData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_lhwmAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lhwmData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_ldwmAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_ldwmData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_lwmAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lwmData_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_lIdleMisaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lIdleLoadSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lbMisaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lbLoadSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lhwMisaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lhwLoadSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldwMisaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldwLoadSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lwMisaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lwLoadSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lhwmMisaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lhwmLoadSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldwmMisaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldwmLoadSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lwmMisaligned_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lwmLoadSign_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lIdleDriveDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lbDriveDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lhwDriveDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldwDriveDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lwDriveDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lwDriveDelay1_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lhwmDriveDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_ldwmDriveDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lwmDriveDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_lIdleFifoToAddrMerge_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lbFifoToDataMerge_34",
+      "kind": "wire",
+      "width_text": "[33:0]"
+    },
+    {
+      "name": "w_lhwFifoToDataMerge_34",
+      "kind": "wire",
+      "width_text": "[33:0]"
+    },
+    {
+      "name": "w_ldwFifoToDataMerge_66",
+      "kind": "wire",
+      "width_text": "[65:0]"
+    },
+    {
+      "name": "w_lwFifoToDataMerge_34",
+      "kind": "wire",
+      "width_text": "[33:0]"
+    },
+    {
+      "name": "w_lhwmMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lhwmTemp_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_ldwmMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_ldwmTemp_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_lwmMemAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_lwmTemp_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_f2lidleMerge",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_drvFlidleMerge",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_loadAddr_32",
+      "kind": "wire",
+      "width_text": "[31:0]"
+    },
+    {
+      "name": "w_driveToStoreSelectorDelay_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_storeValid_4",
+      "kind": "wire",
+      "width_text": "[3:0]"
+    },
+    {
+      "name": "w_storeData1_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_storeData2_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_storeData3_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_storeData4_64",
+      "kind": "wire",
+      "width_text": "[63:0]"
+    },
+    {
+      "name": "w_driveToStoreSelectorDelay1_1",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "w_driveToStoreSelectorDelay2_1",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "dataUpdateSelector",
+      "module_type": "cSelector2_2b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cSelector2_2b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "i_lsuToDataUpdate_1",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_data_2",
+          "signal": "{i_store_1,i_load_1}",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free",
+          "signal": "o_dataUpdateToLsu_1",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveNext0",
+          "signal": "w_driveToLoadSelector_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext0",
+          "signal": "w_loadSelectorToDataUpdateSelector_1",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data0_2",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_driveNext1",
+          "signal": "w_driveToStoreSelector_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data1_2",
+          "signal": "",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext1",
+          "signal": "w_storeSelectorToDataUpdateSelector_1",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "SelSplit"
+    },
+    {
+      "instance_name": "loadSelector",
+      "module_type": "cSelector8_106b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cSelector8_106b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_driveToLoadSelector_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_106",
+          "signal": "{i_misaligned_1,i_loadSign_1,i_memAddr_32,i_memData_64,w_loadValid_8}",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_loadSelectorToDataUpdateSelector_1",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveNext0",
+          "signal": "w_lIdleDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext0",
+          "signal": "w_freeFlIdle",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_data0_98",
+          "signal": "{w_lIdleMisaligned_1,w_lIdleLoadSign_1,w_lIdleAddr_32,w_lIdleData_64}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveNext1",
+          "signal": "w_lbDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data1_98",
+          "signal": "{w_lbMisaligned_1,w_lbLoadSign_1,w_lbAddr_32,w_lbData_64}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext1",
+          "signal": "w_freeFlb",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext2",
+          "signal": "w_lhwDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext2",
+          "signal": "w_freeFlhw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_data2_98",
+          "signal": "{w_lhwMisaligned_1,w_lhwLoadSign_1,w_lhwAddr_32,w_lhwData_64}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveNext3",
+          "signal": "w_ldwDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data3_98",
+          "signal": "{w_ldwMisaligned_1,w_ldwLoadSign_1,w_ldwAddr_32,w_ldwData_64}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext3",
+          "signal": "w_freeFldw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext4",
+          "signal": "w_lwDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data4_98",
+          "signal": "{w_lwMisaligned_1,w_lwLoadSign_1,w_lwAddr_32,w_lwData_64}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext4",
+          "signal": "w_freeFlw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext5",
+          "signal": "w_lhwmDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data5_98",
+          "signal": "{w_lhwmMisaligned_1,w_lhwmLoadSign_1,w_lhwmAddr_32,w_lhwmData_64}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext5",
+          "signal": "w_freeFlhwm",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext6",
+          "signal": "w_ldwmDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data6_98",
+          "signal": "{w_ldwmMisaligned_1,w_ldwmLoadSign_1,w_ldwmAddr_32,w_ldwmData_64}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext6",
+          "signal": "w_freeFldwm",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext7",
+          "signal": "w_lwmDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data7_98",
+          "signal": "{w_lwmMisaligned_1,w_lwmLoadSign_1,w_lwmAddr_32,w_lwmData_64}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext7",
+          "signal": "w_freeFlwm",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "SelSplit"
+    },
+    {
+      "instance_name": "lIdleFifo",
+      "module_type": "lIdleFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/lIdleFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_lIdleDriveDelay_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_32",
+          "signal": "w_lIdleAddr_32",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFlIdle",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFlIdle",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data_32",
+          "signal": "w_lIdleFifoToAddrMerge_32",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2lIdle",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "lbFifo",
+      "module_type": "lbFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/lbFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_lbDriveDelay_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_32",
+          "signal": "w_lbGrfData_32",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFlb",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFlb",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data_34",
+          "signal": "w_lbFifoToDataMerge_34",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2lb",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "lhwFifo",
+      "module_type": "lhwFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/lhwFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_lhwDriveDelay_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_32",
+          "signal": "w_lhwGrfData_32",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFlhw",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFlhw",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data_34",
+          "signal": "w_lhwFifoToDataMerge_34",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2lhw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "ldwFifo",
+      "module_type": "ldwFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/ldwFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_ldwDriveDelay_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_64",
+          "signal": "w_ldwGrfData_64",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFldw",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFldw",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data_66",
+          "signal": "w_ldwFifoToDataMerge_66",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2ldw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "lwFifo",
+      "module_type": "lwFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/lwFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_lwDriveDelay1_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2lw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFlw",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFlw",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_32",
+          "signal": "w_lwGrfData_32",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data_34",
+          "signal": "w_lwFifoToDataMerge_34",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "lhwmFifo",
+      "module_type": "lhwmFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/lhwmFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_lhwmDriveDelay_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2lhwm",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFlhwm",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFlhwm",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_96",
+          "signal": "{w_lhwmAddr_32,w_lhwmData_64}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data_96",
+          "signal": "{w_lhwmMemAddr_32,w_lhwmTemp_64}",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "ldwmFifo",
+      "module_type": "ldwmFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/ldwmFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_ldwmDriveDelay_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2ldwm",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFldwm",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFldwm",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_96",
+          "signal": "{w_ldwmAddr_32,w_ldwmData_64}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data_96",
+          "signal": "{w_ldwmMemAddr_32,w_ldwmTemp_64}",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "lwmFifo",
+      "module_type": "lwmFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/lwmFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_lwmDriveDelay_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2lwm",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFlwm",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFlwm",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_96",
+          "signal": "{w_lwmAddr_32,w_lwmData_64}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data_96",
+          "signal": "{w_lwmMemAddr_32,w_lwmTemp_64}",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "lidleMerge",
+      "module_type": "cMutexMerge4_32b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cMutexMerge4_32b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive0",
+          "signal": "w_driveFlIdle",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive1",
+          "signal": "w_driveFlhwm",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive2",
+          "signal": "w_driveFlwm",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive3",
+          "signal": "w_driveFldwm",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data0_32",
+          "signal": "w_lIdleFifoToAddrMerge_32",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data1_32",
+          "signal": "w_lhwmMemAddr_32",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data2_32",
+          "signal": "w_lwmMemAddr_32",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data3_32",
+          "signal": "w_ldwmMemAddr_32",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_f2lidleMerge",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free0",
+          "signal": "w_free2lIdle",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free1",
+          "signal": "w_free2lhwm",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free2",
+          "signal": "w_free2lwm",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free3",
+          "signal": "w_free2ldwm",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_drvFlidleMerge",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_data_32",
+          "signal": "w_loadAddr_32",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ],
+      "family": "MutexMerge"
+    },
+    {
+      "instance_name": "lbMerge",
+      "module_type": "cMutexMerge4_74b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cMutexMerge4_74b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive0",
+          "signal": "w_driveFlb",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive1",
+          "signal": "w_driveFlhw",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive2",
+          "signal": "w_driveFlw",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_drive3",
+          "signal": "w_driveFldw",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data0_74",
+          "signal": "{i_dHi_4,i_dLo_4,w_lbFifoToDataMerge_34[33:2],{32{1'b0}},w_lbFifoToDataMerge_34[1:0]}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_data1_74",
+          "signal": "{i_dHi_4,i_dLo_4,w_lhwFifoToDataMerge_34[33:2],{32{1'b0}},w_lhwFifoToDataMerge_34[1:0]}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_data2_74",
+          "signal": "{i_dHi_4,i_dLo_4,w_lwFifoToDataMerge_34[33:2],{32{1'b0}},w_lwFifoToDataMerge_34[1:0]}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_data3_74",
+          "signal": "{i_dHi_4,i_dLo_4,w_ldwFifoToDataMerge_66}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_writebackFreeToDataUpate_1",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free0",
+          "signal": "w_free2lb",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free1",
+          "signal": "w_free2lhw",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free2",
+          "signal": "w_free2lw",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_free3",
+          "signal": "w_free2ldw",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_dataUpdateDriveToWriteback_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data_74",
+          "signal": "o_dataUpdateToWritebackData_74",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ],
+      "family": "MutexMerge"
+    },
+    {
+      "instance_name": "storeSelector",
+      "module_type": "cSelector4_68b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cSelector4_68b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_driveToStoreSelectorDelay1_1",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_68",
+          "signal": "{i_storeData_64,w_storeValid_4}",
+          "port_direction": "input",
+          "signal_role": "condition"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_storeSelectorToDataUpdateSelector_1",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveNext0",
+          "signal": "w_sIdleDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext0",
+          "signal": "w_freeFsIdle",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_data0_64",
+          "signal": "w_storeData1_64",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveNext1",
+          "signal": "w_swDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data1_64",
+          "signal": "w_storeData2_64",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext1",
+          "signal": "w_freeFsw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext2",
+          "signal": "w_shwDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext2",
+          "signal": "w_freeFshw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_data2_64",
+          "signal": "w_storeData3_64",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_driveNext3",
+          "signal": "w_sdwDrive",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data3_64",
+          "signal": "w_storeData4_64",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext3",
+          "signal": "w_freeFsdw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        }
+      ],
+      "family": "SelSplit"
+    },
+    {
+      "instance_name": "sidleFifo",
+      "module_type": "sidleFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/sidleFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_sIdleDrive",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2sidle",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFsIdle",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFsidle",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_104",
+          "signal": "{w_sIdleMemAddr_32,w_sIdleMemData_64,w_sIdleMemWen_8}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data_104",
+          "signal": "{r_sIdleMemAddr_32,r_sIdleMemData_64,r_sIdleMemWen_8}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "swFifo",
+      "module_type": "swFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/swFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_swDrive",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2sw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFsw",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFsw",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_104",
+          "signal": "{w_swMemAddr_32,w_swMemData_64,w_swMemWen_8}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data_104",
+          "signal": "{r_swMemAddr_32,r_swMemData_64,r_swMemWen_8}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "shwFifo",
+      "module_type": "shwFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/shwFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_shwDrive",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2shw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFshw",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFshw",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_104",
+          "signal": "{w_shwMemAddr_32,w_shwMemData_64,8'b0000_0001}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data_104",
+          "signal": "{r_shwMemAddr_32,r_shwMemData_64,r_shwMemWen_8}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "sdwFifo",
+      "module_type": "sdwFifo_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/sdwFifo_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive",
+          "signal": "w_sdwDrive",
+          "port_direction": "input",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "w_free2sdw",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free",
+          "signal": "w_freeFsdw",
+          "port_direction": "output",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "w_driveFsdw",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "i_data_104",
+          "signal": "{w_sdwMemAddr_32,w_sdwMemData_64,8'b0000_1111}",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "o_data_104",
+          "signal": "{r_sdwMemAddr_32,r_sdwMemData_64,r_sdwMemWen_8}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ],
+      "family": "Fifo1"
+    },
+    {
+      "instance_name": "outMerge",
+      "module_type": "cMutexMerge2_104b_lsu",
+      "artifact_kind": "derived_component",
+      "target_ref": "../components/cMutexMerge2_104b_lsu.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "i_drive0",
+          "signal": "w_drvFlidleMerge",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_drive1",
+          "signal": "w_drvFsidleMerge",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data0_104",
+          "signal": "{{64{1'b0}}, w_loadAddr_32,{8{1'b0}}}",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "i_data1_104",
+          "signal": "w_storeDataAddr_104",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "i_freeNext",
+          "signal": "i_dataRoutFreeToDataUpate_1",
+          "port_direction": "input",
+          "signal_role": "event_free"
+        },
+        {
+          "port": "rst",
+          "signal": "rst",
+          "port_direction": "input",
+          "signal_role": "reset"
+        },
+        {
+          "port": "o_free0",
+          "signal": "w_f2lidleMerge",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_free1",
+          "signal": "w_f2sidleMerge",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "o_driveNext",
+          "signal": "o_dataUpdateDriveToMem_1",
+          "port_direction": "output",
+          "signal_role": "event_drive"
+        },
+        {
+          "port": "o_data_104",
+          "signal": "{o_memData_64, o_memAddr_32, o_memWen_8}",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        }
+      ],
+      "family": "MutexMerge"
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [
+        "o_dataUpdateDriveToMem_1",
+        "o_dataUpdateDriveToWriteback_1"
+      ],
+      "payload_inputs": [
+        "i_lsuToDataUpdate_1",
+        "i_memData_64",
+        "i_storeData_64"
+      ],
+      "payload_outputs": [
+        "o_dataUpdateToLsu_1",
+        "o_dataUpdateToWritebackData_74",
+        "o_memData_64"
+      ],
+      "condition_inputs": [
+        "i_stateValid_12"
+      ],
+      "condition_outputs": [],
+      "reset_inputs": [
+        "rst"
+      ],
+      "reset_outputs": []
+    },
+    "control_signals": [
+      "i_stateValid_12"
+    ],
+    "backpressure_signals": [
+      "i_dataRoutFreeToDataUpate_1",
+      "i_writebackFreeToDataUpate_1"
+    ]
+  },
+  "direct_children": {
+    "modules": [],
+    "components": [
+      "cMutexMerge2_104b_lsu",
+      "cMutexMerge4_32b_lsu",
+      "cMutexMerge4_74b_lsu",
+      "cSelector2_2b_lsu",
+      "cSelector4_68b_lsu",
+      "cSelector8_106b_lsu",
+      "lIdleFifo_lsu",
+      "lbFifo_lsu",
+      "ldwFifo_lsu",
+      "ldwmFifo_lsu",
+      "lhwFifo_lsu",
+      "lhwmFifo_lsu",
+      "lwFifo_lsu",
+      "lwmFifo_lsu",
+      "sdwFifo_lsu",
+      "shwFifo_lsu",
+      "sidleFifo_lsu",
+      "swFifo_lsu"
+    ]
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "i_addrFromPeripheralFlag_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_dHi_4",
+        "kind": "port_input",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_dLo_4",
+        "kind": "port_input",
+        "width_text": "[3:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_dataRoutFreeToDataUpate_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "i_loadSign_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_load_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_lsuToDataUpdate_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_lsuType_2",
+        "kind": "port_input",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_memAddr_32",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "i_memData_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_misaligned_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_stateValid_12",
+        "kind": "port_input",
+        "width_text": "[11:0]",
+        "role": "condition"
+      },
+      {
+        "name": "i_storeData_64",
+        "kind": "port_input",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "i_store_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "i_writebackFreeToDataUpate_1",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "o_dataUpdateDriveToMem_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_dataUpdateDriveToWriteback_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "o_dataUpdateToLsu_1",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_dataUpdateToWritebackData_74",
+        "kind": "port_output",
+        "width_text": "[73:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_memAddr_32",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "o_memData_64",
+        "kind": "port_output",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "o_memWen_8",
+        "kind": "port_output",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_addrFromPeripheralFlag_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_lsuType_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_memAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_misaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "r_sIdleMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_sIdleMemDataTemp_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_sIdleMemData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_sIdleMemWenTemp_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_sIdleMemWen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_sdwMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_sdwMemData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_sdwMemWen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_shwMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_shwMemData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_shwMemWen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_storeData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_swMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "r_swMemData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "r_swMemWen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "rst",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "reset"
+      },
+      {
+        "name": "w_addrFromPeripheralFlag_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_driveFlIdle",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFlb",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFldw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFldwm",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFlhw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFlhwm",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFlw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFlwm",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFsdw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFshw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFsidle",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveFsw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveToLoadSelector_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveToStoreSelectorDelay1_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveToStoreSelectorDelay2_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveToStoreSelectorDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_driveToStoreSelector_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_drvFlidleMerge",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_drvFsidleMerge",
+        "kind": "implicit_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_f2lidleMerge",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_f2sidleMerge",
+        "kind": "implicit_signal",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "w_free2lIdle",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2lb",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2ldw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2ldwm",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2lhw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2lhwm",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2lw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2lwm",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2sdw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2shw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2sidle",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_free2sw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFlIdle",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFlb",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFldw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFldwm",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFlhw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFlhwm",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFlw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFlwm",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFsIdle",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFsdw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFshw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_freeFsw",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_free"
+      },
+      {
+        "name": "w_lIdleAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lIdleData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lIdleDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lIdleDriveDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lIdleFifoToAddrMerge_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lIdleLoadSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lIdleMisaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lbAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lbData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lbDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lbDriveDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lbFifoToDataMerge_34",
+        "kind": "local_signal",
+        "width_text": "[33:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lbGrfData_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lbLoadSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lbMisaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldwAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldwData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_ldwDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_ldwDriveDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_ldwFifoToDataMerge_66",
+        "kind": "local_signal",
+        "width_text": "[65:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_ldwGrfData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_ldwLoadSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldwMisaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldwmAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldwmData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_ldwmDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_ldwmDriveDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_ldwmLoadSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldwmMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldwmMisaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_ldwmTemp_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lhwAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lhwData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lhwDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lhwDriveDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lhwFifoToDataMerge_34",
+        "kind": "local_signal",
+        "width_text": "[33:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lhwGrfData_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lhwLoadSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lhwMisaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lhwmAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lhwmData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lhwmDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lhwmDriveDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lhwmLoadSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lhwmMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lhwmMisaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lhwmTemp_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_loadSelectorToDataUpdateSelector_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_loadValid_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "condition"
+      },
+      {
+        "name": "w_lsuType_2",
+        "kind": "local_signal",
+        "width_text": "[1:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lwAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lwData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lwDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lwDriveDelay1_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lwDriveDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lwFifoToDataMerge_34",
+        "kind": "local_signal",
+        "width_text": "[33:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lwGrfData_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lwLoadSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lwMisaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lwmAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lwmData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_lwmDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lwmDriveDelay_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_lwmLoadSign_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lwmMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lwmMisaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_lwmTemp_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_memAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_memData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_misaligned_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sIdleDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_sIdleMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sIdleMemData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_sIdleMemWen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sdwDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_sdwMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_sdwMemData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_shwDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_shwMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_shwMemData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_stateValid_12",
+        "kind": "local_signal",
+        "width_text": "[11:0]",
+        "role": "condition"
+      },
+      {
+        "name": "w_storeData1_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_storeData2_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_storeData3_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_storeData4_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_storeDataAddr_104",
+        "kind": "implicit_signal",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "w_storeData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_storeSelectorToDataUpdateSelector_1",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_storeValid_4",
+        "kind": "local_signal",
+        "width_text": "[3:0]",
+        "role": "condition"
+      },
+      {
+        "name": "w_swDrive",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "event_drive"
+      },
+      {
+        "name": "w_swMemAddr_32",
+        "kind": "local_signal",
+        "width_text": "[31:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "w_swMemData_64",
+        "kind": "local_signal",
+        "width_text": "[63:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "w_swMemWen_8",
+        "kind": "local_signal",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "{i_dHi_4,i_dLo_4,w_lbFifoToDataMerge_34[33:2],{32{1'b0}},w_lbFifoToDataMerge_34[1:0]}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{i_dHi_4,i_dLo_4,w_ldwFifoToDataMerge_66}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{i_dHi_4,i_dLo_4,w_lhwFifoToDataMerge_34[33:2],{32{1'b0}},w_lhwFifoToDataMerge_34[1:0]}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{i_dHi_4,i_dLo_4,w_lwFifoToDataMerge_34[33:2],{32{1'b0}},w_lwFifoToDataMerge_34[1:0]}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{i_misaligned_1,i_loadSign_1,i_memAddr_32,i_memData_64,w_loadValid_8}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "condition"
+      },
+      {
+        "name": "{i_storeData_64,w_storeValid_4}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "condition"
+      },
+      {
+        "name": "{i_store_1,i_load_1}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{o_memData_64, o_memAddr_32, o_memWen_8}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{r_sIdleMemAddr_32,r_sIdleMemData_64,r_sIdleMemWen_8}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{r_sdwMemAddr_32,r_sdwMemData_64,r_sdwMemWen_8}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{r_shwMemAddr_32,r_shwMemData_64,r_shwMemWen_8}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{r_swMemAddr_32,r_swMemData_64,r_swMemWen_8}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_lIdleMisaligned_1,w_lIdleLoadSign_1,w_lIdleAddr_32,w_lIdleData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_lbMisaligned_1,w_lbLoadSign_1,w_lbAddr_32,w_lbData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_ldwMisaligned_1,w_ldwLoadSign_1,w_ldwAddr_32,w_ldwData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_ldwmAddr_32,w_ldwmData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_ldwmMemAddr_32,w_ldwmTemp_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{w_ldwmMisaligned_1,w_ldwmLoadSign_1,w_ldwmAddr_32,w_ldwmData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_lhwMisaligned_1,w_lhwLoadSign_1,w_lhwAddr_32,w_lhwData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_lhwmAddr_32,w_lhwmData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_lhwmMemAddr_32,w_lhwmTemp_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{w_lhwmMisaligned_1,w_lhwmLoadSign_1,w_lhwmAddr_32,w_lhwmData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_lwMisaligned_1,w_lwLoadSign_1,w_lwAddr_32,w_lwData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_lwmAddr_32,w_lwmData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_lwmMemAddr_32,w_lwmTemp_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "{w_lwmMisaligned_1,w_lwmLoadSign_1,w_lwmAddr_32,w_lwmData_64}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_sIdleMemAddr_32,w_sIdleMemData_64,w_sIdleMemWen_8}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_sdwMemAddr_32,w_sdwMemData_64,8'b0000_1111}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_shwMemAddr_32,w_shwMemData_64,8'b0000_0001}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{w_swMemAddr_32,w_swMemData_64,w_swMemWen_8}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "payload_data"
+      },
+      {
+        "name": "{{64{1'b0}}, w_loadAddr_32,{8{1'b0}}}",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "i_lsuToDataUpdate_1",
+        "instance_name": "dataUpdateSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{i_store_1,i_load_1}",
+        "instance_name": "dataUpdateSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "i_data_2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "o_dataUpdateToLsu_1",
+        "instance_name": "dataUpdateSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveToLoadSelector_1",
+        "instance_name": "dataUpdateSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "o_driveNext0",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_loadSelectorToDataUpdateSelector_1",
+        "instance_name": "dataUpdateSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "i_freeNext0",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveToStoreSelector_1",
+        "instance_name": "dataUpdateSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "o_driveNext1",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_storeSelectorToDataUpdateSelector_1",
+        "instance_name": "dataUpdateSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "i_freeNext1",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "dataUpdateSelector",
+        "module_type": "cSelector2_2b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveToLoadSelector_1",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{i_misaligned_1,i_loadSign_1,i_memAddr_32,i_memData_64,w_loadValid_8}",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_data_106",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_loadSelectorToDataUpdateSelector_1",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_lIdleDrive",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_driveNext0",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFlIdle",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_freeNext0",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{w_lIdleMisaligned_1,w_lIdleLoadSign_1,w_lIdleAddr_32,w_lIdleData_64}",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_data0_98",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_lbDrive",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_driveNext1",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_lbMisaligned_1,w_lbLoadSign_1,w_lbAddr_32,w_lbData_64}",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_data1_98",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFlb",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_freeNext1",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lhwDrive",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_driveNext2",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFlhw",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_freeNext2",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{w_lhwMisaligned_1,w_lhwLoadSign_1,w_lhwAddr_32,w_lhwData_64}",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_data2_98",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_ldwDrive",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_driveNext3",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_ldwMisaligned_1,w_ldwLoadSign_1,w_ldwAddr_32,w_ldwData_64}",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_data3_98",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFldw",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_freeNext3",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lwDrive",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_driveNext4",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_lwMisaligned_1,w_lwLoadSign_1,w_lwAddr_32,w_lwData_64}",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_data4_98",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFlw",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_freeNext4",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lhwmDrive",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_driveNext5",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_lhwmMisaligned_1,w_lhwmLoadSign_1,w_lhwmAddr_32,w_lhwmData_64}",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_data5_98",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFlhwm",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_freeNext5",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_ldwmDrive",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_driveNext6",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_ldwmMisaligned_1,w_ldwmLoadSign_1,w_ldwmAddr_32,w_ldwmData_64}",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_data6_98",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFldwm",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_freeNext6",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lwmDrive",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_driveNext7",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_lwmMisaligned_1,w_lwmLoadSign_1,w_lwmAddr_32,w_lwmData_64}",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "o_data7_98",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFlwm",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "i_freeNext7",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "loadSelector",
+        "module_type": "cSelector8_106b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lIdleDriveDelay_1",
+        "instance_name": "lIdleFifo",
+        "module_type": "lIdleFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lIdleAddr_32",
+        "instance_name": "lIdleFifo",
+        "module_type": "lIdleFifo_lsu",
+        "port": "i_data_32",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFlIdle",
+        "instance_name": "lIdleFifo",
+        "module_type": "lIdleFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "lIdleFifo",
+        "module_type": "lIdleFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFlIdle",
+        "instance_name": "lIdleFifo",
+        "module_type": "lIdleFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_lIdleFifoToAddrMerge_32",
+        "instance_name": "lIdleFifo",
+        "module_type": "lIdleFifo_lsu",
+        "port": "o_data_32",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2lIdle",
+        "instance_name": "lIdleFifo",
+        "module_type": "lIdleFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lbDriveDelay_1",
+        "instance_name": "lbFifo",
+        "module_type": "lbFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lbGrfData_32",
+        "instance_name": "lbFifo",
+        "module_type": "lbFifo_lsu",
+        "port": "i_data_32",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFlb",
+        "instance_name": "lbFifo",
+        "module_type": "lbFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "lbFifo",
+        "module_type": "lbFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFlb",
+        "instance_name": "lbFifo",
+        "module_type": "lbFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_lbFifoToDataMerge_34",
+        "instance_name": "lbFifo",
+        "module_type": "lbFifo_lsu",
+        "port": "o_data_34",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2lb",
+        "instance_name": "lbFifo",
+        "module_type": "lbFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lhwDriveDelay_1",
+        "instance_name": "lhwFifo",
+        "module_type": "lhwFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lhwGrfData_32",
+        "instance_name": "lhwFifo",
+        "module_type": "lhwFifo_lsu",
+        "port": "i_data_32",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFlhw",
+        "instance_name": "lhwFifo",
+        "module_type": "lhwFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "lhwFifo",
+        "module_type": "lhwFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFlhw",
+        "instance_name": "lhwFifo",
+        "module_type": "lhwFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_lhwFifoToDataMerge_34",
+        "instance_name": "lhwFifo",
+        "module_type": "lhwFifo_lsu",
+        "port": "o_data_34",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2lhw",
+        "instance_name": "lhwFifo",
+        "module_type": "lhwFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_ldwDriveDelay_1",
+        "instance_name": "ldwFifo",
+        "module_type": "ldwFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_ldwGrfData_64",
+        "instance_name": "ldwFifo",
+        "module_type": "ldwFifo_lsu",
+        "port": "i_data_64",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFldw",
+        "instance_name": "ldwFifo",
+        "module_type": "ldwFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "ldwFifo",
+        "module_type": "ldwFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFldw",
+        "instance_name": "ldwFifo",
+        "module_type": "ldwFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_ldwFifoToDataMerge_66",
+        "instance_name": "ldwFifo",
+        "module_type": "ldwFifo_lsu",
+        "port": "o_data_66",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2ldw",
+        "instance_name": "ldwFifo",
+        "module_type": "ldwFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lwDriveDelay1_1",
+        "instance_name": "lwFifo",
+        "module_type": "lwFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2lw",
+        "instance_name": "lwFifo",
+        "module_type": "lwFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "lwFifo",
+        "module_type": "lwFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFlw",
+        "instance_name": "lwFifo",
+        "module_type": "lwFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFlw",
+        "instance_name": "lwFifo",
+        "module_type": "lwFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_lwGrfData_32",
+        "instance_name": "lwFifo",
+        "module_type": "lwFifo_lsu",
+        "port": "i_data_32",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lwFifoToDataMerge_34",
+        "instance_name": "lwFifo",
+        "module_type": "lwFifo_lsu",
+        "port": "o_data_34",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_lhwmDriveDelay_1",
+        "instance_name": "lhwmFifo",
+        "module_type": "lhwmFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2lhwm",
+        "instance_name": "lhwmFifo",
+        "module_type": "lhwmFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "lhwmFifo",
+        "module_type": "lhwmFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFlhwm",
+        "instance_name": "lhwmFifo",
+        "module_type": "lhwmFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFlhwm",
+        "instance_name": "lhwmFifo",
+        "module_type": "lhwmFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_lhwmAddr_32,w_lhwmData_64}",
+        "instance_name": "lhwmFifo",
+        "module_type": "lhwmFifo_lsu",
+        "port": "i_data_96",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{w_lhwmMemAddr_32,w_lhwmTemp_64}",
+        "instance_name": "lhwmFifo",
+        "module_type": "lhwmFifo_lsu",
+        "port": "o_data_96",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_ldwmDriveDelay_1",
+        "instance_name": "ldwmFifo",
+        "module_type": "ldwmFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2ldwm",
+        "instance_name": "ldwmFifo",
+        "module_type": "ldwmFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "ldwmFifo",
+        "module_type": "ldwmFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFldwm",
+        "instance_name": "ldwmFifo",
+        "module_type": "ldwmFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFldwm",
+        "instance_name": "ldwmFifo",
+        "module_type": "ldwmFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_ldwmAddr_32,w_ldwmData_64}",
+        "instance_name": "ldwmFifo",
+        "module_type": "ldwmFifo_lsu",
+        "port": "i_data_96",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{w_ldwmMemAddr_32,w_ldwmTemp_64}",
+        "instance_name": "ldwmFifo",
+        "module_type": "ldwmFifo_lsu",
+        "port": "o_data_96",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_lwmDriveDelay_1",
+        "instance_name": "lwmFifo",
+        "module_type": "lwmFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2lwm",
+        "instance_name": "lwmFifo",
+        "module_type": "lwmFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "lwmFifo",
+        "module_type": "lwmFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFlwm",
+        "instance_name": "lwmFifo",
+        "module_type": "lwmFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFlwm",
+        "instance_name": "lwmFifo",
+        "module_type": "lwmFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_lwmAddr_32,w_lwmData_64}",
+        "instance_name": "lwmFifo",
+        "module_type": "lwmFifo_lsu",
+        "port": "i_data_96",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{w_lwmMemAddr_32,w_lwmTemp_64}",
+        "instance_name": "lwmFifo",
+        "module_type": "lwmFifo_lsu",
+        "port": "o_data_96",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFlIdle",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "i_drive0",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFlhwm",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "i_drive1",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFlwm",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "i_drive2",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFldwm",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "i_drive3",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lIdleFifoToAddrMerge_32",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "i_data0_32",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lhwmMemAddr_32",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "i_data1_32",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_lwmMemAddr_32",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "i_data2_32",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_ldwmMemAddr_32",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "i_data3_32",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_f2lidleMerge",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2lIdle",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "o_free0",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2lhwm",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "o_free1",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2lwm",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "o_free2",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2ldwm",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "o_free3",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_drvFlidleMerge",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_loadAddr_32",
+        "instance_name": "lidleMerge",
+        "module_type": "cMutexMerge4_32b_lsu",
+        "port": "o_data_32",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFlb",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "i_drive0",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFlhw",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "i_drive1",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFlw",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "i_drive2",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_driveFldw",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "i_drive3",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{i_dHi_4,i_dLo_4,w_lbFifoToDataMerge_34[33:2],{32{1'b0}},w_lbFifoToDataMerge_34[1:0]}",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "i_data0_74",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{i_dHi_4,i_dLo_4,w_lhwFifoToDataMerge_34[33:2],{32{1'b0}},w_lhwFifoToDataMerge_34[1:0]}",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "i_data1_74",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{i_dHi_4,i_dLo_4,w_lwFifoToDataMerge_34[33:2],{32{1'b0}},w_lwFifoToDataMerge_34[1:0]}",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "i_data2_74",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{i_dHi_4,i_dLo_4,w_ldwFifoToDataMerge_66}",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "i_data3_74",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_writebackFreeToDataUpate_1",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2lb",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "o_free0",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2lhw",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "o_free1",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2lw",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "o_free2",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_free2ldw",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "o_free3",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_dataUpdateDriveToWriteback_1",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_dataUpdateToWritebackData_74",
+        "instance_name": "lbMerge",
+        "module_type": "cMutexMerge4_74b_lsu",
+        "port": "o_data_74",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveToStoreSelectorDelay1_1",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{i_storeData_64,w_storeValid_4}",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "i_data_68",
+        "port_direction": "input",
+        "signal_role": "condition",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_storeSelectorToDataUpdateSelector_1",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_sIdleDrive",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "o_driveNext0",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFsIdle",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "i_freeNext0",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_storeData1_64",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "o_data0_64",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_swDrive",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "o_driveNext1",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_storeData2_64",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "o_data1_64",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFsw",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "i_freeNext1",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_shwDrive",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "o_driveNext2",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFshw",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "i_freeNext2",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_storeData3_64",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "o_data2_64",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_sdwDrive",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "o_driveNext3",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_storeData4_64",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "o_data3_64",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_freeFsdw",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "i_freeNext3",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "storeSelector",
+        "module_type": "cSelector4_68b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_sIdleDrive",
+        "instance_name": "sidleFifo",
+        "module_type": "sidleFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2sidle",
+        "instance_name": "sidleFifo",
+        "module_type": "sidleFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "sidleFifo",
+        "module_type": "sidleFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFsIdle",
+        "instance_name": "sidleFifo",
+        "module_type": "sidleFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFsidle",
+        "instance_name": "sidleFifo",
+        "module_type": "sidleFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_sIdleMemAddr_32,w_sIdleMemData_64,w_sIdleMemWen_8}",
+        "instance_name": "sidleFifo",
+        "module_type": "sidleFifo_lsu",
+        "port": "i_data_104",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{r_sIdleMemAddr_32,r_sIdleMemData_64,r_sIdleMemWen_8}",
+        "instance_name": "sidleFifo",
+        "module_type": "sidleFifo_lsu",
+        "port": "o_data_104",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_swDrive",
+        "instance_name": "swFifo",
+        "module_type": "swFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2sw",
+        "instance_name": "swFifo",
+        "module_type": "swFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "swFifo",
+        "module_type": "swFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFsw",
+        "instance_name": "swFifo",
+        "module_type": "swFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFsw",
+        "instance_name": "swFifo",
+        "module_type": "swFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_swMemAddr_32,w_swMemData_64,w_swMemWen_8}",
+        "instance_name": "swFifo",
+        "module_type": "swFifo_lsu",
+        "port": "i_data_104",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{r_swMemAddr_32,r_swMemData_64,r_swMemWen_8}",
+        "instance_name": "swFifo",
+        "module_type": "swFifo_lsu",
+        "port": "o_data_104",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_shwDrive",
+        "instance_name": "shwFifo",
+        "module_type": "shwFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2shw",
+        "instance_name": "shwFifo",
+        "module_type": "shwFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "shwFifo",
+        "module_type": "shwFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFshw",
+        "instance_name": "shwFifo",
+        "module_type": "shwFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFshw",
+        "instance_name": "shwFifo",
+        "module_type": "shwFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_shwMemAddr_32,w_shwMemData_64,8'b0000_0001}",
+        "instance_name": "shwFifo",
+        "module_type": "shwFifo_lsu",
+        "port": "i_data_104",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{r_shwMemAddr_32,r_shwMemData_64,r_shwMemWen_8}",
+        "instance_name": "shwFifo",
+        "module_type": "shwFifo_lsu",
+        "port": "o_data_104",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_sdwDrive",
+        "instance_name": "sdwFifo",
+        "module_type": "sdwFifo_lsu",
+        "port": "i_drive",
+        "port_direction": "input",
+        "signal_role": "event_drive",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_free2sdw",
+        "instance_name": "sdwFifo",
+        "module_type": "sdwFifo_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "sdwFifo",
+        "module_type": "sdwFifo_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_freeFsdw",
+        "instance_name": "sdwFifo",
+        "module_type": "sdwFifo_lsu",
+        "port": "o_free",
+        "port_direction": "output",
+        "signal_role": "event_free",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_driveFsdw",
+        "instance_name": "sdwFifo",
+        "module_type": "sdwFifo_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{w_sdwMemAddr_32,w_sdwMemData_64,8'b0000_1111}",
+        "instance_name": "sdwFifo",
+        "module_type": "sdwFifo_lsu",
+        "port": "i_data_104",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{r_sdwMemAddr_32,r_sdwMemData_64,r_sdwMemWen_8}",
+        "instance_name": "sdwFifo",
+        "module_type": "sdwFifo_lsu",
+        "port": "o_data_104",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_drvFlidleMerge",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "i_drive0",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_drvFsidleMerge",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "i_drive1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "{{64{1'b0}}, w_loadAddr_32,{8{1'b0}}}",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "i_data0_104",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_storeDataAddr_104",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "i_data1_104",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "i_dataRoutFreeToDataUpate_1",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "i_freeNext",
+        "port_direction": "input",
+        "signal_role": "event_free",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "rst",
+        "port_direction": "input",
+        "signal_role": "reset",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "w_f2lidleMerge",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "o_free0",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "w_f2sidleMerge",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "o_free1",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "o_dataUpdateDriveToMem_1",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "o_driveNext",
+        "port_direction": "output",
+        "signal_role": "event_drive",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "{o_memData_64, o_memAddr_32, o_memWen_8}",
+        "instance_name": "outMerge",
+        "module_type": "cMutexMerge2_104b_lsu",
+        "port": "o_data_104",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [],
+    "reachable_components": [
+      "cMutexMerge2_104b_lsu",
+      "cMutexMerge4_32b_lsu",
+      "cMutexMerge4_74b_lsu",
+      "cSelector2_2b_lsu",
+      "cSelector4_68b_lsu",
+      "cSelector8_106b_lsu",
+      "lIdleFifo_lsu",
+      "lbFifo_lsu",
+      "ldwFifo_lsu",
+      "ldwmFifo_lsu",
+      "lhwFifo_lsu",
+      "lhwmFifo_lsu",
+      "lwFifo_lsu",
+      "lwmFifo_lsu",
+      "sdwFifo_lsu",
+      "shwFifo_lsu",
+      "sidleFifo_lsu",
+      "swFifo_lsu"
+    ],
+    "families_used": [
+      "Fifo1",
+      "MutexMerge",
+      "SelSplit"
+    ]
+  },
+  "warnings": []
+}

@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 from typing import Any, Dict, List
 
+from .boundary_policy import is_skip_helper_module
 from .flow_inference import infer_signal_role, summarize_component_semantics
 
 
@@ -20,6 +21,16 @@ def load_family_templates(repo_root: Path) -> Dict[str, Dict[str, Any]]:
     return templates
 
 
+def missing_family_template(family: str) -> Dict[str, Any]:
+    return {
+        "family": family,
+        "kind": "missing_family_template",
+        "contract": {},
+        "_template_missing": True,
+        "_template_source": "missing_family_template",
+    }
+
+
 def build_component_json(
     parse_result: Dict[str, Any],
     family: str,
@@ -32,8 +43,8 @@ def build_component_json(
     role_mapping = module_role_mapping or infer_role_mapping(parse_result, cc_header)
     flow_semantics = summarize_component_semantics(template, role_mapping)
     warnings = list(parse_result.get("warnings", []))
-    if cc_header and not role_mapping_from_header(cc_header):
-        warnings.append("cc_header present but roles missing or empty")
+    if template.get("_template_missing"):
+        warnings.append(f"family template missing for {family}; using empty contract")
 
     return {
         "schema": "parser_pipeline_component",
@@ -42,7 +53,7 @@ def build_component_json(
         "artifact_kind": "derived_component",
         "family": family,
         "file": str(file_path),
-        "template_source": "parser/schemas/json_templates/family_level.json",
+        "template_source": template.get("_template_source", "parser/schemas/json_templates/family_level.json"),
         "interface": {
             "params": params,
             "ports": parse_result.get("ports", []),
@@ -53,7 +64,11 @@ def build_component_json(
         "flow_semantics": flow_semantics,
         "implementation_summary": {
             "internal_dependencies": sorted(
-                {instance["module_type"] for instance in parse_result.get("instances", [])}
+                {
+                    instance["module_type"]
+                    for instance in parse_result.get("instances", [])
+                    if not is_skip_helper_module(instance["module_type"])
+                }
             ),
             "stops_at_family_level": True,
         },
@@ -62,17 +77,12 @@ def build_component_json(
 
 
 def infer_role_mapping(parse_result: Dict[str, Any], cc_header: Dict[str, Any]) -> Dict[str, Any]:
-    header_roles = role_mapping_from_header(cc_header)
-    if header_roles:
-        return {
-            "upstream": {"ports": header_roles.get("upstream", [])},
-            "downstream": {"ports": header_roles.get("downstream", [])},
-            "payload": {"ports": header_roles.get("payload", [])},
-            "fire": {"ports": header_roles.get("fire", [])},
-        }
-
-    upstream: List[str] = []
-    downstream: List[str] = []
+    # cc_header is accepted for call-site compatibility; role mapping is inferred from parsed ports.
+    _ = cc_header
+    upstream_drive: List[str] = []
+    upstream_free: List[str] = []
+    downstream_drive: List[str] = []
+    downstream_free: List[str] = []
     payload: List[str] = []
     fire: List[str] = []
     condition: List[str] = []
@@ -80,14 +90,14 @@ def infer_role_mapping(parse_result: Dict[str, Any], cc_header: Dict[str, Any]) 
         role = infer_signal_role(port["name"])
         if role == "event_drive":
             if port["direction"] == "input":
-                upstream.append(port["name"])
+                upstream_drive.append(port["name"])
             else:
-                downstream.append(port["name"])
+                downstream_drive.append(port["name"])
         elif role == "event_free":
             if port["direction"] == "output":
-                upstream.append(port["name"])
+                upstream_free.append(port["name"])
             else:
-                downstream.append(port["name"])
+                downstream_free.append(port["name"])
         elif role == "payload_data":
             payload.append(port["name"])
         elif role == "condition":
@@ -96,23 +106,11 @@ def infer_role_mapping(parse_result: Dict[str, Any], cc_header: Dict[str, Any]) 
             fire.append(port["name"])
 
     mapping: Dict[str, Any] = {
-        "upstream": {"ports": upstream},
-        "downstream": {"ports": downstream},
+        "upstream": {"ports": upstream_drive + upstream_free},
+        "downstream": {"ports": downstream_drive + downstream_free},
         "payload": {"ports": payload},
         "fire": {"ports": fire},
     }
     if condition:
         mapping["condition"] = {"ports": condition}
     return mapping
-
-
-def role_mapping_from_header(cc_header: Dict[str, Any]) -> Dict[str, List[str]]:
-    roles = cc_header.get("roles", {}) if cc_header else {}
-    if not isinstance(roles, dict):
-        return {}
-    extracted: Dict[str, List[str]] = {}
-    for key in ("upstream", "downstream", "payload", "fire"):
-        value = roles.get(key)
-        if isinstance(value, list):
-            extracted[key] = value
-    return extracted

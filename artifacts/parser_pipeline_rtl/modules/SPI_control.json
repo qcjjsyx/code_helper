@@ -1,0 +1,3193 @@
+{
+  "schema": "parser_pipeline_module",
+  "schema_version": "1.0",
+  "name": "SPI_control",
+  "artifact_kind": "module",
+  "module_role": "submodule",
+  "file": "test_data/rtl/IONet/SPI/SPI1/SPI_control.v",
+  "interface": {
+    "params": [],
+    "ports": [
+      {
+        "name": "clk",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "rst_n",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "io_ctl_sclk",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "io_ctl_miso",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "io_ctl_mosi",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "io_ctl_nss",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "sclk_in",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "miso_in",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "mosi_in",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "nss_in",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "sclk_out",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "miso_out",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "mosi_out",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "nss_out",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "SPI_interrupt",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "PADDR",
+        "direction": "input",
+        "width_text": "[7:0]"
+      },
+      {
+        "name": "PENABLE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PSEL",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PWDATA",
+        "direction": "input",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "PWRITE",
+        "direction": "input",
+        "width_text": "1"
+      },
+      {
+        "name": "PRDATA",
+        "direction": "output",
+        "width_text": "[31:0]"
+      },
+      {
+        "name": "PREADY",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "PSLVERR",
+        "direction": "output",
+        "width_text": "1"
+      },
+      {
+        "name": "nss_reg",
+        "direction": "output",
+        "width_text": "1"
+      }
+    ],
+    "reset": {
+      "reset_port": "rst_n",
+      "reset_active_low": true
+    }
+  },
+  "local_signals": [
+    {
+      "name": "BSY",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "OVR",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "MODF",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "MODF_reg",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "CRCERR",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RXNE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TXE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CRCBSY",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RDR",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "TDR",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "CRCPOLY",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "TXCRC",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "RXCRC",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "BIDIMODE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "BIDIOE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CRCEN",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CRCNEXT",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DFF",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RXONLY",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "SSM",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "SSI",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "LSBFIRST",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "SPE_apb",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "SPE",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "BR",
+      "kind": "wire",
+      "width_text": "[2:0]"
+    },
+    {
+      "name": "MSTR_apb",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "MSTR",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "CPOL",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CPHA",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TXEIE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RXNEIE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "ERRIE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "SSOE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TXDMAE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RXDMAE",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "SR_r",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DR_w",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "DR_r",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CR1_w",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CR1_r",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "sclk_out_div",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "sclk_m_div",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "sclk_m",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "sclk_s",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "M_en",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "S_en",
+      "kind": "reg",
+      "width_text": "1"
+    },
+    {
+      "name": "enable_m",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "enable_s",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "crc_en_m",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "crc_en_s",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "enable",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "crc_en",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "rx_m",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "rx_s",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "tx_m",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "tx_s",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RDR_m",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "RDR_s",
+      "kind": "wire",
+      "width_text": "[15:0]"
+    },
+    {
+      "name": "busy_m",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "busy_s",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RXNE_m",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "RXNE_s",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TXE_m",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "TXE_s",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "OVR_m",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "OVR_s",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "OVR_in",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "rxonly",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CRC_busy_rx",
+      "kind": "wire",
+      "width_text": "1"
+    },
+    {
+      "name": "CRC_busy_tx",
+      "kind": "wire",
+      "width_text": "1"
+    }
+  ],
+  "instances": [
+    {
+      "instance_name": "clk_div_u",
+      "module_type": "clk_div",
+      "artifact_kind": "module",
+      "target_ref": "../modules/clk_div.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst_n",
+          "signal": "rst_n",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rx_only",
+          "signal": "RXONLY",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "M_en",
+          "signal": "M_en",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DFF",
+          "signal": "DFF",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "enable",
+          "signal": "enable_m | crc_en_m",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "BR",
+          "signal": "BR",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "nss_out",
+          "signal": "nss_out",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "sclk_m",
+          "signal": "sclk_m_div",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "sclk_out",
+          "signal": "sclk_out_div",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "spi_m_u",
+      "module_type": "spi_m",
+      "artifact_kind": "module",
+      "target_ref": "../modules/spi_m.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "sclk",
+          "signal": "sclk_m",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst_n",
+          "signal": "rst_n",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DFF",
+          "signal": "DFF",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "M_en",
+          "signal": "M_en",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DR_w",
+          "signal": "DR_w",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "data_in",
+          "signal": "TDR",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "LSBFIRST",
+          "signal": "LSBFIRST",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rx",
+          "signal": "rx_m",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DR_r",
+          "signal": "DR_r",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rxonly",
+          "signal": "RXONLY",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "data_out",
+          "signal": "RDR_m",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "OVR",
+          "signal": "OVR_m",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRC_next",
+          "signal": "CRCNEXT",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TXCRC",
+          "signal": "TXCRC",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CPHA",
+          "signal": "CPHA",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RXNE",
+          "signal": "RXNE_m",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TXE",
+          "signal": "TXE_m",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "enable",
+          "signal": "enable_m",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "crc_en",
+          "signal": "crc_en_m",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "busy",
+          "signal": "busy_m",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "tx",
+          "signal": "tx_m",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "spi_s_u",
+      "module_type": "spi_s",
+      "artifact_kind": "module",
+      "target_ref": "../modules/spi_s.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "sclk",
+          "signal": "sclk_s",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst_n",
+          "signal": "rst_n",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "S_en",
+          "signal": "S_en",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DR_w",
+          "signal": "DR_w",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DFF",
+          "signal": "DFF",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "data_in",
+          "signal": "TDR",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "LSBFIRST",
+          "signal": "LSBFIRST",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rx",
+          "signal": "rx_s",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DR_r",
+          "signal": "DR_r",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rxonly",
+          "signal": "rxonly",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "data_out",
+          "signal": "RDR_s",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "OVR",
+          "signal": "OVR_s",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRC_next",
+          "signal": "CRCNEXT",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TXCRC",
+          "signal": "TXCRC",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CPHA",
+          "signal": "CPHA",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RXNE",
+          "signal": "RXNE_s",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TXE",
+          "signal": "TXE_s",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "enable",
+          "signal": "enable_s",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "crc_en",
+          "signal": "crc_en_s",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "busy",
+          "signal": "busy_s",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "tx",
+          "signal": "miso_out",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "CRC_rx_u",
+      "module_type": "CRC_rx",
+      "artifact_kind": "module",
+      "target_ref": "../modules/CRC_rx.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst_n",
+          "signal": "rst_n",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRC_en",
+          "signal": "CRCEN",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RXNE",
+          "signal": "RXNE",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DFF",
+          "signal": "DFF",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRC_next",
+          "signal": "CRCNEXT",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "datain",
+          "signal": "RDR",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRCERR",
+          "signal": "CRCERR",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "poly",
+          "signal": "CRCPOLY",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRC_out",
+          "signal": "RXCRC",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRC_busy",
+          "signal": "CRC_busy_rx",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "CRC_tx_u",
+      "module_type": "CRC_tx",
+      "artifact_kind": "module",
+      "target_ref": "../modules/CRC_tx.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst_n",
+          "signal": "rst_n",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRC_en",
+          "signal": "CRCEN",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DFF",
+          "signal": "DFF",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "datain",
+          "signal": "TDR",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "poly",
+          "signal": "CRCPOLY",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "enable",
+          "signal": "enable",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "crc_en",
+          "signal": "crc_en",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRC_out",
+          "signal": "TXCRC",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRC_busy",
+          "signal": "CRC_busy_tx",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "OVR_u",
+      "module_type": "state0",
+      "artifact_kind": "module",
+      "target_ref": "../modules/state0.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst_n",
+          "signal": "rst_n",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "S1",
+          "signal": "DR_r",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "S2",
+          "signal": "SR_r",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "S3",
+          "signal": "OVR_in",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "stateout",
+          "signal": "OVR",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "MODF_u",
+      "module_type": "state0",
+      "artifact_kind": "module",
+      "target_ref": "../modules/state0.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst_n",
+          "signal": "rst_n",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "S1",
+          "signal": "SR_r",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "S2",
+          "signal": "CR1_w",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "S3",
+          "signal": "MODF_reg",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "stateout",
+          "signal": "MODF",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    },
+    {
+      "instance_name": "reg_apb_u",
+      "module_type": "reg_apb",
+      "artifact_kind": "module",
+      "target_ref": "../modules/reg_apb.json",
+      "parameter_overrides": {},
+      "connections": [
+        {
+          "port": "clk",
+          "signal": "clk",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "rst_n",
+          "signal": "rst_n",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PADDR",
+          "signal": "PADDR",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PENABLE",
+          "signal": "PENABLE",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PSEL",
+          "signal": "PSEL",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PWDATA",
+          "signal": "PWDATA",
+          "port_direction": "input",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "PWRITE",
+          "signal": "PWRITE",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PRDATA",
+          "signal": "PRDATA",
+          "port_direction": "output",
+          "signal_role": "payload_data"
+        },
+        {
+          "port": "PREADY",
+          "signal": "PREADY",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "PSLVERR",
+          "signal": "PSLVERR",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "BSY",
+          "signal": "BSY",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "OVR",
+          "signal": "OVR",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "MODF",
+          "signal": "MODF",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRCERR",
+          "signal": "CRCERR",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RXNE",
+          "signal": "RXNE",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TXE",
+          "signal": "TXE",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRCBSY",
+          "signal": "CRCBSY",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TDR",
+          "signal": "TDR",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RDR",
+          "signal": "RDR",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRCPOLY",
+          "signal": "CRCPOLY",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TXCRC",
+          "signal": "TXCRC",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RXCRC",
+          "signal": "RXCRC",
+          "port_direction": "input",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "BIDIMODE",
+          "signal": "BIDIMODE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "BIDIOE",
+          "signal": "BIDIOE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRCEN",
+          "signal": "CRCEN",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CRCNEXT",
+          "signal": "CRCNEXT",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DFF",
+          "signal": "DFF",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RXONLY",
+          "signal": "RXONLY",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "SSM",
+          "signal": "SSM",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "SSI",
+          "signal": "SSI",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "LSBFIRST",
+          "signal": "LSBFIRST",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "SPE",
+          "signal": "SPE_apb",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "BR",
+          "signal": "BR",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "MSTR",
+          "signal": "MSTR_apb",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CPOL",
+          "signal": "CPOL",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CPHA",
+          "signal": "CPHA",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TXEIE",
+          "signal": "TXEIE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RXNEIE",
+          "signal": "RXNEIE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "ERRIE",
+          "signal": "ERRIE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "SSOE",
+          "signal": "SSOE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "TXDMAE",
+          "signal": "TXDMAE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "RXDMAE",
+          "signal": "RXDMAE",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "SR_r",
+          "signal": "SR_r",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DR_w",
+          "signal": "DR_w",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "DR_r",
+          "signal": "DR_r",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CR1_w",
+          "signal": "CR1_w",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        },
+        {
+          "port": "CR1_r",
+          "signal": "CR1_r",
+          "port_direction": "output",
+          "signal_role": "unknown"
+        }
+      ]
+    }
+  ],
+  "interface_summary": {
+    "signal_groups": {
+      "event_inputs": [],
+      "event_outputs": [],
+      "payload_inputs": [
+        "PWDATA"
+      ],
+      "payload_outputs": [
+        "PRDATA"
+      ],
+      "condition_inputs": [],
+      "condition_outputs": [],
+      "reset_inputs": [],
+      "reset_outputs": []
+    },
+    "control_signals": [],
+    "backpressure_signals": []
+  },
+  "direct_children": {
+    "modules": [
+      "CRC_rx",
+      "CRC_tx",
+      "clk_div",
+      "reg_apb",
+      "spi_m",
+      "spi_s",
+      "state0"
+    ],
+    "components": []
+  },
+  "flow_graph": {
+    "signals": [
+      {
+        "name": "BIDIMODE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BIDIOE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "BR",
+        "kind": "local_signal",
+        "width_text": "[2:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "BSY",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CPHA",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CPOL",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CR1_r",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CR1_w",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CRCBSY",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CRCEN",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CRCERR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CRCNEXT",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CRCPOLY",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "CRC_busy_rx",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "CRC_busy_tx",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DFF",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DR_r",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "DR_w",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "ERRIE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "LSBFIRST",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "MODF",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "MODF_reg",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "MSTR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "MSTR_apb",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "M_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OVR",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OVR_in",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OVR_m",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "OVR_s",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PADDR",
+        "kind": "port_input",
+        "width_text": "[7:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "PENABLE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PRDATA",
+        "kind": "port_output",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "PREADY",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PSEL",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PSLVERR",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "PWDATA",
+        "kind": "port_input",
+        "width_text": "[31:0]",
+        "role": "payload_data"
+      },
+      {
+        "name": "PWRITE",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RDR",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RDR_m",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RDR_s",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RXCRC",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "RXDMAE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RXNE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RXNEIE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RXNE_m",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RXNE_s",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "RXONLY",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SPE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SPE_apb",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SPI_interrupt",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SR_r",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SSI",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SSM",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "SSOE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "S_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TDR",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "TXCRC",
+        "kind": "local_signal",
+        "width_text": "[15:0]",
+        "role": "unknown"
+      },
+      {
+        "name": "TXDMAE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TXE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TXEIE",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TXE_m",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "TXE_s",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "busy_m",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "busy_s",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "clk",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "crc_en",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "crc_en_m",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "crc_en_s",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "enable",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "enable_m",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "enable_m | crc_en_m",
+        "kind": "expression",
+        "width_text": null,
+        "role": "unknown"
+      },
+      {
+        "name": "enable_s",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "io_ctl_miso",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "io_ctl_mosi",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "io_ctl_nss",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "io_ctl_sclk",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "miso_in",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "miso_out",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "mosi_in",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "mosi_out",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "nss_in",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "nss_out",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "nss_reg",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rst_n",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rx_m",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rx_s",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "rxonly",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_in",
+        "kind": "port_input",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_m",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_m_div",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_out",
+        "kind": "port_output",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_out_div",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "sclk_s",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "tx_m",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      },
+      {
+        "name": "tx_s",
+        "kind": "local_signal",
+        "width_text": "1",
+        "role": "unknown"
+      }
+    ],
+    "edges": [
+      {
+        "signal": "clk",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_n",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "rst_n",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RXONLY",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "rx_only",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "M_en",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "M_en",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DFF",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "DFF",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "enable_m | crc_en_m",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "enable",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "BR",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "BR",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "nss_out",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "nss_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "sclk_m_div",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "sclk_m",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "sclk_out_div",
+        "instance_name": "clk_div_u",
+        "module_type": "clk_div",
+        "port": "sclk_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "sclk_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "sclk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_n",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "rst_n",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DFF",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "DFF",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "M_en",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "M_en",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DR_w",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "DR_w",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "TDR",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "data_in",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "LSBFIRST",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "LSBFIRST",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rx_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "rx",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DR_r",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "DR_r",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RXONLY",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "rxonly",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RDR_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "data_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "OVR_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "OVR",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CRCNEXT",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "CRC_next",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "TXCRC",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "TXCRC",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CPHA",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "CPHA",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RXNE_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "RXNE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "TXE_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "TXE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "enable_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "enable",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "crc_en_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "crc_en",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "busy_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "busy",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "tx_m",
+        "instance_name": "spi_m_u",
+        "module_type": "spi_m",
+        "port": "tx",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "sclk_s",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "sclk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_n",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "rst_n",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "S_en",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "S_en",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DR_w",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "DR_w",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DFF",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "DFF",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "TDR",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "data_in",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "LSBFIRST",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "LSBFIRST",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rx_s",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "rx",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DR_r",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "DR_r",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rxonly",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "rxonly",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RDR_s",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "data_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "OVR_s",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "OVR",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CRCNEXT",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "CRC_next",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "TXCRC",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "TXCRC",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CPHA",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "CPHA",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RXNE_s",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "RXNE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "TXE_s",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "TXE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "enable_s",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "enable",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "crc_en_s",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "crc_en",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "busy_s",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "busy",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "miso_out",
+        "instance_name": "spi_s_u",
+        "module_type": "spi_s",
+        "port": "tx",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_n",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "rst_n",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CRCEN",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "CRC_en",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RXNE",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "RXNE",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DFF",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "DFF",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CRCNEXT",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "CRC_next",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RDR",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "datain",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CRCERR",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "CRCERR",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CRCPOLY",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "poly",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RXCRC",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "CRC_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CRC_busy_rx",
+        "instance_name": "CRC_rx_u",
+        "module_type": "CRC_rx",
+        "port": "CRC_busy",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_n",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "rst_n",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CRCEN",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "CRC_en",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DFF",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "DFF",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "TDR",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "datain",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CRCPOLY",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "poly",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "enable",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "enable",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "crc_en",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "crc_en",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "TXCRC",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "CRC_out",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CRC_busy_tx",
+        "instance_name": "CRC_tx_u",
+        "module_type": "CRC_tx",
+        "port": "CRC_busy",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "OVR_u",
+        "module_type": "state0",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_n",
+        "instance_name": "OVR_u",
+        "module_type": "state0",
+        "port": "rst_n",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "DR_r",
+        "instance_name": "OVR_u",
+        "module_type": "state0",
+        "port": "S1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "SR_r",
+        "instance_name": "OVR_u",
+        "module_type": "state0",
+        "port": "S2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "OVR_in",
+        "instance_name": "OVR_u",
+        "module_type": "state0",
+        "port": "S3",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "OVR",
+        "instance_name": "OVR_u",
+        "module_type": "state0",
+        "port": "stateout",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "MODF_u",
+        "module_type": "state0",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_n",
+        "instance_name": "MODF_u",
+        "module_type": "state0",
+        "port": "rst_n",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "SR_r",
+        "instance_name": "MODF_u",
+        "module_type": "state0",
+        "port": "S1",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CR1_w",
+        "instance_name": "MODF_u",
+        "module_type": "state0",
+        "port": "S2",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "MODF_reg",
+        "instance_name": "MODF_u",
+        "module_type": "state0",
+        "port": "S3",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "MODF",
+        "instance_name": "MODF_u",
+        "module_type": "state0",
+        "port": "stateout",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "clk",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "clk",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "rst_n",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "rst_n",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PADDR",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "PADDR",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PENABLE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "PENABLE",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PSEL",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "PSEL",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PWDATA",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "PWDATA",
+        "port_direction": "input",
+        "signal_role": "payload_data",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PWRITE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "PWRITE",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "PRDATA",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "PRDATA",
+        "port_direction": "output",
+        "signal_role": "payload_data",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "PREADY",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "PREADY",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "PSLVERR",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "PSLVERR",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "BSY",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "BSY",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "OVR",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "OVR",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "MODF",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "MODF",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CRCERR",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "CRCERR",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RXNE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "RXNE",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "TXE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "TXE",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CRCBSY",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "CRCBSY",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "TDR",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "TDR",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "RDR",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "RDR",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "CRCPOLY",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "CRCPOLY",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "TXCRC",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "TXCRC",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "RXCRC",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "RXCRC",
+        "port_direction": "input",
+        "signal_role": "unknown",
+        "edge_kind": "signal_to_instance"
+      },
+      {
+        "signal": "BIDIMODE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "BIDIMODE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "BIDIOE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "BIDIOE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CRCEN",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "CRCEN",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CRCNEXT",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "CRCNEXT",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "DFF",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "DFF",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "RXONLY",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "RXONLY",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "SSM",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "SSM",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "SSI",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "SSI",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "LSBFIRST",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "LSBFIRST",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "SPE_apb",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "SPE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "BR",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "BR",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "MSTR_apb",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "MSTR",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CPOL",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "CPOL",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CPHA",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "CPHA",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "TXEIE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "TXEIE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "RXNEIE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "RXNEIE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "ERRIE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "ERRIE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "SSOE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "SSOE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "TXDMAE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "TXDMAE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "RXDMAE",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "RXDMAE",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "SR_r",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "SR_r",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "DR_w",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "DR_w",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "DR_r",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "DR_r",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CR1_w",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "CR1_w",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      },
+      {
+        "signal": "CR1_r",
+        "instance_name": "reg_apb_u",
+        "module_type": "reg_apb",
+        "port": "CR1_r",
+        "port_direction": "output",
+        "signal_role": "unknown",
+        "edge_kind": "instance_to_signal"
+      }
+    ]
+  },
+  "transitive_summary": {
+    "reachable_modules": [
+      "CRC_rx",
+      "CRC_tx",
+      "clk_div",
+      "reg_apb",
+      "spi_m",
+      "spi_s",
+      "state0"
+    ],
+    "reachable_components": [],
+    "families_used": []
+  },
+  "warnings": []
+}
