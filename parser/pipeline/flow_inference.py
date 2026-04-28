@@ -13,13 +13,17 @@ def infer_signal_role(name: str) -> str:
         return "reset"
     if "valid" in lowered or lowered.startswith("sel") or "switch" in lowered or lowered == "pmt" or "permit" in lowered:
         return "condition"
-    if "drive" in lowered:
+    if "drive" in lowered or _has_drv_token(lowered):
         return "event_drive"
     if "free" in lowered:
         return "event_free"
     if "data" in lowered:
         return "payload_data"
     return "unknown"
+
+
+def _has_drv_token(lowered_name: str) -> bool:
+    return bool(re.search(r"(^|_)drv|^[iow]_drv", lowered_name))
 
 
 def build_flow_graph(parse_result: Dict[str, Any]) -> Dict[str, List[Dict[str, Any]]]:

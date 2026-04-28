@@ -48,6 +48,43 @@ python -m parser.pipeline build \
 - `artifacts/parser_pipeline_result/components/<component_name>.json`
 - `artifacts/parser_pipeline_result/build_report.json`
 
+## Manual IR Export
+
+Manual IR 从已有 parser pipeline 产物中加载知识库，再生成面向手册写作的中间表示。它不会重新运行 parser，也不会修改 RTL 源码。
+
+单文件导出适合程序消费或保存完整快照：
+
+```bash
+python -m knowledge.manual_ir export \
+  --artifacts-root artifacts/parser_pipeline_rtl \
+  --top-module arm_soc_top \
+  --output artifacts/manual_ir/arm_soc_top_manual_ir.json
+```
+
+输出文件包含完整 `ManualIR`：
+
+- `objects.system_views`
+- `objects.module_cards`
+- `objects.component_contracts`
+- `indexes`
+- `warnings`
+
+拆分目录导出适合人工逐类审核：
+
+```bash
+python -m knowledge.manual_ir export \
+  --artifacts-root artifacts/parser_pipeline_rtl \
+  --top-module arm_soc_top \
+  --output-dir artifacts/manual_ir/arm_soc_top
+```
+
+输出目录：
+
+- `manifest.json`：记录 schema、top module、对象数量、文件索引、indexes 和 warnings
+- `system_views.json`：系统视图列表
+- `module_cards/<module_name>.json`：每个模块一个 ModuleCard
+- `component_contracts/<component_name>.json`：每个结构子一个 ComponentContract
+
 ## Recent Progress
 
 这部分记录最近一轮对话中已经落地的 parser / manual_ir 相关改动，方便新对话快速接上下文。

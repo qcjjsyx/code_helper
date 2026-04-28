@@ -3,10 +3,13 @@ from parser.pipeline.flow_inference import build_flow_graph, infer_signal_role
 
 def test_signal_role_rules_cover_core_protocol_names():
     assert infer_signal_role("i_driveToExe") == "event_drive"
+    assert infer_signal_role("i_drvFCPU") == "event_drive"
+    assert infer_signal_role("o_drv2CPU") == "event_drive"
     assert infer_signal_role("o_freeFrmExe") == "event_free"
     assert infer_signal_role("o_dataCPUtoTS_128") == "payload_data"
     assert infer_signal_role("rstn") == "reset"
     assert infer_signal_role("valid0") == "condition"
+    assert infer_signal_role("addrvance") == "unknown"
 
 
 def test_flow_graph_uses_port_directions_for_edges():
