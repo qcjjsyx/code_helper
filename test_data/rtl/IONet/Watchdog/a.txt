@@ -1,7 +1,0 @@
-a.txt
-cFifo2_wd.v
-cmsdk_apb_watchdog_defs.v
-cmsdk_apb_watchdog_frc.v
-cmsdk_apb_watchdog.v
-noc_wd2noc.v
-wd2noc.v

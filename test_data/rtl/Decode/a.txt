@@ -1,6 +1,0 @@
-a.txt
-cMutexMerge2_165b_dec.v
-cSelector2_65b_dec.v
-decoder_16.v
-decoder_32.v
-decoder.v

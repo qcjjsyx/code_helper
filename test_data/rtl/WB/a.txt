@@ -1,7 +1,0 @@
-a.txt
-cMutexMerge2_64b_wb.v
-cMutexMerge2_74b_wb.v
-cSelector2_5b_wb.v
-cSelector6_101b_wb.v
-cSplitter2_103b_wb.v
-wb.v
