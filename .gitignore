@@ -2,3 +2,4 @@ artifacts/
 .pytest_cache/
 test_data/
 unused_code/
+my_agent/
