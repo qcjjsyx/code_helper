@@ -160,7 +160,6 @@ def test_build_manual_ir_maps_core_objects_and_indexes(tmp_path):
     assert manual_ir.indexes.by_family["SelSplit"] == ["contract:cSelSplit_2_fetch"]
     assert "module:Fetch_top" in manual_ir.indexes.by_module["Fetch_top"]
     assert manual_ir.warnings == [
-        "channel card mapping is deferred in this phase.",
         "flow path extraction is deferred in this phase.",
         "reading path planning is deferred in this phase.",
     ]
@@ -393,3 +392,72 @@ def test_build_manual_ir_populates_module_cards_from_interface_facts(tmp_path):
         "cFifo1_cpu": "fifo_stage",
         "cSelSplit_2_fetch": "splitter",
     }
+
+
+def test_build_manual_ir_builds_boundary_channel_cards(tmp_path):
+    artifacts_root = tmp_path / "artifacts"
+    modules_dir = artifacts_root / "modules"
+    components_dir = artifacts_root / "components"
+    modules_dir.mkdir(parents=True)
+    components_dir.mkdir(parents=True)
+
+    _write_json(artifacts_root / "project_index.json", {"top_modules": [{"name": "cpu_top"}], "stats": {}})
+    _write_json(
+        modules_dir / "cpu_top.json",
+        {
+            "name": "cpu_top",
+            "artifact_kind": "module",
+            "file": "test_data/cpu/CPU/cpu_top.v",
+            "module_role": "top",
+            "interface": {
+                "ports": [
+                    {"name": "i_drvFProducer", "direction": "input", "width_text": "1"},
+                    {"name": "o_free2Producer", "direction": "output", "width_text": "1"},
+                    {"name": "i_dataFProducer", "direction": "input", "width_text": "[31:0]"},
+                    {"name": "o_drv2Consumer", "direction": "output", "width_text": "1"},
+                    {"name": "i_freeFConsumer", "direction": "input", "width_text": "1"},
+                    {"name": "o_data2Consumer", "direction": "output", "width_text": "[31:0]"},
+                    {"name": "o_drv2NoFree", "direction": "output", "width_text": "1"},
+                ]
+            },
+            "direct_children": {"modules": [], "components": []},
+            "transitive_summary": {"reachable_modules": [], "reachable_components": [], "families_used": []},
+            "flow_graph": {"signals": [], "edges": []},
+            "warnings": [],
+        },
+    )
+
+    kb = load_knowledge_base(artifacts_root)
+    manual_ir = build_manual_ir(kb, "cpu_top")
+
+    channels_by_drive = {
+        item.handshake.drive: item
+        for item in manual_ir.objects.channel_cards
+    }
+    assert set(channels_by_drive) == {"i_drvFProducer", "o_drv2Consumer", "o_drv2NoFree"}
+
+    ingress = channels_by_drive["i_drvFProducer"]
+    assert ingress.channel_type == "event_with_payload"
+    assert ingress.producer.owner_kind == "external"
+    assert ingress.producer.owner_name == "Producer"
+    assert ingress.consumer.owner_kind == "module"
+    assert ingress.consumer.owner_name == "cpu_top"
+    assert ingress.consumer.free_signal == "o_free2Producer"
+    assert ingress.payload.signals == ["i_dataFProducer"]
+    assert ingress.payload.width_text == "[31:0]"
+
+    egress = channels_by_drive["o_drv2Consumer"]
+    assert egress.producer.owner_kind == "module"
+    assert egress.producer.owner_name == "cpu_top"
+    assert egress.consumer.owner_kind == "external"
+    assert egress.consumer.owner_name == "Consumer"
+    assert egress.consumer.free_signal == "i_freeFConsumer"
+    assert egress.payload.signals == ["o_data2Consumer"]
+    assert egress.handshake.backpressure_supported is True
+
+    no_free = channels_by_drive["o_drv2NoFree"]
+    assert no_free.confidence == "low"
+    assert no_free.handshake.free == ""
+    assert no_free.warnings == ["no matching free signal found for drive signal o_drv2NoFree."]
+    assert "channel:cpu_top:o_drv2Consumer" in manual_ir.indexes.by_module["cpu_top"]
+    assert "channel:cpu_top:o_drv2Consumer" in manual_ir.indexes.by_tag["channel"]

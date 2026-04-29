@@ -4,3 +4,7 @@
 3. 目前的agent不太适合直接生成代码手册，要设计多阶段agent。每个阶段负责不同的部分。
 
 
+## 20240429
+ChannelCard 第一版严格基于 parser 当前识别出的 event_drive 事实生成。如果审核时发现某些信号被错误归入 channel，应优先修正 parser 的信号角色规则，而不是在 Manual IR 里补语义猜测
+
+

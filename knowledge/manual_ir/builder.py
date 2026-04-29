@@ -13,10 +13,15 @@ from knowledge.loaders.knowledge_base import ArtifactRecord, ProjectKnowledgeBas
 from .models import (
     BackpressureBehavior,
     BackpressurePoint,
+    ChannelCard,
+    ChannelConditioning,
+    ChannelEndpoint,
+    ChannelPayload,
     ComponentContract,
     ComponentRoleRef,
     ExternalDependencyRef,
     GeneratedFrom,
+    HandshakeRule,
     KeyComponentRole,
     KeyInterfaces,
     ManualIR,
@@ -39,7 +44,7 @@ class ManualIRBuildOptions:
     build_system_view: bool = True
     build_module_cards: bool = True
     build_component_contracts: bool = True
-    build_channel_cards: bool = False
+    build_channel_cards: bool = True
     build_flow_paths: bool = False
     build_reading_paths: bool = False
 
@@ -69,6 +74,8 @@ def build_manual_ir(
         objects.system_views.append(_build_system_view(kb, graph, artifacts_root))
     if options.build_module_cards:
         objects.module_cards.extend(_build_module_cards(kb, graph, artifacts_root))
+    if options.build_channel_cards:
+        objects.channel_cards.extend(_build_channel_cards(graph, artifacts_root))
     if options.build_component_contracts:
         objects.component_contracts.extend(_build_component_contracts(kb, graph, artifacts_root))
 
@@ -354,6 +361,136 @@ def _build_component_contracts(
             )
         )
     return contracts
+
+
+def _build_channel_cards(
+    graph: _ReachabilityGraph,
+    artifacts_root: Path | None,
+) -> List[ChannelCard]:
+    cards: List[ChannelCard] = []
+    for record in graph.modules_in_order:
+        payload = record.payload
+        ports = payload.get("interface", {}).get("ports", [])
+        ports = ports if isinstance(ports, list) else []
+        ports_by_name = {
+            port.get("name", ""): port
+            for port in ports
+            if isinstance(port, dict) and port.get("name")
+        }
+        interface_summary = _module_interface_summary(payload)
+        signal_groups = interface_summary["signal_groups"]
+        drive_names = sorted(set(signal_groups["event_inputs"] + signal_groups["event_outputs"]))
+
+        free_ports = [
+            port for port in ports_by_name.values()
+            if _signal_role_for_name(port.get("name", "")) == "event_free"
+        ]
+        payload_ports = [
+            port for port in ports_by_name.values()
+            if _signal_role_for_name(port.get("name", "")) == "payload_data"
+        ]
+        condition_ports = [
+            port for port in ports_by_name.values()
+            if _signal_role_for_name(port.get("name", "")) == "condition"
+        ]
+
+        for drive_name in drive_names:
+            drive_port = ports_by_name.get(drive_name, {})
+            drive_direction = drive_port.get("direction") or (
+                "input" if drive_name in signal_groups["event_inputs"] else "output"
+            )
+            if drive_direction not in {"input", "output"}:
+                continue
+
+            free_port = _match_channel_free_port(drive_name, drive_direction, free_ports)
+            payload_matches = _match_channel_payload_ports(drive_name, drive_direction, payload_ports)
+            condition_matches = _match_channel_condition_ports(drive_name, condition_ports)
+
+            peer_name = _infer_channel_peer_name(drive_name, drive_direction)
+            channel_name = _build_channel_name(record.name, drive_name, drive_direction, peer_name)
+            free_signal = free_port.get("name", "") if free_port else ""
+            payload_signals = [port.get("name", "") for port in payload_matches if port.get("name")]
+            condition_signals = [port.get("name", "") for port in condition_matches if port.get("name")]
+            warnings = [] if free_signal else [f"no matching free signal found for drive signal {drive_name}."]
+
+            if drive_direction == "input":
+                producer = ChannelEndpoint(
+                    owner_kind="external",
+                    owner_name=peer_name or "external",
+                    drive_signal=drive_name,
+                    payload_signals=payload_signals,
+                )
+                consumer = ChannelEndpoint(
+                    owner_kind="module",
+                    owner_name=record.name,
+                    free_signal=free_signal,
+                )
+                direction_tag = "ingress"
+            else:
+                producer = ChannelEndpoint(
+                    owner_kind="module",
+                    owner_name=record.name,
+                    drive_signal=drive_name,
+                    payload_signals=payload_signals,
+                )
+                consumer = ChannelEndpoint(
+                    owner_kind="external",
+                    owner_name=peer_name or "external",
+                    free_signal=free_signal,
+                )
+                direction_tag = "egress"
+
+            channel_type = "event_only"
+            if payload_signals:
+                channel_type = "event_with_payload"
+            if condition_signals:
+                channel_type = "condition_gated"
+
+            cards.append(
+                ChannelCard(
+                    id=f"channel:{record.name}:{drive_name}",
+                    kind="channel_card",
+                    title=channel_name,
+                    summary=(
+                        f"模块 {record.name} 边界上的局部握手通道，"
+                        f"drive 信号为 {drive_name}。"
+                    ),
+                    top_module=graph.top_record.name,
+                    tags=["channel", "boundary_channel", direction_tag],
+                    source_refs=[
+                        _artifact_source_ref(
+                            record,
+                            artifacts_root,
+                            ["interface.ports", "interface_summary"],
+                        )
+                    ],
+                    warnings=warnings,
+                    confidence="medium" if free_signal else "low",
+                    scope_module=record.name,
+                    channel_name=channel_name,
+                    channel_type=channel_type, # type: ignore[arg-type]
+                    producer=producer,
+                    consumer=consumer,
+                    payload=ChannelPayload(
+                        present=bool(payload_signals),
+                        width_text=_payload_width_text(payload_matches),
+                        signals=payload_signals,
+                    ),
+                    handshake=HandshakeRule(
+                        drive=drive_name,
+                        free=free_signal,
+                        completion_rule=_channel_completion_rule(free_signal),
+                        backpressure_supported=bool(free_signal),
+                    ),
+                    conditioning=ChannelConditioning(
+                        has_condition=bool(condition_signals),
+                        signals=condition_signals,
+                    ),
+                    implemented_by_path=[],
+                    related_flow_paths=[],
+                )
+            )
+    return cards
 
 
 def _build_phase_warnings(options: ManualIRBuildOptions) -> List[str]:
@@ -649,13 +786,139 @@ def _signal_role_for_name(name: str) -> str:
         return "reset"
     if "valid" in lowered or lowered.startswith("sel") or "switch" in lowered or lowered == "pmt" or "permit" in lowered:
         return "condition"
-    if "drive" in lowered:
+    if "drive" in lowered or _has_drv_token(lowered):
         return "event_drive"
     if "free" in lowered:
         return "event_free"
     if "data" in lowered:
         return "payload_data"
     return "unknown"
+
+
+def _has_drv_token(lowered_name: str) -> bool:
+    return bool(re.search(r"(^|_)drv|^[iow]_drv", lowered_name))
+
+
+def _match_channel_free_port(
+    drive_name: str,
+    drive_direction: str,
+    free_ports: List[Dict[str, Any]],
+) -> Dict[str, Any] | None:
+    expected_direction = "output" if drive_direction == "input" else "input"
+    candidates = [
+        port for port in free_ports
+        if port.get("direction") == expected_direction
+    ]
+    return _best_related_port(drive_name, drive_direction, candidates)
+
+
+def _match_channel_payload_ports(
+    drive_name: str,
+    drive_direction: str,
+    payload_ports: List[Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+    peer_key = _channel_peer_key(drive_name, drive_direction)
+    candidates = [
+        port for port in payload_ports
+        if port.get("direction") == drive_direction
+    ]
+    if peer_key:
+        return [
+            port for port in candidates
+            if _channel_peer_key(port.get("name", ""), drive_direction) == peer_key
+        ]
+    if len(candidates) == 1:
+        return candidates
+    return []
+
+
+def _match_channel_condition_ports(
+    drive_name: str,
+    condition_ports: List[Dict[str, Any]],
+) -> List[Dict[str, Any]]:
+    peer_key = _channel_peer_key(drive_name, "")
+    if not peer_key:
+        return []
+    return [
+        port for port in condition_ports
+        if _channel_peer_key(port.get("name", ""), "") == peer_key
+    ]
+
+
+def _best_related_port(
+    drive_name: str,
+    drive_direction: str,
+    candidates: List[Dict[str, Any]],
+) -> Dict[str, Any] | None:
+    if not candidates:
+        return None
+    peer_key = _channel_peer_key(drive_name, drive_direction)
+    if peer_key:
+        peer_matches = [
+            port for port in candidates
+            if _channel_peer_key(port.get("name", ""), port.get("direction", "")) == peer_key
+        ]
+        if peer_matches:
+            return sorted(peer_matches, key=lambda port: port.get("name", ""))[0]
+        return None
+    if len(candidates) == 1:
+        return candidates[0]
+    return None
+
+
+def _infer_channel_peer_name(signal_name: str, signal_direction: str) -> str:
+    return _extract_channel_peer(signal_name, signal_direction)
+
+
+def _channel_peer_key(signal_name: str, signal_direction: str) -> str:
+    peer = _extract_channel_peer(signal_name, signal_direction)
+    return re.sub(r"[^a-z0-9]", "", peer.lower())
+
+
+def _extract_channel_peer(signal_name: str, signal_direction: str) -> str:
+    name = signal_name.strip()
+    from_to_match = re.search(r"from([A-Za-z0-9_]+?)to([A-Za-z0-9_]+)", name, flags=re.IGNORECASE)
+    if from_to_match:
+        return from_to_match.group(1) if signal_direction == "input" else from_to_match.group(2)
+
+    for pattern in (
+        r"(?:drive|drv|free|data)(?:from|frm|f)([A-Za-z0-9_]+)",
+        r"(?:drive|drv|free|data)(?:to|2)([A-Za-z0-9_]+)",
+    ):
+        match = re.search(pattern, name, flags=re.IGNORECASE)
+        if match:
+            return match.group(1)
+    return ""
+
+
+def _build_channel_name(
+    scope_module: str,
+    drive_name: str,
+    drive_direction: str,
+    peer_name: str,
+) -> str:
+    if not peer_name:
+        return f"{scope_module}:{drive_name}"
+    if drive_direction == "input":
+        return f"{peer_name}_to_{scope_module}:{drive_name}"
+    return f"{scope_module}_to_{peer_name}:{drive_name}"
+
+
+def _payload_width_text(payload_ports: List[Dict[str, Any]]) -> str:
+    widths = sorted({
+        port.get("width_text", "")
+        for port in payload_ports
+        if port.get("width_text")
+    })
+    if len(widths) == 1:
+        return widths[0]
+    return ""
+
+
+def _channel_completion_rule(free_signal: str) -> str:
+    if free_signal:
+        return "free signal returns completion/backpressure for this local channel."
+    return "completion/free signal was not identified for this local channel."
 
 
 def _interface_signal_group_key(signal_role: str, port_direction: str) -> str | None:

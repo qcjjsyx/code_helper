@@ -221,7 +221,7 @@ class ChannelConditioning:
 
 @dataclass(frozen=True)
 class ChannelCard(ManualIRObject):
-    # 单条逻辑 Channel 的文档卡片；当前 builder 默认尚不生成。
+    # 单条局部逻辑 Channel 的文档卡片；当前 builder 先生成模块边界 channel。
     scope_module: str = ""
     channel_name: str = ""
     channel_type: ChannelType = "event_with_payload"

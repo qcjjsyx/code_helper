@@ -77,6 +77,7 @@ def _write_split_manual_ir(output_dir: Path, manual_ir: dict) -> None:
     files = {
         "system_views": "system_views.json",
         "module_cards": {},
+        "channel_cards": {},
         "component_contracts": {},
     }
 
@@ -89,6 +90,14 @@ def _write_split_manual_ir(output_dir: Path, manual_ir: dict) -> None:
         file_name = f"{_safe_json_filename(module_name)}.json"
         _write_json_file(module_dir / file_name, card)
         files["module_cards"][module_name] = f"module_cards/{file_name}"
+
+    channel_dir = output_dir / "channel_cards"
+    channel_dir.mkdir(parents=True, exist_ok=True)
+    for card in channel_cards:
+        channel_id = card.get("id") or card.get("channel_name") or card.get("title") or "channel_card"
+        file_name = f"{_safe_json_filename(channel_id)}.json"
+        _write_json_file(channel_dir / file_name, card)
+        files["channel_cards"][channel_id] = f"channel_cards/{file_name}"
 
     contract_dir = output_dir / "component_contracts"
     contract_dir.mkdir(parents=True, exist_ok=True)

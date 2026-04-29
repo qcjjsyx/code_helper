@@ -24,7 +24,12 @@ def _write_minimal_artifacts(artifacts_root: Path) -> None:
             "artifact_kind": "module",
             "file": "test_data/cpu_top.v",
             "module_role": "top",
-            "interface": {"ports": []},
+            "interface": {
+                "ports": [
+                    {"name": "i_drvFProducer", "direction": "input", "width_text": "1"},
+                    {"name": "o_free2Producer", "direction": "output", "width_text": "1"},
+                ]
+            },
             "direct_children": {"modules": [], "components": ["cFifo1_cpu"]},
             "transitive_summary": {
                 "reachable_modules": [],
@@ -87,6 +92,7 @@ def test_manual_ir_cli_export_writes_output_file(tmp_path):
     assert payload["schema"] == "manual_ir"
     assert payload["top_module"] == "cpu_top"
     assert [item["module_name"] for item in payload["objects"]["module_cards"]] == ["cpu_top"]
+    assert [item["handshake"]["drive"] for item in payload["objects"]["channel_cards"]] == ["i_drvFProducer"]
     assert [item["component_name"] for item in payload["objects"]["component_contracts"]] == ["cFifo1_cpu"]
 
 
@@ -114,20 +120,28 @@ def test_manual_ir_cli_export_writes_split_output_dir(tmp_path):
     assert manifest["top_module"] == "cpu_top"
     assert manifest["counts"]["system_views"] == 1
     assert manifest["counts"]["module_cards"] == 1
+    assert manifest["counts"]["channel_cards"] == 1
     assert manifest["counts"]["component_contracts"] == 1
     assert manifest["files"]["system_views"] == "system_views.json"
     assert manifest["files"]["module_cards"] == {"cpu_top": "module_cards/cpu_top.json"}
+    assert manifest["files"]["channel_cards"] == {
+        "channel:cpu_top:i_drvFProducer": "channel_cards/channel_cpu_top_i_drvFProducer.json",
+    }
     assert manifest["files"]["component_contracts"] == {
         "cFifo1_cpu": "component_contracts/cFifo1_cpu.json",
     }
 
     system_views = json.loads((output_dir / "system_views.json").read_text(encoding="utf-8"))
     module_card = json.loads((output_dir / "module_cards" / "cpu_top.json").read_text(encoding="utf-8"))
+    channel_card = json.loads(
+        (output_dir / "channel_cards" / "channel_cpu_top_i_drvFProducer.json").read_text(encoding="utf-8")
+    )
     component_contract = json.loads(
         (output_dir / "component_contracts" / "cFifo1_cpu.json").read_text(encoding="utf-8")
     )
     assert system_views[0]["id"] == "system:cpu_top"
     assert module_card["module_name"] == "cpu_top"
+    assert channel_card["handshake"]["drive"] == "i_drvFProducer"
     assert component_contract["component_name"] == "cFifo1_cpu"
 
 
