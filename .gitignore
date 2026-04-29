@@ -3,3 +3,4 @@ artifacts/
 test_data/
 unused_code/
 my_agent/
+knowledge/__pycache__/
