@@ -1,4 +1,4 @@
-from parser.pipeline.flow_inference import build_flow_graph, infer_signal_role
+from parser.pipeline.flow_inference import build_flow_graph, extract_signal_terms, infer_signal_role
 
 
 def test_signal_role_rules_cover_core_protocol_names():
@@ -43,3 +43,46 @@ def test_flow_graph_uses_port_directions_for_edges():
     assert any(edge["edge_kind"] == "signal_to_instance" for edge in graph["edges"])
     assert any(edge["edge_kind"] == "instance_to_signal" for edge in graph["edges"])
     assert any(signal["name"] == "w_drive" for signal in graph["signals"])
+
+
+def test_flow_graph_expands_simple_concat_signal_terms():
+    signal = "{i_driveLocal,i_driveSouth,i_driveNorth,i_driveEast,i_driveWest}"
+    assert extract_signal_terms(signal) == [
+        "i_driveLocal",
+        "i_driveSouth",
+        "i_driveNorth",
+        "i_driveEast",
+        "i_driveWest",
+    ]
+
+    graph = build_flow_graph(
+        {
+            "ports": [{"name": "i_driveEast", "direction": "input", "width_text": "1"}],
+            "local_signals": [],
+            "instances": [
+                {
+                    "instance_name": "arbMerge",
+                    "module_type": "cArbMerge5_51b",
+                    "connections": [
+                        {
+                            "port": "i_drive_5",
+                            "signal": signal,
+                            "signal_terms": extract_signal_terms(signal),
+                            "port_direction": "input",
+                            "signal_role": "event_drive",
+                        }
+                    ],
+                }
+            ],
+        }
+    )
+
+    assert any(item["name"] == signal and item["kind"] == "expression" for item in graph["signals"])
+    assert any(item["name"] == "i_driveEast" for item in graph["signals"])
+    assert any(edge["signal"] == signal and "source_expression" not in edge for edge in graph["edges"])
+    assert any(
+        edge["signal"] == "i_driveEast"
+        and edge["source_expression"] == signal
+        and edge["edge_kind"] == "signal_to_instance"
+        for edge in graph["edges"]
+    )

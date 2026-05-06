@@ -79,6 +79,8 @@ def _write_split_manual_ir(output_dir: Path, manual_ir: dict) -> None:
         "module_cards": {},
         "channel_cards": {},
         "component_contracts": {},
+        "flow_paths": {},
+        "reading_paths": {},
     }
 
     _write_json_file(output_dir / "system_views.json", system_views)
@@ -106,6 +108,22 @@ def _write_split_manual_ir(output_dir: Path, manual_ir: dict) -> None:
         file_name = f"{_safe_json_filename(component_name)}.json"
         _write_json_file(contract_dir / file_name, contract)
         files["component_contracts"][component_name] = f"component_contracts/{file_name}"
+
+    flow_dir = output_dir / "flow_paths"
+    flow_dir.mkdir(parents=True, exist_ok=True)
+    for path in flow_paths:
+        flow_id = path.get("id") or path.get("title") or "flow_path"
+        file_name = f"{_safe_json_filename(flow_id)}.json"
+        _write_json_file(flow_dir / file_name, path)
+        files["flow_paths"][flow_id] = f"flow_paths/{file_name}"
+
+    reading_dir = output_dir / "reading_paths"
+    reading_dir.mkdir(parents=True, exist_ok=True)
+    for path in reading_paths:
+        reading_id = path.get("id") or path.get("title") or "reading_path"
+        file_name = f"{_safe_json_filename(reading_id)}.json"
+        _write_json_file(reading_dir / file_name, path)
+        files["reading_paths"][reading_id] = f"reading_paths/{file_name}"
 
     manifest = {
         "schema": manual_ir.get("schema"),

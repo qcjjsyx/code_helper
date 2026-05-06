@@ -246,6 +246,64 @@ def test_hierarchy_stops_at_terminal_component_types(tmp_path):
     assert result["build_report"]["issues"] == []
 
 
+def test_skip_helper_delay_records_transparent_event_flow(tmp_path):
+    _write_family_templates(tmp_path)
+    _write_text(
+        tmp_path / "top.v",
+        """
+        module top(i_driveIn, o_driveOut);
+          input i_driveIn;
+          output o_driveOut;
+          delay8U u_delay(.inR(i_driveIn), .outR(o_driveOut), .rst(rst));
+        endmodule
+        """,
+    )
+    _write_text(
+        tmp_path / "delay8U.v",
+        """
+        module delay8U(inR, outR, rst);
+          input inR, rst;
+          output outR;
+        endmodule
+        """,
+    )
+
+    result = build_project_from_filelists(
+        repo_root=tmp_path,
+        inputs=["."],
+        tops=["top.v"],
+        output_dir=tmp_path / "artifacts" / "parser_pipeline_result",
+    )
+
+    top = result["modules"]["top"]
+    assert top["instances"] == []
+    assert top["transparent_flows"] == [
+        {
+            "instance_name": "u_delay",
+            "module_type": "delay8U",
+            "artifact_kind": "transparent_helper",
+            "source": "skip_helper_rule",
+            "input_port": "inR",
+            "input_signal": "i_driveIn",
+            "output_port": "outR",
+            "output_signal": "o_driveOut",
+            "signal_role": "event_drive",
+        }
+    ]
+    assert any(
+        edge["transparent"] is True
+        and edge["signal"] == "i_driveIn"
+        and edge["edge_kind"] == "signal_to_instance"
+        for edge in top["flow_graph"]["edges"]
+    )
+    assert any(
+        edge["transparent"] is True
+        and edge["signal"] == "o_driveOut"
+        and edge["edge_kind"] == "instance_to_signal"
+        for edge in top["flow_graph"]["edges"]
+    )
+
+
 def test_component_leaf_with_missing_family_template_uses_empty_contract(tmp_path):
     _write_family_templates(tmp_path)
     _write_text(

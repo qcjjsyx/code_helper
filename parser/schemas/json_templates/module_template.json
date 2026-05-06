@@ -46,10 +46,26 @@
         {
           "port": "<target_port_name>",
           "signal": "<connected_signal_or_expression>",
+          "signal_terms": [
+            "<member_signal_name_for_simple_concat>"
+          ],
           "port_direction": "input|output|inout|unknown",
           "signal_role": "event|payload_data|condition|reset|backpressure|unknown"
         }
       ]
+    }
+  ],
+  "transparent_flows": [
+    {
+      "instance_name": "<skipped_helper_instance_name>",
+      "module_type": "delay<number>U|delay<number>Unit",
+      "artifact_kind": "transparent_helper",
+      "source": "skip_helper_rule",
+      "input_port": "inR",
+      "input_signal": "<event_signal_before_helper>",
+      "output_port": "outR",
+      "output_signal": "<event_signal_after_helper>",
+      "signal_role": "event_drive|event_free"
     }
   ],
   "interface_summary": {
@@ -106,8 +122,11 @@
     "edges": [
       {
         "signal": "<signal_name>",
+        "source_expression": "<original_expression_when_edge_was_expanded_from_concat>",
         "instance_name": "<instance_name>",
         "module_type": "<target_module_type>",
+        "transparent": false,
+        "transparent_source": "<skip_helper_rule_when_transparent_edge>",
         "port": "<target_port_name>",
         "port_direction": "input|output|inout|unknown",
         "signal_role": "event|payload_data|condition|reset|backpressure|unknown",

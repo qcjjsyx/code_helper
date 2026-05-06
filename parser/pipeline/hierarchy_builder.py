@@ -10,7 +10,7 @@ from typing import Any, Dict, List, Set
 from .boundary_policy import BoundaryDecision, decide_boundary, infer_component_family
 from .cc_header_reader import read_cc_header
 from .family_json_builder import build_component_json, load_family_templates, missing_family_template
-from .flow_inference import build_flow_graph, collect_family_usage, infer_signal_role
+from .flow_inference import build_flow_graph, collect_family_usage, extract_signal_terms, infer_signal_role
 from .module_index import build_module_index, resolve_explicit_verilog_files
 from .module_parser import parse_verilog_file
 
@@ -123,6 +123,7 @@ def _build_module_artifact(context: BuildContext, module_name: str) -> Dict[str,
 
     hierarchy_children: List[Dict[str, Any]] = []
     enriched_instances: List[Dict[str, Any]] = []
+    transparent_flows: List[Dict[str, Any]] = []
     direct_modules: List[str] = []
     direct_components: List[str] = []
 
@@ -137,6 +138,9 @@ def _build_module_artifact(context: BuildContext, module_name: str) -> Dict[str,
             cc_header=target_header,
         )
         if target_info.kind == "skip_helper":
+            transparent_flow = _build_skip_helper_transparent_flow(instance)
+            if transparent_flow:
+                transparent_flows.append(transparent_flow)
             continue
         target_kind = target_info.artifact_kind
         target_parse = _parse_with_cache(context, target_module, target_path) if target_path else None
@@ -197,6 +201,7 @@ def _build_module_artifact(context: BuildContext, module_name: str) -> Dict[str,
             "ports": parse_result.get("ports", []),
             "local_signals": parse_result.get("local_signals", []),
             "instances": enriched_instances,
+            "transparent_flows": transparent_flows,
         }
     )
 
@@ -214,6 +219,7 @@ def _build_module_artifact(context: BuildContext, module_name: str) -> Dict[str,
         },
         "local_signals": parse_result.get("local_signals", []),
         "instances": enriched_instances,
+        "transparent_flows": transparent_flows,
         "interface_summary": _build_interface_summary(parse_result.get("ports", [])),
         "direct_children": {
             "modules": sorted(set(direct_modules)),
@@ -284,14 +290,51 @@ def _enrich_connections(connections: List[Dict[str, Any]], target_parse: Dict[st
     enriched = []
     for connection in connections:
         signal = connection.get("signal", "")
-        enriched.append(
-            {
-                **connection,
-                "port_direction": port_direction_map.get(connection["port"], "unknown"),
-                "signal_role": infer_signal_role(signal),
-            }
-        )
+        enriched_connection = {
+            **connection,
+            "port_direction": port_direction_map.get(connection["port"], "unknown"),
+            "signal_role": infer_signal_role(signal),
+        }
+        signal_terms = extract_signal_terms(signal)
+        if signal_terms and signal_terms != [signal]:
+            enriched_connection["signal_terms"] = signal_terms
+        enriched.append(enriched_connection)
     return enriched
+
+
+def _build_skip_helper_transparent_flow(instance: Dict[str, Any]) -> Dict[str, Any]:
+    connections_by_port = {
+        connection.get("port", "").lower(): connection
+        for connection in instance.get("connections", [])
+        if connection.get("port")
+    }
+    input_connection = connections_by_port.get("inr")
+    output_connection = connections_by_port.get("outr")
+    if input_connection is None or output_connection is None:
+        return {}
+
+    input_signal = input_connection.get("signal", "")
+    output_signal = output_connection.get("signal", "")
+    if not input_signal or not output_signal:
+        return {}
+
+    input_role = infer_signal_role(input_signal)
+    output_role = infer_signal_role(output_signal)
+    signal_role = output_role if output_role != "unknown" else input_role
+    if signal_role not in {"event_drive", "event_free"}:
+        return {}
+
+    return {
+        "instance_name": instance.get("instance_name", ""),
+        "module_type": instance.get("module_type", ""),
+        "artifact_kind": "transparent_helper",
+        "source": "skip_helper_rule",
+        "input_port": input_connection.get("port", "inR"),
+        "input_signal": input_signal,
+        "output_port": output_connection.get("port", "outR"),
+        "output_signal": output_signal,
+        "signal_role": signal_role,
+    }
 
 
 def _compute_transitive_summary(context: BuildContext, module_name: str) -> Dict[str, Any]:

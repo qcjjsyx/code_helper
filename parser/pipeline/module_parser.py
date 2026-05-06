@@ -6,7 +6,7 @@ import re
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from .flow_inference import infer_signal_role
+from .flow_inference import extract_signal_terms, infer_signal_role
 
 
 KEYWORDS = {
@@ -317,14 +317,16 @@ def parse_named_connections(connections_text: str) -> List[Dict[str, Any]]:
             continue
         port_name = match.group(1)
         signal = match.group(2).strip()
-        connections.append(
-            {
-                "port": port_name,
-                "signal": signal,
-                "port_direction": "unknown",
-                "signal_role": infer_signal_role(signal),
-            }
-        )
+        connection = {
+            "port": port_name,
+            "signal": signal,
+            "port_direction": "unknown",
+            "signal_role": infer_signal_role(signal),
+        }
+        signal_terms = extract_signal_terms(signal)
+        if signal_terms and signal_terms != [signal]:
+            connection["signal_terms"] = signal_terms
+        connections.append(connection)
     return connections
 
 

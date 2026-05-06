@@ -93,7 +93,9 @@ def test_manual_ir_cli_export_writes_output_file(tmp_path):
     assert payload["top_module"] == "cpu_top"
     assert [item["module_name"] for item in payload["objects"]["module_cards"]] == ["cpu_top"]
     assert [item["handshake"]["drive"] for item in payload["objects"]["channel_cards"]] == ["i_drvFProducer"]
+    assert [item["startpoints"][0]["signal"] for item in payload["objects"]["flow_paths"]] == ["i_drvFProducer"]
     assert [item["component_name"] for item in payload["objects"]["component_contracts"]] == ["cFifo1_cpu"]
+    assert [item["audience"] for item in payload["objects"]["reading_paths"]] == ["newcomer", "maintainer", "reviewer"]
 
 
 def test_manual_ir_cli_export_writes_split_output_dir(tmp_path):
@@ -122,6 +124,8 @@ def test_manual_ir_cli_export_writes_split_output_dir(tmp_path):
     assert manifest["counts"]["module_cards"] == 1
     assert manifest["counts"]["channel_cards"] == 1
     assert manifest["counts"]["component_contracts"] == 1
+    assert manifest["counts"]["flow_paths"] == 1
+    assert manifest["counts"]["reading_paths"] == 3
     assert manifest["files"]["system_views"] == "system_views.json"
     assert manifest["files"]["module_cards"] == {"cpu_top": "module_cards/cpu_top.json"}
     assert manifest["files"]["channel_cards"] == {
@@ -129,6 +133,14 @@ def test_manual_ir_cli_export_writes_split_output_dir(tmp_path):
     }
     assert manifest["files"]["component_contracts"] == {
         "cFifo1_cpu": "component_contracts/cFifo1_cpu.json",
+    }
+    assert manifest["files"]["flow_paths"] == {
+        "flow:cpu_top:i_drvFProducer": "flow_paths/flow_cpu_top_i_drvFProducer.json",
+    }
+    assert manifest["files"]["reading_paths"] == {
+        "reading:newcomer:cpu_top": "reading_paths/reading_newcomer_cpu_top.json",
+        "reading:maintainer:cpu_top": "reading_paths/reading_maintainer_cpu_top.json",
+        "reading:reviewer:cpu_top": "reading_paths/reading_reviewer_cpu_top.json",
     }
 
     system_views = json.loads((output_dir / "system_views.json").read_text(encoding="utf-8"))
@@ -139,10 +151,18 @@ def test_manual_ir_cli_export_writes_split_output_dir(tmp_path):
     component_contract = json.loads(
         (output_dir / "component_contracts" / "cFifo1_cpu.json").read_text(encoding="utf-8")
     )
+    flow_path = json.loads(
+        (output_dir / "flow_paths" / "flow_cpu_top_i_drvFProducer.json").read_text(encoding="utf-8")
+    )
+    reading_path = json.loads(
+        (output_dir / "reading_paths" / "reading_newcomer_cpu_top.json").read_text(encoding="utf-8")
+    )
     assert system_views[0]["id"] == "system:cpu_top"
     assert module_card["module_name"] == "cpu_top"
     assert channel_card["handshake"]["drive"] == "i_drvFProducer"
     assert component_contract["component_name"] == "cFifo1_cpu"
+    assert flow_path["startpoints"][0]["signal"] == "i_drvFProducer"
+    assert reading_path["audience"] == "newcomer"
 
 
 def test_manual_ir_cli_export_prints_to_stdout(tmp_path, capsys):

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from parser.pipeline.module_parser import parse_verilog_file
+from parser.pipeline.module_parser import parse_named_connections, parse_verilog_file
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +27,24 @@ def test_parse_module_extracts_instances_connections_and_overrides():
     ports = {item["port"]: item["signal"] for item in split_instances[0]["connections"]}
     assert ports["i_drive"] == "w_driveFifoToSel_dealy1"
     assert ports["valid5"] == "w_bru_1"
+
+
+def test_parse_named_connections_records_simple_concat_signal_terms():
+    connections = parse_named_connections(
+        ".i_drive_5({i_driveLocal,i_driveSouth,i_driveNorth,i_driveEast,i_driveWest}),"
+        ".o_driveNext(o_driveNext)"
+    )
+
+    drive_connection = connections[0]
+    assert drive_connection["signal"] == "{i_driveLocal,i_driveSouth,i_driveNorth,i_driveEast,i_driveWest}"
+    assert drive_connection["signal_terms"] == [
+        "i_driveLocal",
+        "i_driveSouth",
+        "i_driveNorth",
+        "i_driveEast",
+        "i_driveWest",
+    ]
+    assert "signal_terms" not in connections[1]
 
 
 def test_parse_module_extracts_non_ansi_port_declarations(tmp_path):

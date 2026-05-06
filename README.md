@@ -65,7 +65,10 @@ python -m knowledge.manual_ir export \
 
 - `objects.system_views`
 - `objects.module_cards`
+- `objects.channel_cards`
 - `objects.component_contracts`
+- `objects.flow_paths`
+- `objects.reading_paths`
 - `indexes`
 - `warnings`
 
@@ -83,7 +86,10 @@ python -m knowledge.manual_ir export \
 - `manifest.json`：记录 schema、top module、对象数量、文件索引、indexes 和 warnings
 - `system_views.json`：系统视图列表
 - `module_cards/<module_name>.json`：每个模块一个 ModuleCard
+- `channel_cards/<channel_id>.json`：每个 drive-centered 局部事件通道一个 ChannelCard
 - `component_contracts/<component_name>.json`：每个结构子一个 ComponentContract
+- `flow_paths/<flow_id>.json`：每个 module-local event flow 一个 FlowPath
+- `reading_paths/<reading_id>.json`：按读者类型生成的 ReadingPath
 
 ## Recent Progress
 

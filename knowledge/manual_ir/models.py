@@ -184,7 +184,7 @@ class ModuleCard(ManualIRObject):
 
 @dataclass(frozen=True)
 class ChannelEndpoint:
-    # Channel 的一端，描述生产者或消费者归属及握手信号。
+    # Channel 的一端，描述事件生产者或消费者归属及可选 companion free 信号。
     owner_kind: OwnerKind
     owner_name: str
     drive_signal: str = ""
@@ -204,7 +204,7 @@ class ChannelPayload:
 
 @dataclass(frozen=True)
 class HandshakeRule:
-    # Channel 的 drive/free 握手规则。
+    # Channel 的核心 drive 事件及可选 free/backpressure companion。
     drive: str
     free: str
     completion_rule: str
@@ -221,7 +221,7 @@ class ChannelConditioning:
 
 @dataclass(frozen=True)
 class ChannelCard(ManualIRObject):
-    # 单条局部逻辑 Channel 的文档卡片；当前 builder 先生成模块边界 channel。
+    # 单条以 drive 为核心的局部事件 Channel；当前 builder 先生成模块边界 channel。
     scope_module: str = ""
     channel_name: str = ""
     channel_type: ChannelType = "event_with_payload"
@@ -326,7 +326,7 @@ class FlowBlockingPoint:
 
 @dataclass(frozen=True)
 class FlowPath(ManualIRObject):
-    # 模块内部或跨模块的逻辑流路径；当前 builder 默认尚不生成。
+    # 模块内部或跨模块的逻辑流路径；当前 builder 先生成 module-local event path。
     scope_module: str = ""
     path_type: FlowPathType = "mixed"
     # 路径起点信号列表。
@@ -354,6 +354,38 @@ class ReadingSection:
     title: str
     # 本章节应覆盖的 Manual IR object id。
     covers: List[str] = field(default_factory=list)
+    # 本章节在最终手册中要解决的问题。
+    intent: str = ""
+    # 本章节生成时应产出的内容形态。
+    expected_outputs: List[str] = field(default_factory=list)
+    # 本章节允许使用的证据边界和禁止越界的说明。
+    evidence_policy: List[str] = field(default_factory=list)
+    # 本章节内对象的展开优先级。
+    coverage_priority: "CoveragePriority" = field(default_factory=lambda: CoveragePriority())
+    # 对大量对象进行分组写作的确定性提示。
+    grouping_hints: List[str] = field(default_factory=list)
+    # 面向人工审查或维护的问题清单。
+    review_questions: List[str] = field(default_factory=list)
+    # 建议映射到最终手册中的章节位置。
+    artifact_target: "ArtifactTarget" = field(default_factory=lambda: ArtifactTarget())
+
+
+@dataclass(frozen=True)
+class CoveragePriority:
+    # 需要在正文中展开解释的 Manual IR object id。
+    must_explain: List[str] = field(default_factory=list)
+    # 需要按组或表格汇总的 Manual IR object id。
+    summarize: List[str] = field(default_factory=list)
+    # 只需要作为证据索引或附录引用的 Manual IR object id。
+    reference_only: List[str] = field(default_factory=list)
+
+
+@dataclass(frozen=True)
+class ArtifactTarget:
+    # 建议写入的最终手册章节文件名。
+    manual_chapter: str = ""
+    # 建议章节锚点。
+    anchor: str = ""
 
 
 @dataclass(frozen=True)
@@ -379,11 +411,11 @@ class ManualIRObjects:
     system_views: List[SystemView] = field(default_factory=list)
     # 可达 module 的文档卡片。
     module_cards: List[ModuleCard] = field(default_factory=list)
-    # 逻辑 Channel 卡片；当前阶段通常为空。
+    # 以 drive 为核心的局部事件 Channel 卡片。
     channel_cards: List[ChannelCard] = field(default_factory=list)
     # 可达 component leaf 的协议卡片。
     component_contracts: List[ComponentContract] = field(default_factory=list)
-    # 逻辑流路径对象；当前阶段通常为空。
+    # module-local event flow 路径对象。
     flow_paths: List[FlowPath] = field(default_factory=list)
     # 手册阅读路径对象；当前阶段通常为空。
     reading_paths: List[ReadingPath] = field(default_factory=list)
