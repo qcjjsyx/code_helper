@@ -1,6 +1,7 @@
 """Manual-oriented intermediate representations."""
 
 from .builder import ManualIRBuildOptions, build_manual_ir
+from .context_pack import build_context_pack, write_context_pack
 from .models import (
     BackpressureBehavior,
     BackpressurePoint,
@@ -37,6 +38,8 @@ from .models import (
     SourceRef,
     SystemView,
 )
+from .split_store import build_object_catalog, list_reading_paths, resolve_manual_ir_object, resolve_manual_ir_objects
+from .validator import validate_manual_ir_split
 
 __all__ = [
     "BackpressureBehavior",
@@ -75,4 +78,11 @@ __all__ = [
     "SourceRef",
     "SystemView",
     "build_manual_ir",
+    "build_context_pack",
+    "build_object_catalog",
+    "list_reading_paths",
+    "resolve_manual_ir_object",
+    "resolve_manual_ir_objects",
+    "validate_manual_ir_split",
+    "write_context_pack",
 ]

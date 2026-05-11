@@ -11,6 +11,9 @@ from typing import Optional
 from knowledge.loaders.knowledge_base import load_knowledge_base
 
 from .builder import build_manual_ir
+from .context_pack import build_context_pack, write_context_pack
+from .split_store import ManualIRSplitError, resolve_manual_ir_object
+from .validator import validate_manual_ir_split
 
 
 def main(argv: Optional[list[str]] = None) -> int:
@@ -22,6 +25,23 @@ def main(argv: Optional[list[str]] = None) -> int:
     export_parser.add_argument("--top-module", required=True, help="Top module to build Manual IR for")
     export_parser.add_argument("--output", default=None, help="Output JSON file. Prints to stdout if omitted")
     export_parser.add_argument("--output-dir", default=None, help="Output split Manual IR JSON files into a directory")
+
+    validate_parser = subparsers.add_parser("validate", help="Validate split Manual IR JSON files")
+    validate_parser.add_argument("--manual-ir-dir", required=True, help="Split Manual IR output directory")
+    validate_parser.add_argument("--parser-artifacts-root", default=None, help="Optional parser pipeline artifacts directory")
+    validate_parser.add_argument("--output", default=None, help="Output validation report JSON. Prints to stdout if omitted")
+
+    pack_parser = subparsers.add_parser("pack", help="Build a section-scoped ContextPack from split Manual IR")
+    pack_parser.add_argument("--manual-ir-dir", required=True, help="Split Manual IR output directory")
+    pack_parser.add_argument("--reading-path-id", default=None, help="ReadingPath id, e.g. reading:newcomer:top")
+    pack_parser.add_argument("--audience", default=None, help="ReadingPath audience, e.g. newcomer")
+    pack_parser.add_argument("--section-id", default=None, help="Optional ReadingSection id")
+    pack_parser.add_argument("--output", default=None, help="Output ContextPack JSON. Prints to stdout if omitted")
+
+    resolve_parser = subparsers.add_parser("resolve", help="Resolve one Manual IR object id from a split export")
+    resolve_parser.add_argument("--manual-ir-dir", required=True, help="Split Manual IR output directory")
+    resolve_parser.add_argument("--object-id", required=True, help="Manual IR object id")
+    resolve_parser.add_argument("--output", default=None, help="Output object JSON. Prints to stdout if omitted")
 
     args = parser.parse_args(argv)
 
@@ -58,6 +78,61 @@ def main(argv: Optional[list[str]] = None) -> int:
             output_path.write_text(payload + "\n", encoding="utf-8")
         else:
             print(payload)
+        return 0
+
+    if args.command == "validate":
+        manual_ir_dir = Path(args.manual_ir_dir)
+        if not manual_ir_dir.is_absolute():
+            manual_ir_dir = Path.cwd().resolve() / manual_ir_dir
+        parser_artifacts_root = args.parser_artifacts_root
+        if parser_artifacts_root:
+            parser_artifacts_path = Path(parser_artifacts_root)
+            if not parser_artifacts_path.is_absolute():
+                parser_artifacts_path = Path.cwd().resolve() / parser_artifacts_path
+            parser_artifacts_root = str(parser_artifacts_path)
+        report = validate_manual_ir_split(
+            manual_ir_dir,
+            parser_artifacts_root=parser_artifacts_root,
+        )
+        _write_or_print_json(report, args.output)
+        return 0 if report.get("status") == "passed" else 1
+
+    if args.command == "pack":
+        if not args.reading_path_id and not args.audience:
+            print("error: --reading-path-id or --audience is required", file=sys.stderr)
+            return 1
+        manual_ir_dir = Path(args.manual_ir_dir)
+        if not manual_ir_dir.is_absolute():
+            manual_ir_dir = Path.cwd().resolve() / manual_ir_dir
+        try:
+            context_pack = build_context_pack(
+                manual_ir_dir,
+                reading_path_id=args.reading_path_id,
+                audience=args.audience,
+                section_id=args.section_id,
+            )
+        except (FileNotFoundError, ManualIRSplitError, json.JSONDecodeError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
+        if args.output:
+            output_path = Path(args.output)
+            if not output_path.is_absolute():
+                output_path = Path.cwd().resolve() / output_path
+            write_context_pack(output_path, context_pack)
+        else:
+            print(json.dumps(context_pack, ensure_ascii=False, indent=2))
+        return 0
+
+    if args.command == "resolve":
+        manual_ir_dir = Path(args.manual_ir_dir)
+        if not manual_ir_dir.is_absolute():
+            manual_ir_dir = Path.cwd().resolve() / manual_ir_dir
+        try:
+            payload = resolve_manual_ir_object(manual_ir_dir, args.object_id)
+        except (FileNotFoundError, ManualIRSplitError, json.JSONDecodeError) as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
+        _write_or_print_json(payload, args.output)
         return 0
 
     return 1
@@ -147,6 +222,18 @@ def _write_split_manual_ir(output_dir: Path, manual_ir: dict) -> None:
 
 def _write_json_file(path: Path, payload: object) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
+def _write_or_print_json(payload: object, output: str | None) -> None:
+    serialized = json.dumps(payload, ensure_ascii=False, indent=2)
+    if output:
+        output_path = Path(output)
+        if not output_path.is_absolute():
+            output_path = Path.cwd().resolve() / output_path
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(serialized + "\n", encoding="utf-8")
+    else:
+        print(serialized)
 
 
 def _safe_json_filename(name: str) -> str:
